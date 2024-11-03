@@ -38,8 +38,14 @@ $ php artisan key:generate
 $ php artisan migrate
 ```
 
-5) Crear un usuario administrador para el admin panel
+5) Crear un usuario administrador para el Admin Panel
 
 ```shell
 $ php artisan moonshine:user
+```
+
+6) Lanzar el portal Admin Panel
+
+```shell
+$ php artisan serve
 ```
