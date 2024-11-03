@@ -7,6 +7,7 @@ namespace App\MoonShine\Resources;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Book;
 use Illuminate\Support\Facades\Request;
+use MoonShine\Attributes\Icon;
 use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
@@ -17,6 +18,8 @@ use MoonShine\Fields\Text;
 /**
  * @extends ModelResource<Book>
  */
+
+#[Icon('heroicons.book-open')]
 class BookResource extends ModelResource
 {
     protected string $model = Book::class;
