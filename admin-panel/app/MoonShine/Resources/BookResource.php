@@ -33,6 +33,8 @@ class BookResource extends ModelResource
 
     protected bool $detailInModal = false;
 
+    protected bool $errorsAbove = true;
+
     public function title(): string
     {
         return __('moonshine::ui.resource.book_title');
@@ -52,10 +54,10 @@ class BookResource extends ModelResource
         return [
             Block::make([
                 ID::make()->sortable(),
-                Text::make('Title'),
-                Text::make('Author'),
-                Textarea::make('Resume'),
-                Textarea::make('Description'),
+                Text::make(static fn() => __('moonshine::ui.resource.book.title'), 'title'),
+                Text::make(static fn() => __('moonshine::ui.resource.book.author'), 'author'),
+                Textarea::make(static fn() => __('moonshine::ui.resource.book.resume'), 'resume'),
+                Textarea::make(static fn() => __('moonshine::ui.resource.book.description'), 'description'),
             ]),
         ];
     }
@@ -68,6 +70,21 @@ class BookResource extends ModelResource
      */
     public function rules(Model $item): array
     {
-        return [];
+        return [
+            'title' => ['required', 'string', 'min:5'],
+            'author' => ['required', 'string', 'min:5'],
+            'resume' => ['required', 'string', 'min:5'],
+            'description' => ['required', 'string', 'min:5'],
+        ];
+    }
+
+    public function validationMessages(): array
+    {
+        return [
+            'title.required' => 'El campo título es obligatorio.',
+            'author.required' => 'El campo autor es obligatorio.',
+            'resume.required' => 'El campo resumen es obligatorio.',
+            'description.required' => 'El campo descripción es obligatorio.',
+        ];
     }
 }

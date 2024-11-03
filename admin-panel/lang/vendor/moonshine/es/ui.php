@@ -65,6 +65,12 @@ return [
 
         // ! Mis Traducciones UI
         'book_title' => 'Libros',
+        'book' => [
+            'title' => 'Título',
+            'author' => 'Autor',
+            'resume' => 'Resumen',
+            'description' => 'Descripción',
+        ],
 
         'main_information' => 'Información principal',
         'change_password' => 'Cambiar contraseña',
