@@ -14,6 +14,7 @@ use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
 use MoonShine\Fields\Text;
+use MoonShine\Fields\Textarea;
 
 /**
  * @extends ModelResource<Book>
@@ -53,8 +54,8 @@ class BookResource extends ModelResource
                 ID::make()->sortable(),
                 Text::make('Title'),
                 Text::make('Author'),
-                Text::make('Resume'),
-                Text::make('Description'),
+                Textarea::make('Resume'),
+                Textarea::make('Description'),
             ]),
         ];
     }
