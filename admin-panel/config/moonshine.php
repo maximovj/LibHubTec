@@ -18,7 +18,7 @@ return [
 
     'route' => [
         'domain' => env('MOONSHINE_URL', ''),
-        'prefix' => env('MOONSHINE_ROUTE_PREFIX', 'admin'),
+        'prefix' => env('MOONSHINE_ROUTE_PREFIX', '/'),
         'single_page_prefix' => 'page',
         'index' => 'moonshine.index',
         'middlewares' => [
