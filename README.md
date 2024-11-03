@@ -18,13 +18,13 @@ Para crear la parte de BackEnd, desarrollar un API para consumir en Angular y mo
 
 # Requisitos
 
-* Node v20.11.1
-* pnpm v9.9.0
-* Laravel ^8.x
-* PHP 8.x
+* Node >= v20.11.1
+* pnpm >= v9.9.0
+* Laravel >= 11.x
+* PHP >=8.1
 * moonshine-laravel 
-* Angular ^17.x
+* Angular >= 17.x
 * Spring Boot
-* jdk v17.0.2
-* jre v17.0.11
+* jdk >= 17.0.2
+* jre >= 17.0.11
 * MySQL v5.7
