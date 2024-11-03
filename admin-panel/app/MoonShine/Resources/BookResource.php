@@ -15,6 +15,8 @@ use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\Textarea;
+use MoonShine\Fields\Image;
+use MoonShine\Fields\Preview;
 
 /**
  * @extends ModelResource<Book>
@@ -54,9 +56,11 @@ class BookResource extends ModelResource
         return [
             Block::make([
                 ID::make()->sortable(),
+                Image::make(static fn() => __('moonshine::ui.resource.book.thumbnail'), 'thumbnail'),
+
                 Text::make(static fn() => __('moonshine::ui.resource.book.title'), 'title'),
                 Text::make(static fn() => __('moonshine::ui.resource.book.author'), 'author'),
-                Textarea::make(static fn() => __('moonshine::ui.resource.book.resume'), 'resume'),
+                Textarea::make(static fn() => __('moonshine::ui.resource.book.summary'), 'summary'),
                 Textarea::make(static fn() => __('moonshine::ui.resource.book.description'), 'description'),
             ]),
         ];
@@ -73,7 +77,7 @@ class BookResource extends ModelResource
         return [
             'title' => ['required', 'string', 'min:5'],
             'author' => ['required', 'string', 'min:5'],
-            'resume' => ['required', 'string', 'min:5'],
+            'summary' => ['required', 'string', 'min:5'],
             'description' => ['required', 'string', 'min:5'],
         ];
     }
@@ -83,7 +87,7 @@ class BookResource extends ModelResource
         return [
             'title.required' => 'El campo título es obligatorio.',
             'author.required' => 'El campo autor es obligatorio.',
-            'resume.required' => 'El campo resumen es obligatorio.',
+            'summary.required' => 'El campo resumen es obligatorio.',
             'description.required' => 'El campo descripción es obligatorio.',
         ];
     }
