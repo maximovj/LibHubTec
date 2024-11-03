@@ -50,9 +50,10 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                     new MoonShineUserRoleResource()
                 ),
             ]),
-
-            MenuItem::make('Libros', new BookResource)
-
+            MenuItem::make(
+            static fn() => __('moonshine::ui.resource.book_title'),
+            new BookResource()
+            ),
         ];
     }
 

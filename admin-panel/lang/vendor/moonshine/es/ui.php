@@ -63,6 +63,9 @@ return [
         'role_title' => 'Roles',
         'role_name' => 'Título',
 
+        // ! Mis Traducciones UI
+        'book_title' => 'Libros',
+
         'main_information' => 'Información principal',
         'change_password' => 'Cambiar contraseña',
 

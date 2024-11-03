@@ -29,6 +29,11 @@ class BookResource extends ModelResource
 
     protected bool $detailInModal = false;
 
+    public function title(): string
+    {
+        return __('moonshine::ui.resource.book_title');
+    }
+
     public function redirectAfterSave(): string
     {
         $refer = Request::header('referer');
