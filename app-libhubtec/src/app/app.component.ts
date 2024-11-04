@@ -6,6 +6,7 @@ import { RouterOutlet } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { PrimeNGConfig } from 'primeng/api';
+import { MenuBarComponent } from './shared/components/menu-bar/menu-bar.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { PrimeNGConfig } from 'primeng/api';
     ButtonModule,
     CommonModule,
     RouterOutlet,
+    MenuBarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
