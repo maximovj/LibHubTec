@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { AvatarModule } from 'primeng/avatar';
 import { BadgeModule } from 'primeng/badge';
-import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
@@ -32,57 +32,20 @@ export class LayoutBookComponent implements OnInit {
   ngOnInit() {
     this.items = [
           {
-              label: 'Home',
-              icon: 'pi pi-home'
+              label: 'Inicio',
+              icon: 'pi pi-home',
+              routerLink: '/books/list',
           },
           {
-              label: 'Features',
-              icon: 'pi pi-star'
+              label: 'Favoritos',
+              icon: 'pi pi-star',
+              routerLink: '/books/list',
           },
           {
-              label: 'Projects',
-              icon: 'pi pi-search',
-              items: [
-                  {
-                      label: 'Core',
-                      icon: 'pi pi-bolt',
-                      shortcut: '⌘+S'
-                  },
-                  {
-                      label: 'Blocks',
-                      icon: 'pi pi-server',
-                      shortcut: '⌘+B'
-                  },
-                  {
-                      label: 'UI Kit',
-                      icon: 'pi pi-pencil',
-                      shortcut: '⌘+U'
-                  },
-                  {
-                      separator: true
-                  },
-                  {
-                      label: 'Templates',
-                      icon: 'pi pi-palette',
-                      items: [
-                          {
-                              label: 'Apollo',
-                              icon: 'pi pi-palette',
-                              badge: '2'
-                          },
-                          {
-                              label: 'Ultima',
-                              icon: 'pi pi-palette',
-                              badge: '3'
-                          }
-                      ]
-                  }
-              ]
-          },
-          {
-              label: 'Contact',
-              icon: 'pi pi-envelope',
-              badge: '3'
+              label: 'Notificaciones',
+              icon: 'pi pi-bell',
+              badge: '3',
+              routerLink: '/books/list',
           }
       ];
   }
