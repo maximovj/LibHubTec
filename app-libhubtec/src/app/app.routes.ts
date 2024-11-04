@@ -29,6 +29,29 @@ export const routes: Routes = [
         loadComponent: () => import('./books/pages/list-page/list-page.component').then( c => c.BooksListComponent),
       },
       {
+        path: ':username',
+        loadComponent : () => import('./users/layouts/user-layout/user-layout.component').then( c => c.UserLayoutComponent),
+        children: [
+          {
+            path: 'settings',
+            loadComponent: () => import('./users/pages/user-settigs/user-settings.component').then( c => c.UserSettingsComponent),
+          },
+          {
+            path: 'my-books',
+            loadComponent: () => import('./users/pages/user-books/user-books.component').then( c => c.UserBooksComponent),
+          },
+          {
+            path: 'my-search',
+            loadComponent: () => import('./users/pages/user-search/user-search.component').then( c => c.UserSearchComponent),
+          },
+          {
+            path: '',
+            pathMatch: 'full',
+            redirectTo: 'settings',
+          }
+        ]
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'list',
