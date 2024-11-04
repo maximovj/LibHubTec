@@ -44,6 +44,12 @@ $ php artisan migrate
 $ php artisan moonshine:user
 ```
 
+5) Insertar datos a la tabla de libros
+
+```shell
+$ php artisan db:seed --class=BooksTableSeeder
+```
+
 6) Lanzar el portal Admin Panel
 
 ```shell
