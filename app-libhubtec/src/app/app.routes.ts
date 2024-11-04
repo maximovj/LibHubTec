@@ -10,6 +10,10 @@ export const routes: Routes = [
         loadComponent : () => import('./auth/pages/login/login-page.component').then( c => c.LoginPageComponent),
       },
       {
+        path: 'recover-password',
+        loadComponent : () => import('./auth/pages/recover-password/recover-password.component').then( c => c.RecoverPasswordComponent),
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'login',
