@@ -22,11 +22,11 @@ export const routes: Routes = [
   },
   {
     path: 'books',
-    loadComponent: () => import('./books/layout/layout-book.component').then( c => c.LayoutBookComponent),
+    loadComponent: () => import('./books/layout/layout-book/layout-book.component').then( c => c.LayoutBookComponent),
     children: [
       {
         path: 'list',
-        loadComponent: () => import('./books/pages/list-page.component').then( c => c.BooksListComponent),
+        loadComponent: () => import('./books/pages/list-page/list-page.component').then( c => c.BooksListComponent),
       },
       {
         path: '',
