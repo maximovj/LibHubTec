@@ -7,6 +7,7 @@ Este admin panel es creado usando Moonshine Laravel
 * php => 8.1
 * composer => 2.4.1
 * laravel >= 11.9
+* moonshine-laravel => 2.22
 * mysql => v5.2
     * database: libhubtec_db
     * collaction: utf8mb4  

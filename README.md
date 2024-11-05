@@ -11,7 +11,13 @@ Para crear la parte del Panel Administrador, con un CRUD para libros, usuarios, 
 ```plain
 Requisitos
 * php => 8.1
-* Apache Maven => 3.6.3
+* composer => 2.4.1
+* laravel >= 11.9
+* moonshine-laravel => 2.22
+* mysql => v5.2
+    * database: libhubtec_db
+    * collaction: utf8mb4  
+    * collaction: utf8mb4_spanish2_ci
 
 ```
 
