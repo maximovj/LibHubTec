@@ -1,0 +1,20 @@
+# custom folders
+vendor
+node_modules
+.vscode
+.workspace
+.vagrant
+
+# custom files
+composer.lock
+package-lock.json
+*-lock.json
+*.lock
+
+# node 
+/node_modules
+/dist
+/e2e
+/docs
+.gitignore
+*.zip
