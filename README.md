@@ -11,12 +11,8 @@ Para crear la parte del Panel Administrador, con un CRUD para libros, usuarios, 
 ```plain
 Requisitos
 * php => 8.1
-* composer => 2.4.1
-* laravel >= 11.9
-* mysql => v5.2
-    * database: libhubtec_db
-    * collaction: utf8mb4  
-    * collaction: utf8mb4_spanish2_ci
+* Apache Maven => 3.6.3
+
 ```
 
 * Angular 
@@ -26,6 +22,22 @@ Para crear la parte de FrontEnd de la biblioteca virtual para la universidad.
 * SpringBoot
 
 Para crear la parte de BackEnd, desarrollar un API para consumir en Angular y moonshine-laravel
+
+```plain
+Requisitos
+* java openjdk => 17.0.2
+* spring boot => 3.3.5
+* Spring Dependencias
+    * MySQL Driver
+    * Spring Data JPA
+    * Spring Boot DevTools
+    * Spring Web
+    * Spring Data JDBC
+* mysql => v5.2
+    * database: libhubtec_db
+    * collaction: utf8mb4  
+    * collaction: utf8mb4_spanish2_ci
+```
 
 # Requisitos
 
