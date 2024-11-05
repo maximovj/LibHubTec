@@ -1,0 +1,57 @@
+
+networks:
+  libhubtec-net:
+    driver: bridge
+
+services:
+  service_db:
+    image: mysql:5.7
+    container_name: libhubtec-mysql-57
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: libhubtec_db
+      MYSQL_USER: libhubtec
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - libhubtec-net
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_spanish2_ci
+
+  service_laravel:
+    image: shinsenter/laravel:php8.2-alpine
+    container_name: libhubtec-laravel-11
+    environment:
+      DB_HOST: service_db
+      DB_DATABASE: libhubtec_db
+      DB_USERNAME: libhubtec
+      DB_PASSWORD: password
+      APP_URL: http://192.168.33.99:8000
+      FILESYSTEM_DISK: public
+      MOONSHINE_TITLE: AdminPanel
+      MOONSHINE_LOGO: http://192.168.33.99:8000/vendor/moonshine/android-chrome-512x512.png
+      MOONSHINE_LOGO_SMALL: http://192.168.33.99:8000/moonshine/vendor/android-chrome-192x192.png
+    ports:
+      - "8000:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./admin-panel:/var/www/html
+    networks:
+      - libhubtec-net
+    command: |
+      /bin/bash -c "
+        composer install --ignore-platform-reqs && 
+        php artisan key:generate &&
+        php artisan migrate --force &&
+        # npm install --production &&
+        php artisan optimize &&
+        php artisan config:cache &&
+        php artisan config:clear &&
+        php artisan cache:clear &&
+        php artisan view:clear &&
+        php artisan route:clear &&
+        nginx -g 'daemon off;'
+      "
+    depends_on:
+      - service_db
