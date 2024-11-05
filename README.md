@@ -18,8 +18,11 @@ Requisitos
     * database: libhubtec_db
     * collaction: utf8mb4  
     * collaction: utf8mb4_spanish2_ci
-
 ```
+
+Sitio de servicio: [http//:localhost:8000](http://localhost:8000)
+
+Puerto de servicio: 8000
 
 * Angular 
 
@@ -34,6 +37,10 @@ Requisitos
     * PrimeIcons => 7.0.0
     * PrimeFlex => 3.3.1
 ```
+
+Sitio de servicio: [http://localhost:4200](http://localhost:4200)
+
+Puerto de servicio: 4200
 
 * SpringBoot
 
@@ -54,6 +61,10 @@ Requisitos
     * collaction: utf8mb4  
     * collaction: utf8mb4_spanish2_ci
 ```
+
+Sitio de servicio: [http://localhost:5800](http://localhost:5800)
+
+Puerto de servicio: 5800
 
 # Requisitos
 
