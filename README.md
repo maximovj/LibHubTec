@@ -19,6 +19,16 @@ Requisitos
 
 Para crear la parte de FrontEnd de la biblioteca virtual para la universidad.
 
+```plain
+Requisitos
+* Node => 20.11.1
+* npm => 9.6.2
+    * Angular => 18.2.0
+    * PrimeNG => 17.18.11
+    * PrimeIcons => 7.0.0
+    * PrimeFlex => 3.3.1
+```
+
 * SpringBoot
 
 Para crear la parte de BackEnd, desarrollar un API para consumir en Angular y moonshine-laravel
