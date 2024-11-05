@@ -55,3 +55,15 @@ services:
       "
     depends_on:
       - service_db
+
+  service_angular:
+    container_name: libhubtec-angular-18
+    build:
+      context: ./app-libhubtec
+      dockerfile: Dockerfile.angular
+    ports:
+      - "8080:80"
+    depends_on:
+      - service_db
+      - service_laravel
+  
