@@ -1,2 +1,8 @@
+# Custom
+node_modules
+vendor
+.env
 /.metadata/
 .workspace
+.vagrant
+.vscode
