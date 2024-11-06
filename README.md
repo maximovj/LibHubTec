@@ -4,7 +4,7 @@ Este es un proyecto que consiste en crear una biblioteca virtual para una univer
 
 Herramientas o técnologias que se van a usar:
 
-* moonshine-laravel 
+* Laravel 11.x y moonshine-laravel 
 
 Para crear la parte del Panel Administrador, con un CRUD para libros, usuarios, alumnos, autorizaciones, etc. 
 
@@ -24,7 +24,7 @@ Sitio de servicio: [http://localhost:8000](http://localhost:8000)
 
 Puerto de servicio: 8000
 
-* Angular 
+* Angular 18.x 
 
 Para crear la parte de FrontEnd de la biblioteca virtual para la universidad.
 
@@ -42,7 +42,7 @@ Sitio de servicio: [http://localhost:4200](http://localhost:4200)
 
 Puerto de servicio: 4200
 
-* SpringBoot
+* SpringBoot 3.x
 
 Para crear la parte de BackEnd, desarrollar un API para consumir en Angular y moonshine-laravel
 
@@ -105,11 +105,11 @@ con dirección IP de `192.168.33.99`, por lo tanto para acceder a los serivcios 
 
 es necesario cambiar `localhost` por la dirección IP de la caja de Vagrant (y viceversa), sería de está manera:
 
-Sitio de servicio: [http://192.168.33.99:8000](http://192.168.33.99:8000)
+Sitio de servicio Laravel 11.x: [http://192.168.33.99:8000](http://192.168.33.99:8000)
 
-Sitio de servicio: [http://192.168.33.99:4200](http://192.168.33.99:4200)
+Sitio de servicio Angular 18.x: [http://192.168.33.99:4200](http://192.168.33.99:4200)
 
-Sitio de servicio: [http://192.168.33.99:5800](http://192.168.33.99:5800)
+Sitio de servicio SpringBoot 3.x: [http://192.168.33.99:5800](http://192.168.33.99:5800)
 
 <br>
 

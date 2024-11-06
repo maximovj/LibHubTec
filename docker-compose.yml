@@ -62,7 +62,7 @@ services:
       context: ./app-libhubtec
       dockerfile: Dockerfile.angular
     ports:
-      - "8080:80"
+      - "4200:80"
     networks:
       - libhubtec-net
     depends_on:
