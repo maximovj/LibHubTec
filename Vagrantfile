@@ -101,7 +101,7 @@ Vagrant.configure("2") do |config|
   # *OJO* : Corre solo una vez usando `vagrant up`
   config.vm.provision "install-docker",
       type: "docker",
-      images: ["mysql:5.7", "openjdk:17.0.2-jdk", "shinsenter/laravel:php8.2-alpine", "node:20.11.1-alpine"]
+      images: ["mysql:5.7", "maven:3.6.3-openjdk-17-slim", "shinsenter/laravel:php8.2-alpine", "node:20.11.1-alpine"]
 
   #config.vm.provider "vmware_fusion" do |v|
   #    v.vmx["vhv.enable"] = "TRUE"
