@@ -63,7 +63,23 @@ services:
       dockerfile: Dockerfile.angular
     ports:
       - "8080:80"
+    networks:
+      - libhubtec-net
     depends_on:
       - service_db
       - service_laravel
+    
+  service_springboot:
+    container_name: libhubtec-springboot-3
+    build:
+      context: ./ApiLibHubTec
+      dockerfile: Dockerfile.springboot
+    ports:
+      - "5800:5800"
+    networks:
+      - libhubtec-net
+    depends_on:
+      - service_db
+      - service_laravel
+      - service_angular
   
