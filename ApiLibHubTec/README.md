@@ -46,3 +46,19 @@ cobertura de pruebas, informes de errores, etc. El sitio se genera en el directo
 ```shell
 $ mvn site
 ```
+
+# Comandos para arrancar el proyecto usando Dockerfile
+
+Construir el contenedor de Angular, con el sig. comandos:
+
+```shell
+$ docker build -f Dockerfile.springboot -t img-springboot-3 .
+```
+
+Ejecutar el contenedor de Angular, con el sig. comandos:
+
+```shell
+$ docker run -d -p 5800:5800 img-springboot-3
+# o también
+$ docker run -it -p 5800:5800 img-springboot-3
+```

@@ -1,0 +1,44 @@
+# Ignorar la carpeta de dependencias locales de Maven
+/.m2
+
+# Ignorar archivos y carpetas generados por Maven
+/target
+
+# Ignorar archivos de configuración local, como los de IDEs
+.idea
+*.iml
+*.ipr
+*.iws
+.vscode
+
+# Ignorar archivos de configuración específicos de sistemas operativos
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar archivos de pruebas unitarias si no son necesarios para producción
+**/test-*.xml
+**/tests*
+
+# Ignorar archivos de configuración personal
+*.properties
+*.yml
+*.yaml
+
+# Ignorar archivos de configuración específicos de Spring Boot, si no son necesarios
+application-dev.properties
+application-dev.yml
+
+# Ignorar archivos relacionados con la compilación
+*.class
+
+# Ignorar contenedores de Docker previos
+.docker/
+
+# Ignorar archivos de compilación del JDK
+*.jar
+
+# Ignorar cualquier otro archivo que no sea relevante para la producción
+*.war

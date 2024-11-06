@@ -1,0 +1,29 @@
+# Usar una imagen base de OpenJDK 17
+FROM maven:3.6.3-openjdk-17-slim AS builder
+
+# Instalar Maven en la imagen
+#RUN apt-get update && apt-get install -y maven
+
+# Setear el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copiar el archivo pom.xml y el código fuente a la imagen
+COPY pom.xml .
+COPY src ./src
+
+# Descargar las dependencias con Maven
+RUN mvn clean install -DskipTests
+
+# Copiar el archivo JAR generado en la construcción
+FROM maven:3.6.3-openjdk-17-slim
+
+WORKDIR /app
+
+# Copiar el JAR desde la etapa anterior
+COPY --from=builder /app/target/*.jar app.jar
+
+# Exponer el puerto donde Spring Boot se ejecutará
+EXPOSE 5800 5800
+
+# Definir el comando para ejecutar el JAR cuando se inicie el contenedor
+ENTRYPOINT ["java", "-jar", "app.jar"]
