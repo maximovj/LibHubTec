@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\MoonShine\Resources\AccountResource;
 use App\MoonShine\Resources\BookResource;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
 use MoonShine\MoonShine;
@@ -53,6 +54,10 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
             MenuItem::make(
             static fn() => __('moonshine::ui.resource.book_title'),
             new BookResource()
+            ),
+            MenuItem::make(
+            static fn() => __('moonshine::ui.resource.account_title'),
+            new AccountResource()
             ),
         ];
     }
