@@ -73,6 +73,22 @@ return [
             'description' => 'Description',
         ],
 
+        'account_title' => 'Accounts',
+        'account' => [
+            'name' => 'Name',
+            'last_name' => 'Last Name',
+            'control_number' => 'Control number',
+            'sex' => 'Sex',
+            'age' => 'Age',
+            'grade' => 'Grade',
+            'shift' => 'Shift',
+            'photo' => 'Photo',
+            'bio' => 'Bio',
+            'username' => 'Username',
+            'email' => 'Email',
+            'password' => 'Password',
+        ],
+
         'main_information' => 'Main information',
         'change_password' => 'Change password',
 

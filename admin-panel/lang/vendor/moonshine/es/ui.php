@@ -73,6 +73,22 @@ return [
             'description' => 'Descripción',
         ],
 
+        'account_title' => 'Cuentas',
+        'account' => [
+            'name' => 'Nombres',
+            'last_name' => 'Apellidos',
+            'control_number' => 'Número de control',
+            'sex' => 'Sexo',
+            'age' => 'Edad',
+            'grade' => 'Grado',
+            'shift' => 'Turno',
+            'photo' => 'Foto',
+            'bio' => 'Bio',
+            'username' => 'Nombre de usuario',
+            'email' => 'Correo electrónico',
+            'password' => 'Contraseña',
+        ],
+
         'main_information' => 'Información principal',
         'change_password' => 'Cambiar contraseña',
 
