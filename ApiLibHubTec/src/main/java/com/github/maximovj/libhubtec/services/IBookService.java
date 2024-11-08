@@ -2,10 +2,12 @@ package com.github.maximovj.libhubtec.services;
 
 import java.util.List;
 
-import com.github.maximovj.libhubtec.model.Book;
+import org.springframework.http.ResponseEntity;
+
+import com.github.maximovj.libhubtec.response.BookResponse;
 
 public interface IBookService {
 	
-	public List<Book> findAllBooks();
+	public ResponseEntity<BookResponse> findAllBooks();
 
 }
