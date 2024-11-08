@@ -19,7 +19,7 @@ import com.github.maximovj.libhubtec.response.BookResponse;
 import jakarta.persistence.Entity;
 
 @Service
-public class BookServiceImpl implements IBookService {
+public class BookServiceImpl implements IBookServiceImpl {
 	
 	private BookResponse response;
 	

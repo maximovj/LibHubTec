@@ -11,14 +11,14 @@ import org.springframework.web.servlet.function.EntityResponse;
 
 import com.github.maximovj.libhubtec.model.Book;
 import com.github.maximovj.libhubtec.response.BookResponse;
-import com.github.maximovj.libhubtec.services.IBookService;
+import com.github.maximovj.libhubtec.services.IBookServiceImpl;
 
 @RestController
 @RequestMapping("/v1")
 public class BookRestController {
 	
 	@Autowired
-	private IBookService bookService;
+	private IBookServiceImpl bookService;
 
 	@GetMapping("/books")
 	public ResponseEntity<BookResponse> findAllBooks(){
