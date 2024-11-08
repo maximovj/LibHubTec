@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +20,8 @@ import com.github.maximovj.libhubtec.response.ApiResponse;
 
 @Service
 public class AccountServiceImpl implements IAccountServiceImpl {
-	
+
+	private Logger log = LoggerFactory.getLogger(getClass());
 	private AccountResponse response;
 	
 	@Autowired
@@ -26,6 +29,7 @@ public class AccountServiceImpl implements IAccountServiceImpl {
 
 	@Override
 	public ResponseEntity<AccountResponse> FindAccountAll() {
+		this.log.info("@FindAccountAll : Iniciando");
 		List<Account> accounts =  new ArrayList<Account>();
 		
 		this.response = new AccountResponse();
@@ -41,7 +45,7 @@ public class AccountServiceImpl implements IAccountServiceImpl {
 					true));
 			
 			accounts = (List<Account>) iAccountDao.findAll();
-			this.response.setData(Optional.ofNullable(accounts));			
+						
 		} catch (Exception e) {
 			
 			this.response.setResponse(new ApiResponse(
@@ -53,12 +57,12 @@ public class AccountServiceImpl implements IAccountServiceImpl {
 					"error", 
 					false));
 			
-			this.response.setData(Optional.ofNullable(accounts));
+			this.log.error("@FindAccountAll : Error");
 			e.getStackTrace();
-			System.out.println("AccountServiceImpl::FindAccountAll | ** Error **");
-			System.out.println(e.getMessage());
 		}
 		
+		this.response.setData(Optional.ofNullable(accounts));
+		this.log.info("@FindAccountAll : Finalizado");
 		return ResponseEntity.ok(this.response);
 	}
 	

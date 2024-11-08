@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import jakarta.persistence.Entity;
 @Service
 public class BookServiceImpl implements IBookServiceImpl {
 	
+	private Logger log = LoggerFactory.getLogger(getClass());
 	private BookResponse response;
 	
 	@Autowired
@@ -29,6 +32,7 @@ public class BookServiceImpl implements IBookServiceImpl {
 	@Override
 	@Transactional(readOnly = true)
 	public ResponseEntity<BookResponse> findAllBooks() {
+		this.log.info("@findAllBooks : Iniciando");
 		List<Book> books = new ArrayList<Book>();
 		
 		this.response = new BookResponse();
@@ -54,12 +58,12 @@ public class BookServiceImpl implements IBookServiceImpl {
 					"error", 
 					false));
 			
+			this.log.error("@findAllBooks : Error");
 			e.getStackTrace();
-			System.out.println("BookServiceImpl::findAllBooks | ** Error **");
-			System.out.println(e.getMessage());
 		}
 		
 		this.response.setData(Optional.ofNullable(books));
+		this.log.info("@findAllBooks : Finalizado");
 		return ResponseEntity.ok(this.response);
 	}
 	
