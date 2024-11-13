@@ -11,14 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.function.EntityResponse;
 
 import com.github.maximovj.libhubtec.dao.IBookDao;
 import com.github.maximovj.libhubtec.model.Book;
 import com.github.maximovj.libhubtec.response.ApiResponse;
 import com.github.maximovj.libhubtec.response.BookResponse;
-
-import jakarta.persistence.Entity;
 
 @Service
 public class BookServiceImpl implements IBookServiceImpl {
