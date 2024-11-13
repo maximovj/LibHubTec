@@ -1,12 +1,8 @@
 package com.github.maximovj.libhubtec.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -17,51 +13,51 @@ import com.github.maximovj.libhubtec.model.Book;
 import com.github.maximovj.libhubtec.response.ApiResponse;
 import com.github.maximovj.libhubtec.response.BookResponse;
 
-@Service
-public class BookServiceImpl implements IBookServiceImpl {
-	
-	private Logger log = LoggerFactory.getLogger(getClass());
-	private BookResponse response;
-	
-	@Autowired
-	private IBookDao dao;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-	@Override
-	@Transactional(readOnly = true)
-	public ResponseEntity<BookResponse> findAllBooks() {
-		this.log.info("@findAllBooks : Iniciando");
-		List<Book> books = new ArrayList<Book>();
-		
-		this.response = new BookResponse();
-		
-		try {
-			this.response.setResponse(new ApiResponse(
-					"Listar libros", 
-					"Cuentas listados correctamente", 
-					"/v1/books", 
-					"GET", 
-					HttpStatus.OK.value(), 
-					"success", 
-					true));
-		
-			books = (List<Book>) this.dao.findAll();
-		}catch ( Exception e) {
-			this.response.setResponse(new ApiResponse(
-					"Listar libros", 
-					"Error al obtener los libros", 
-					"/v1/books", 
-					"GET", 
-					HttpStatus.NO_CONTENT.value(), 
-					"error", 
-					false));
-			
-			this.log.error("@findAllBooks : Error");
-			e.getStackTrace();
-		}
-		
-		this.response.setData(Optional.ofNullable(books));
-		this.log.info("@findAllBooks : Finalizado");
-		return ResponseEntity.ok(this.response);
-	}
-	
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class BookServiceImpl implements IBookServiceImpl {
+
+    private final IBookDao dao;
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResponseEntity<BookResponse> findAllBooks() {
+        log.info("@findAllBooks : Iniciando");
+        
+        BookResponse response = new BookResponse();
+        
+        try {
+            response.setResponse(new ApiResponse(
+                "Listar libros", 
+                "Cuentas listados correctamente", 
+                "/v1/books", 
+                "GET", 
+                HttpStatus.OK.value(), 
+                "success", 
+                true
+            ));
+
+            List<Book> books = (List<Book>) dao.findAll();
+            response.setData(Optional.ofNullable(books));
+        } catch (Exception e) {
+            response.setResponse(new ApiResponse(
+                "Listar libros", 
+                "Error al obtener los libros", 
+                "/v1/books", 
+                "GET", 
+                HttpStatus.NO_CONTENT.value(), 
+                "error", 
+                false
+            ));
+            
+            log.error("@findAllBooks : Error", e);
+        }
+
+        log.info("@findAllBooks : Finalizado");
+        return ResponseEntity.ok(response);
+    }
 }
