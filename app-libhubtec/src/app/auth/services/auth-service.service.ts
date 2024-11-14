@@ -1,9 +1,9 @@
 import { LoginRequest } from './../interfaces/login-request.interface';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginResponse } from '../interfaces/login-response.interface';
-import { catchError, map, Observable, take, throwError } from 'rxjs';
-import { User } from '../interfaces';
+import { catchError, map, Observable, of, take, throwError } from 'rxjs';
+import { User, VerifyTokenResponse } from '../interfaces';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 
 @Injectable({
@@ -19,7 +19,9 @@ export class AuthService {
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
   public authStatus = computed(() => this._authStatus());
 
-  constructor() { }
+  constructor() {
+    this.checkAuthentication().subscribe();
+  }
 
   login(req :LoginRequest) :Observable<boolean>
   {
@@ -49,9 +51,49 @@ export class AuthService {
     return _pipe;
   }
 
+  checkAuthentication() :Observable<boolean>
+  {
+    const token = localStorage.getItem('_token');
+
+    if(!token){
+      this._authStatus.set(AuthStatus.notAuthenticated);
+      return of(false);
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this
+      .http
+      .get<VerifyTokenResponse>('http://localhost:5800/v1/auth/verify-token', { headers })
+      .pipe(
+        map(({response, data}) => {
+          console.log(response, data);
+          if(response?.success && data?.refresh_token) {
+            this._authStatus.set(AuthStatus.authenticated);
+            localStorage.setItem('_token' , data.refresh_token);
+          }
+          return response.success || false;
+        }),
+        catchError( err => throwError(() => {
+          this.logout();
+          console.log(err);
+          return err.message;
+        })),
+      );
+  }
+
   isAuthenticated() :boolean
   {
     return this.authStatus() === AuthStatus.authenticated;
+  }
+
+  logout() :void
+  {
+    this._authStatus.set(AuthStatus.notAuthenticated);
+    this._user.set(null);
+    localStorage.removeItem('_token');
   }
 
 }
