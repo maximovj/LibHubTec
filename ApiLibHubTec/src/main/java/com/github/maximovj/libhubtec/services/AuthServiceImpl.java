@@ -2,9 +2,6 @@ package com.github.maximovj.libhubtec.services;
 
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,30 +14,29 @@ import com.github.maximovj.libhubtec.model.AuthRequest;
 import com.github.maximovj.libhubtec.response.ApiResponse;
 import com.github.maximovj.libhubtec.response.AuthResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements IAuthServiceImpl {
 
-    private Logger log = LoggerFactory.getLogger(getClass());
-    private AuthResponse authResponse;
-
-    @Autowired
-	private JwtService jwtService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+	private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public ResponseEntity<AuthResponse> authenticate(AuthRequest auth) {
-        this.log.info("AuthServiceImpl::generateToken | Iniciando proceso");
-        this.authResponse = new AuthResponse();
-        String token = "";
+        log.info("AuthServiceImpl::generateToken | Iniciando proceso");
+        AuthResponse authResponse = new AuthResponse();
         AuthTokenData data = new AuthTokenData();
-
+        String token = "";
+        
         Authentication authentication = this.authenticationManager
 				.authenticate( new UsernamePasswordAuthenticationToken(auth.getEmail(), auth.getPassword()));
 
 		if(authentication.isAuthenticated()) {
-            this.authResponse.setResponse(new ApiResponse(
+            authResponse.setResponse(new ApiResponse(
                 "Autenticación", 
                 "Usuario autenticado exitosamente", 
                 "/v1/auth/authenticate",
@@ -51,7 +47,7 @@ public class AuthServiceImpl implements IAuthServiceImpl {
 			token = this.jwtService.generateToken(auth.getEmail());
             data.setToken(token);
 		} else {
-            this.authResponse.setResponse(new ApiResponse(
+            authResponse.setResponse(new ApiResponse(
                 "Autenticación", 
                 "Usuario no autenticado", 
                 "/v1/auth/authenticate",
@@ -62,17 +58,21 @@ public class AuthServiceImpl implements IAuthServiceImpl {
 			//throw new UsernameNotFoundException("Invalid user request!");
 		}
 
-        this.log.info("AuthServiceImpl::generateToken | Proceso  finalizado");
-        this.authResponse.setData(Optional.ofNullable(data));
-        return ResponseEntity.ok(this.authResponse);
+        log.info("AuthServiceImpl::generateToken | Proceso  finalizado");
+        authResponse.setData(Optional.ofNullable(data));
+        return ResponseEntity.ok(authResponse);
     }
     
     @Override
     public ResponseEntity<AuthResponse> refreshToken() {
-        this.log.info("AuthServiceImpl::generateToken | Iniciando proceso");
-        this.authResponse = new AuthResponse();
-        this.log.info("AuthServiceImpl::generateToken | Proceso  finalizado");
-        return ResponseEntity.ok(this.authResponse);
+        log.info("AuthServiceImpl::generateToken | Iniciando proceso");
+        AuthResponse authResponse = new AuthResponse();
+        AuthTokenData data = new AuthTokenData();
+        String token = "";
+    
+        authResponse = new AuthResponse();
+        log.info("AuthServiceImpl::generateToken | Proceso  finalizado");
+        return ResponseEntity.ok(authResponse);
     }
 
 }
