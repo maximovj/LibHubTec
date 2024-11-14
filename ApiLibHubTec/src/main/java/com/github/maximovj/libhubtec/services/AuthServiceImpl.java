@@ -14,6 +14,7 @@ import com.github.maximovj.libhubtec.model.AuthRequest;
 import com.github.maximovj.libhubtec.response.ApiResponse;
 import com.github.maximovj.libhubtec.response.AuthResponse;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -101,12 +102,29 @@ public class AuthServiceImpl implements IAuthServiceImpl {
     }
 
     @Override
-    public ResponseEntity<AuthResponse> verifyToken(AuthRequest auth) {
+    public ResponseEntity<AuthResponse> verifyToken(HttpServletRequest request) {
         log.info("AuthServiceImpl::verifyToken | Iniciando proceso");
         AuthResponse authResponse = new AuthResponse();
         AuthTokenData data = new AuthTokenData();
+        // Obtiene el token del encabezado Authorization
+        String authHeader = request.getHeader("Authorization");
+        String token = null;
 
-        if(this.jwtService.validateToken(auth.getToken())) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            token = authHeader.substring(7); // Elimina "Bearer " para obtener solo el token
+        } else {
+            authResponse.setResponse(new ApiResponse(
+                "Autenticación",
+                "Encabezado Authorization no encontrado o mal formado",
+                "/v1/auth/refresh-token",
+                "POST",
+                HttpStatus.BAD_REQUEST.value(),
+                "error",
+                false));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(authResponse);
+        }
+
+        if(this.jwtService.validateToken(token)) {
             authResponse.setResponse(new ApiResponse(
                 "Autenticación", 
                 "Token regenerado exitosamente", 
@@ -116,8 +134,8 @@ public class AuthServiceImpl implements IAuthServiceImpl {
                 "success", 
                 true));
             
-            data.setToken(auth.getToken());
-            data.setRefresh_token(this.jwtService.refreshToken(auth.getToken()));
+            data.setToken(token);
+            data.setRefresh_token(this.jwtService.refreshToken(token));
             data.setIs_valid(true);
 
         } else {
