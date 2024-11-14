@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { AuthService } from '../../../auth/services/auth-service.service';
 
 @Component({
   standalone: true,
@@ -7,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class UserSettingsComponent implements OnInit {
+
+  private service = inject(AuthService);
+
   constructor() { }
 
   ngOnInit() { }
+
+  onClickLogout()
+  {
+    this.service.logout();
+  }
+
 }
