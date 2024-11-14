@@ -46,6 +46,7 @@ public class AuthServiceImpl implements IAuthServiceImpl {
                 true));
 			token = this.jwtService.generateToken(auth.getEmail());
             data.setToken(token);
+            data.setIs_valid(true);
 		} else {
             authResponse.setResponse(new ApiResponse(
                 "Autenticación", 
@@ -64,14 +65,74 @@ public class AuthServiceImpl implements IAuthServiceImpl {
     }
     
     @Override
-    public ResponseEntity<AuthResponse> refreshToken() {
-        log.info("AuthServiceImpl::generateToken | Iniciando proceso");
+    public ResponseEntity<AuthResponse> refreshToken(AuthRequest auth) {
+        log.info("AuthServiceImpl::refreshToken | Iniciando proceso");
         AuthResponse authResponse = new AuthResponse();
         AuthTokenData data = new AuthTokenData();
         String token = "";
-    
-        authResponse = new AuthResponse();
-        log.info("AuthServiceImpl::generateToken | Proceso  finalizado");
+        
+        token = this.jwtService.refreshToken(auth.getToken());
+
+        if(token != null) {
+            authResponse.setResponse(new ApiResponse(
+                "Autenticación", 
+                "Token regenerado exitosamente", 
+                "/v1/auth/refresh-token",
+                "POST", 
+                HttpStatus.OK.value(), 
+                "success", 
+                true));
+            data.setRefresh_token(token);
+            data.setIs_valid(true);
+        } else {
+            authResponse.setResponse(new ApiResponse(
+                "Autenticación", 
+                "Token inválido o expirado", 
+                "/v1/auth/refresh-token",
+                "POST", 
+                HttpStatus.UNAUTHORIZED.value(), 
+                "error", 
+                false));
+        }
+        
+        log.info("AuthServiceImpl::refreshToken | Proceso  finalizado");
+        authResponse.setData(Optional.ofNullable(data));
+        return ResponseEntity.ok(authResponse);
+    }
+
+    @Override
+    public ResponseEntity<AuthResponse> verifyToken(AuthRequest auth) {
+        log.info("AuthServiceImpl::verifyToken | Iniciando proceso");
+        AuthResponse authResponse = new AuthResponse();
+        AuthTokenData data = new AuthTokenData();
+
+        if(this.jwtService.validateToken(auth.getToken())) {
+            authResponse.setResponse(new ApiResponse(
+                "Autenticación", 
+                "Token regenerado exitosamente", 
+                "/v1/auth/refresh-token",
+                "POST", 
+                HttpStatus.OK.value(), 
+                "success", 
+                true));
+            
+            data.setToken(auth.getToken());
+            data.setRefresh_token(this.jwtService.refreshToken(auth.getToken()));
+            data.setIs_valid(true);
+
+        } else {
+            authResponse.setResponse(new ApiResponse(
+                "Autenticación", 
+                "Token inválido o expirado", 
+                "/v1/auth/refresh-token",
+                "POST", 
+                HttpStatus.UNAUTHORIZED.value(), 
+                "error", 
+                false));
+        }
+
+        log.info("AuthServiceImpl::verifyToken | Proceso  finalizado");
+        authResponse.setData(Optional.ofNullable(data));
         return ResponseEntity.ok(authResponse);
     }
 

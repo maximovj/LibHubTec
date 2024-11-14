@@ -1,10 +1,12 @@
 package com.github.maximovj.libhubtec.services;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,22 @@ public class JwtService {
     public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userName);
+    }
+
+    public String refreshToken(String token) {
+        try {
+
+            if(this.validateToken(token)){
+                // Validar token
+                Claims claims = this.extractAllClaims(token);
+                // Crear nuevo token
+                return this.createToken(claims, claims.getSubject());
+            }
+        } catch (SignatureException | ExpiredJwtException e) {
+            // Si el token es inválido o expirado, lanza una excepción o maneja el error
+            //throw new RuntimeException("Token inválido o expirado");
+        }
+        return null;
     }
 
     // Create a JWT token with specified claims and subject (user name)
@@ -88,5 +106,26 @@ public class JwtService {
         this.log.info("JwtService:::validateToken | " + isValid);
         return isValid;
     }
+
+    // Validar el token existe, usando un token previamente generado
+    public Boolean validateToken(String token) {
+        try {
+            final String username = extractUsername(token);
+            final Claims claims = extractAllClaims(token);
+            this.log.info("JwtService:::validateToken | username = " + username);
+    
+            // Valida que el token no haya expirado y que el nombre de usuario sea válido
+            final boolean isValid = (username.length() > 3 && !isTokenExpired(token) && claims != null);
+            this.log.info("JwtService:::validateToken | isValid = " + isValid);
+            
+            return isValid;
+    
+        } catch (Exception e) {
+            // Maneja excepciones como un token mal formado, expirado, etc.
+            this.log.error("JwtService:::validateToken | Error al validar el token: " + e.getMessage());
+            return false; // Retorna falso en caso de error en la validación
+        }
+    }
+
 
 }

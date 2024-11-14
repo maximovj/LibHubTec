@@ -8,6 +8,7 @@ import com.github.maximovj.libhubtec.response.AuthResponse;
 public interface IAuthServiceImpl {
 
     public ResponseEntity<AuthResponse> authenticate(AuthRequest auth);
-    public ResponseEntity<AuthResponse> refreshToken();
+    public ResponseEntity<AuthResponse> refreshToken(AuthRequest auth);
+    public ResponseEntity<AuthResponse> verifyToken(AuthRequest auth);
 
 }

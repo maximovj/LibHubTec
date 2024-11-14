@@ -29,4 +29,15 @@ public class AuthRestController {
 		return this.service.authenticate(auth);
 	}
 
+	@PostMapping("/auth/refresh-token")
+	public ResponseEntity<AuthResponse> refreshToken(@RequestBody AuthRequest auth) {
+		return this.service.refreshToken(auth);
+	}
+	
+	@PostMapping("/auth/verify-token")
+	public ResponseEntity<AuthResponse> verifyToken(@RequestBody AuthRequest auth) {
+		return this.service.verifyToken(auth);
+	}
+	
+
 }

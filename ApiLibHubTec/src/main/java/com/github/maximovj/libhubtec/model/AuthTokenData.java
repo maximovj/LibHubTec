@@ -11,5 +11,6 @@ public class AuthTokenData {
 
     String token;
     String refresh_token;
+    Boolean is_valid;
 
 }
