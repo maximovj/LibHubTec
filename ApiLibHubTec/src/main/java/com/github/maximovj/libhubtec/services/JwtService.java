@@ -13,10 +13,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.github.maximovj.libhubtec.user.UserInfo;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 
@@ -25,13 +28,12 @@ public class JwtService {
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
-	// Replace this with a secure key in a real application, ideally fetched from environment variables
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
     // Generate token with given user name
-    public String generateToken(String userName) {
+    public String generateToken(Long id) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, userName);
+        return createToken(claims, id);
     }
 
     public String refreshToken(String token) {
@@ -41,7 +43,7 @@ public class JwtService {
                 // Validar token
                 Claims claims = this.extractAllClaims(token);
                 // Crear nuevo token
-                return this.createToken(claims, claims.getSubject());
+                return this.createToken(claims, Long.parseLong(claims.getSubject()));
             }
         } catch (SignatureException | ExpiredJwtException e) {
             // Si el token es inválido o expirado, lanza una excepción o maneja el error
@@ -50,40 +52,40 @@ public class JwtService {
         return null;
     }
 
-    // Create a JWT token with specified claims and subject (user name)
-    private String createToken(Map<String, Object> claims, String userName) {
+    // Crear un JWT token con claims y subject (usaername / id) especificos
+    private String createToken(Map<String, Object> claims, Long id) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(userName)
+                .setSubject(String.valueOf(id))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) // Token valid for 30 minutes
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // Get the signing key for JWT token
+    // Obtener una firma clave para JWT token
     private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    // Extract the username from the token
+    // Extraer el subject (usaername / id) desde el token
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // Extract the expiration date from the token
+    // Extraer la fecha de expiración desde el token 
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    // Extract a claim from the token
+    // Extraer un claim desde el token
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    // Extract all claims from the token
+    // Extraer todos los `claims` desde el token
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
@@ -92,19 +94,16 @@ public class JwtService {
                 .getBody();
     }
 
-    // Check if the token is expired
+    // Verifica si token está expirado
     private Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
-    // Validate the token against user details and expiration
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        this.log.info("JwtService:::validateToken | " .concat(username));
-        this.log.info("JwtService:::validateToken | " .concat(userDetails.getUsername()));
-        final boolean isValid = (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-        this.log.info("JwtService:::validateToken | " + isValid);
-        return isValid;
+    // Válida que el token sea un userDetails y la expiración
+    public Boolean verifyTokenWithUsername(String token, Optional<UserInfo> userInfo) {
+        // Extraer el subject (usaername / id) desde el token
+        final Long username = Long.parseLong(extractUsername(token));
+        return (username.equals(userInfo.get().getId()) && !isTokenExpired(token));
     }
 
     // Validar el token existe, usando un token previamente generado
@@ -112,14 +111,8 @@ public class JwtService {
         try {
             final String username = extractUsername(token);
             final Claims claims = extractAllClaims(token);
-            this.log.info("JwtService:::validateToken | username = " + username);
-    
-            // Valida que el token no haya expirado y que el nombre de usuario sea válido
-            final boolean isValid = (username.length() > 3 && !isTokenExpired(token) && claims != null);
-            this.log.info("JwtService:::validateToken | isValid = " + isValid);
-            
-            return isValid;
-    
+            // Si se puede obtener los claims significa que el token es válido.
+            return (username.length() > 0 && !isTokenExpired(token) && claims != null);
         } catch (Exception e) {
             // Maneja excepciones como un token mal formado, expirado, etc.
             this.log.error("JwtService:::validateToken | Error al validar el token: " + e.getMessage());

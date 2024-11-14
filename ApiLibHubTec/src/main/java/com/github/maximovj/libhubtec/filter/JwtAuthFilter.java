@@ -14,13 +14,19 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.github.maximovj.libhubtec.services.JwtService;
+import com.github.maximovj.libhubtec.user.UserInfo;
+import com.github.maximovj.libhubtec.user.UserInfoRepository;
 import com.github.maximovj.libhubtec.user.UserInfoService;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 	
+	@Autowired
+	private UserInfoRepository  userInfoRepository;
+
 	@Autowired
 	private JwtService jwtService; 
 	
@@ -38,24 +44,29 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 	        // Verificamos que inicie con `Bearer `
 	        if (authHeader != null && authHeader.startsWith("Bearer ")) {
 	            token = authHeader.substring(7); // Extraer token
-	            username = this.jwtService.extractUsername(token); // Extraer username
-	        }
+				// Válida si el token puede extraer los claims
+				if(jwtService.validateToken(token)){
+					username = this.jwtService.extractUsername(token); // Extraer subject (username / id)
+					Optional<UserInfo> userInfo = this.userInfoRepository.findById(Long.valueOf(username)); 
 	       
-	        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-	            UserDetails userDetails = this.userInfoService.loadUserByUsername(username);
-
-	            if (jwtService.validateToken(token, userDetails)) {
-	                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-	                    userDetails,
-	                    null,
-	                    userDetails.getAuthorities()
-	                );
-	                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-	                SecurityContextHolder.getContext().setAuthentication(authToken);
-	            }
+					// Verificar si no existe en usuario y si no existe una autententicación incializada
+					if (userInfo != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+					UserDetails userDetails = this.userInfoService.loadUserByUsername(userInfo.get().getEmail());
+						
+						// Verifica si el token tiene el mismo subject (username / id)
+						if (jwtService.verifyTokenWithUsername(token, userInfo)) {
+							UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+								userDetails,
+								null,
+								userDetails.getAuthorities()
+							);
+							authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+							SecurityContextHolder.getContext().setAuthentication(authToken);
+						}
+					}
+				}
 	        }
 
-	        // Continue the filter chain
 	        filterChain.doFilter(request, response);
 		
 	}

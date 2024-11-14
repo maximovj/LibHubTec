@@ -13,6 +13,8 @@ import com.github.maximovj.libhubtec.model.AuthTokenData;
 import com.github.maximovj.libhubtec.model.AuthRequest;
 import com.github.maximovj.libhubtec.response.ApiResponse;
 import com.github.maximovj.libhubtec.response.AuthResponse;
+import com.github.maximovj.libhubtec.user.UserInfo;
+import com.github.maximovj.libhubtec.user.UserInfoRepository;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements IAuthServiceImpl {
 
+    private final UserInfoRepository userInfoRepository;
 	private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
@@ -35,19 +38,28 @@ public class AuthServiceImpl implements IAuthServiceImpl {
         
         Authentication authentication = this.authenticationManager
 				.authenticate( new UsernamePasswordAuthenticationToken(auth.getEmail(), auth.getPassword()));
+        
 
 		if(authentication.isAuthenticated()) {
-            authResponse.setResponse(new ApiResponse(
-                "Autenticación", 
-                "Usuario autenticado exitosamente", 
-                "/v1/auth/authenticate",
-                "POST", 
-                HttpStatus.OK.value(), 
-                "success", 
-                true));
-			token = this.jwtService.generateToken(auth.getEmail());
-            data.setToken(token);
-            data.setIs_valid(true);
+            
+            Optional<UserInfo> userInfo = this.userInfoRepository.findByEmail(auth.getEmail());
+
+            if(userInfo != null)
+            {
+                authResponse.setResponse(new ApiResponse(
+                    "Autenticación", 
+                    "Usuario autenticado exitosamente", 
+                    "/v1/auth/authenticate",
+                    "POST", 
+                    HttpStatus.OK.value(), 
+                    "success", 
+                    true));
+                    
+                    
+                    token = this.jwtService.generateToken(userInfo.get().getId());
+                    data.setToken(token);
+                    data.setIs_valid(true);
+            }
 		} else {
             authResponse.setResponse(new ApiResponse(
                 "Autenticación", 
@@ -123,21 +135,25 @@ public class AuthServiceImpl implements IAuthServiceImpl {
                 false));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(authResponse);
         }
-
+        
         if(this.jwtService.validateToken(token)) {
-            authResponse.setResponse(new ApiResponse(
-                "Autenticación", 
-                "Token regenerado exitosamente", 
-                "/v1/auth/refresh-token",
-                "POST", 
-                HttpStatus.OK.value(), 
-                "success", 
-                true));
-            
-            data.setToken(token);
-            data.setRefresh_token(this.jwtService.refreshToken(token));
-            data.setIs_valid(true);
+            String userId = this.jwtService.extractUsername(token);
+            Optional<UserInfo> userInfo = this.userInfoRepository.findById(Long.valueOf(userId));
 
+            if(this.jwtService.verifyTokenWithUsername(token, userInfo))
+            {
+                authResponse.setResponse(new ApiResponse(
+                    "Autenticación", 
+                    "Token regenerado exitosamente", 
+                    "/v1/auth/refresh-token",
+                    "POST", 
+                    HttpStatus.OK.value(), 
+                    "success", 
+                    true));
+                    
+                    data.setToken(token);
+                    data.setIs_valid(true);
+            }
         } else {
             authResponse.setResponse(new ApiResponse(
                 "Autenticación", 

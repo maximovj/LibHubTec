@@ -1,9 +1,15 @@
 # Api LibHubTec
 
-Comandos para iniciar el proyecto de Spring Boot
+Este es un proyecto de Spring Boot v3 con JDK 17 implementa  JWT en la capa de Spring Security.
 
+**NOTA**
+- Para la utenticación (/v1/auth/authenticated) se requiere el email y contraseña
+- El token generado agrega como subject el id el usuario / cuenta
+- Para válidar (/v1/auth/verify-token) el token se require las cabeceras (Headers) con `Authorization`  
 
 # Comandos
+
+Comandos para iniciar el proyecto de Spring Boot
 
 Arrancar el proyecto
 
