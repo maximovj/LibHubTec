@@ -9,11 +9,13 @@ import { PrimeNGConfig } from 'primeng/api';
 import { MenuBarComponent } from './shared/components/menu-bar/menu-bar.component';
 import { AuthService } from './auth/services/auth-service.service';
 import { AuthStatus } from './auth/interfaces/auth-status.enum';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
+    ProgressSpinnerModule,
     ButtonModule,
     CommonModule,
     RouterOutlet,

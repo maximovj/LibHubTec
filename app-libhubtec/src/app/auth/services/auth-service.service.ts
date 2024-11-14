@@ -2,7 +2,7 @@ import { LoginRequest } from './../interfaces/login-request.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginResponse } from '../interfaces/login-response.interface';
-import { catchError, map, Observable, of, take, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, of, take, tap, throwError } from 'rxjs';
 import { User, VerifyTokenResponse } from '../interfaces';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 
@@ -63,6 +63,10 @@ export class AuthService {
       .http
       .get<VerifyTokenResponse>('http://localhost:5800/v1/auth/verify-token', { headers })
       .pipe(
+        tap(() => {
+          this._authStatus.set(AuthStatus.checking);
+        }),
+        delay(1000),
         map(({response, data}) => {
           if(response?.success && data?.refresh_token) {
             this._authStatus.set(AuthStatus.authenticated);
