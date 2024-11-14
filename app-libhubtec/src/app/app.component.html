@@ -1,3 +1,6 @@
-<h1 *ngIf="!finishedAuthCheck()">Loading</h1>
+@if (finishedAuthCheck()) {
+  <router-outlet></router-outlet>
+} @else {
+  <h1>Cargando la página</h1>
+}
 
-<router-outlet *ngIf="finishedAuthCheck()"></router-outlet>

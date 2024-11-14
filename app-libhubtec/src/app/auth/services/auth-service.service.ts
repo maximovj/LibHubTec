@@ -25,14 +25,11 @@ export class AuthService {
 
   login(req :LoginRequest) :Observable<boolean>
   {
-    const query = this.http.post<LoginResponse>('http://localhost:5800/v1/auth/authenticate', {
+    return this.http.post<LoginResponse>('http://localhost:5800/v1/auth/authenticate', {
       username: req.username,
       email: req.email,
       password: req.password,
-    });
-
-    const _pipe =  query
-    .pipe(
+    }).pipe(
       map( ({data, response}) => {
         if(response?.success && data?.token ) {
           this._user.set({
@@ -43,12 +40,10 @@ export class AuthService {
           this._authStatus.set(AuthStatus.authenticated);
           localStorage.setItem('_token' , data.token);
         }
-        return response.success || false;
+        return true;
       }),
       catchError( err => throwError(() => err.message)),
     );
-
-    return _pipe;
   }
 
   checkAuthentication() :Observable<boolean>
@@ -69,16 +64,14 @@ export class AuthService {
       .get<VerifyTokenResponse>('http://localhost:5800/v1/auth/verify-token', { headers })
       .pipe(
         map(({response, data}) => {
-          console.log(response, data);
           if(response?.success && data?.refresh_token) {
             this._authStatus.set(AuthStatus.authenticated);
             localStorage.setItem('_token' , data.refresh_token);
           }
-          return response.success || false;
+          return true;
         }),
         catchError( err => throwError(() => {
           this.logout();
-          console.log(err);
           return err.message;
         })),
       );

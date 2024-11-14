@@ -5,10 +5,10 @@ import { AuthStatus } from '../interfaces/auth-status.enum';
 
 export const isNotAuthenticatedGuard: CanActivateFn = (route, state) => {
 
-  const service = inject(AuthService);
+  const authService = inject(AuthService);
   const router = inject(Router);
 
-  if(service.authStatus() === AuthStatus.authenticated) {
+  if(authService.authStatus() === AuthStatus.authenticated) {
     router.navigateByUrl('/books/list');
     return false;
   }
