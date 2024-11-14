@@ -1,8 +1,11 @@
 import { Routes } from '@angular/router';
+import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
+import { isNotAuthenticatedGuard } from './auth/guards/is-not-authenticated.guard';
 
 export const routes: Routes = [
   {
     path: 'auth',
+    canActivate: [isNotAuthenticatedGuard],
     loadComponent: () => import('./auth/layout/layout-auth.component').then( c => c.LayoutAuthComponent),
     children: [
       {
@@ -22,6 +25,7 @@ export const routes: Routes = [
   },
   {
     path: 'books',
+    canActivate: [isAuthenticatedGuard],
     loadComponent: () => import('./books/layout/layout-book/layout-book.component').then( c => c.LayoutBookComponent),
     children: [
       {

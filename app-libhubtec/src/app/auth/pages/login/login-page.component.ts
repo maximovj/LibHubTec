@@ -44,7 +44,7 @@ export class LoginPageComponent implements OnInit {
         password,
       })
       .subscribe({
-        next: () => alert('Authenticado exitosamente'),
+        next: () => this.router.navigateByUrl('/books/list'),
         error: (message) => console.log(message),
       });
   }

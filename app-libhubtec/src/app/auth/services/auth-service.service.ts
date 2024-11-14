@@ -49,4 +49,9 @@ export class AuthService {
     return _pipe;
   }
 
+  isAuthenticated() :boolean
+  {
+    return this.authStatus() === AuthStatus.authenticated;
+  }
+
 }
