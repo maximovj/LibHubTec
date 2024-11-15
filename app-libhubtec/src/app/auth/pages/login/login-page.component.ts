@@ -6,6 +6,8 @@ import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service.service';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   standalone: true,
   imports: [
@@ -21,6 +23,7 @@ import { AuthService } from '../../services/auth-service.service';
 
 export class LoginPageComponent implements OnInit {
 
+  private toastr = inject(ToastrService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private authService = inject(AuthService);
@@ -44,7 +47,10 @@ export class LoginPageComponent implements OnInit {
         password,
       })
       .subscribe({
-        next: () => this.router.navigateByUrl('/books/list'),
+        next: () => {
+          this.toastr.success('Haz iniciado sesión correctamente', 'Inicio de sesión');
+          this.router.navigateByUrl('/books/list');
+        },
         error: (message) => console.log(message),
       });
   }
