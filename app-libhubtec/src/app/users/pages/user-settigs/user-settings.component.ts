@@ -24,11 +24,6 @@ export class UserSettingsComponent implements OnInit {
 
   ngOnInit() { }
 
-  onClickLogout()
-  {
-    this.service.logout();
-  }
-
   get user() : User | null
   {
     return this.service.user();

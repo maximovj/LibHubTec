@@ -1,33 +1,51 @@
-<div class="flex flex-column gap-2" style="width: 50vw;">
-  <h1>Configurar perfil</h1>
-  <div class="flex flex-column gap-2">
-    <label>Nombres</label>
-    <input type="text" pInputText [value]="user?.name" readonly />
-  </div>
+<!-- Título -->
+<h1>Mi Información</h1>
 
-  <div class="flex flex-column gap-2">
-    <label>Apellidos</label>
-    <input type="text" pInputText [value]="user?.last_name" readonly />
+<!-- Información del Usuario -->
+<div class="grid gap-2">
+  <!-- Nombres -->
+  <div class="col-12 md:col-8">
+    <label for="name" class="block font-medium text-md mb-2">Nombres</label>
+    <input id="name" type="text" pInputText [value]="user?.name" readonly class="w-full" />
   </div>
-
-  <div class="flex flex-column gap-2">
-    <label>Correo electrónico</label>
-    <input type="text" pInputText [value]="user?.email" readonly />
+  <!-- Apellidos -->
+  <div class="col-12 md:col-8">
+    <label for="last_name" class="block font-medium text-md mb-2">Apellidos</label>
+    <input id="last_name" type="text" pInputText [value]="user?.last_name" readonly class="w-full" />
   </div>
-
-  <div class="flex flex-column gap-2">
-    <label>Bio</label>
-    <textarea
-      rows="5"
-      cols="30"
-      pInputTextarea>{{user?.bio }}</textarea>
+  <!-- Sexo -->
+  <div class="col-12 md:col-8">
+    <label for="sex" class="block font-medium text-md mb-2">Sexo</label>
+    <input id="sex" type="text" pInputText [value]="user?.sex" readonly class="w-full" />
   </div>
-
-  <div class="flex flex-column gap-2">
-    <label>Sexo</label>
-    <input type="text" pInputText [value]="user?.sex" readonly />
+  <!-- Edad -->
+  <div class="col-12 md:col-8">
+    <label for="age" class="block font-medium text-md mb-2">Edad</label>
+    <input id="age" type="text" pInputText [value]="user?.age" readonly class="w-full" />
   </div>
-  <p-button (click)="onClickLogout()" label="Salir" severity="danger" />
+  <!-- Grado / Semestre -->
+  <div class="col-12 md:col-8">
+    <label for="grade" class="block font-medium text-md mb-2">Grado / Semestre</label>
+    <input id="grade" type="text" pInputText [value]="user?.grade" readonly class="w-full" />
+  </div>
+  <!-- Turno -->
+  <div class="col-12 md:col-8">
+    <label for="shift" class="block font-medium text-md mb-2">Turno</label>
+    <input id="shift" type="text" pInputText [value]="user?.shift" readonly class="w-full" />
+  </div>
+  <!-- Nombre de Usuario -->
+  <div class="col-12 md:col-8">
+    <label for="username" class="block font-medium text-md mb-2">Nombre de usuario</label>
+    <input id="username" type="text" pInputText [value]="user?.username" readonly class="w-full" />
+  </div>
+  <!-- Correo Electrónico -->
+  <div class="col-12 md:col-8">
+    <label for="email" class="block font-medium text-md mb-2">Correo electrónico</label>
+    <input id="email" type="text" pInputText [value]="user?.email" readonly class="w-full" />
+  </div>
+  <!-- Bio -->
+  <div class="col-12 md:col-8">
+    <label for="bio" class="block font-medium text-md mb-2">Bio</label>
+    <textarea id="bio" rows="5" pInputTextarea readonly class="w-full">{{user?.bio }}</textarea>
+  </div>
 </div>
-
-
