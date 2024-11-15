@@ -1,6 +1,5 @@
 package com.github.maximovj.libhubtec.response;
 
-import java.util.List;
 import java.util.Optional;
 
 import com.github.maximovj.libhubtec.model.AuthTokenData;

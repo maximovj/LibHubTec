@@ -1,8 +1,6 @@
 package com.github.maximovj.libhubtec.services;
 
-import java.io.Console;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,6 +61,42 @@ public class AccountServiceImpl implements IAccountServiceImpl {
 		
 		this.response.setData(Optional.ofNullable(accounts));
 		this.log.info("@FindAccountAll : Finalizado");
+		return ResponseEntity.ok(this.response);
+	}
+
+	@Override
+	public ResponseEntity<AccountResponse> getAccountDetails(Long id) {
+		this.log.info("@getAccountDetails : Iniciando");
+		List<Account> accounts =  new ArrayList<Account>();
+		this.response = new AccountResponse();
+		
+		try {
+			this.response.setResponse(new ApiResponse(
+					"Listar cuentas", 
+					"Cuenta obtenida correctamente", 
+					"/v1/accounts", 
+					"GET", 
+					HttpStatus.OK.value(), 
+					"success", 
+					true));
+			accounts.add(iAccountDao.findById(id).get());
+		} catch (Exception e) {
+			
+			this.response.setResponse(new ApiResponse(
+					"Listar cuentas", 
+					"Error al obtener la cuenta", 
+					"/v1/accounts", 
+					"GET", 
+					HttpStatus.NO_CONTENT.value(), 
+					"error", 
+					false));
+			
+			this.log.error("@getAccountDetails : Error");
+			e.getStackTrace();
+		}
+
+		this.response.setData(Optional.ofNullable(accounts));
+		this.log.info("@getAccountDetails : Finalizado");
 		return ResponseEntity.ok(this.response);
 	}
 	

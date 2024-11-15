@@ -6,5 +6,6 @@ import com.github.maximovj.libhubtec.response.AccountResponse;
 public interface IAccountServiceImpl {
 	
 	public ResponseEntity<AccountResponse> FindAccountAll();
+	public ResponseEntity<AccountResponse> getAccountDetails(Long id);
 
 }

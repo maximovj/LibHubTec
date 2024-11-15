@@ -152,6 +152,7 @@ public class AuthServiceImpl implements IAuthServiceImpl {
                     true));
                     
                     data.setToken(token);
+                    data.setRefresh_token(this.jwtService.refreshToken(token));
                     data.setIs_valid(true);
             }
         } else {

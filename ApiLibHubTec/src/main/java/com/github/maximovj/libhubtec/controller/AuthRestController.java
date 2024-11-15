@@ -11,16 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.maximovj.libhubtec.model.AuthRequest;
 import com.github.maximovj.libhubtec.response.AuthResponse;
 import com.github.maximovj.libhubtec.services.IAuthServiceImpl;
-import com.github.maximovj.libhubtec.user.UserInfoService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController()
 @RequestMapping("/v1")
 public class AuthRestController {
-	
-	@Autowired
-	private UserInfoService userInfoService;
 
 	@Autowired
 	private IAuthServiceImpl service; 
