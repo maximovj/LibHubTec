@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth-service.service';
+import { User } from '../../../auth/interfaces';
 
 @Component({
   standalone: true,
@@ -18,6 +19,11 @@ export class UserSettingsComponent implements OnInit {
   onClickLogout()
   {
     this.service.logout();
+  }
+
+  get user() : User | null
+  {
+    return this.service.user();
   }
 
 }

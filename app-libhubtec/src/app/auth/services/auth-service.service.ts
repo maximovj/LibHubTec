@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginResponse } from '../interfaces/login-response.interface';
 import { catchError, delay, map, Observable, of, take, tap, throwError } from 'rxjs';
-import { User, VerifyTokenResponse } from '../interfaces';
+import { AccountDetailsResponse, Payload, User, VerifyTokenResponse } from '../interfaces';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 
 @Injectable({
@@ -32,13 +32,9 @@ export class AuthService {
     }).pipe(
       map( ({data, response}) => {
         if(response?.success && data?.token ) {
-          this._user.set({
-            username: req.username || 'Desconocido',
-            email: req.email,
-            password: req.password,
-          });
-          this._authStatus.set(AuthStatus.authenticated);
-          localStorage.setItem('_token' , data.token);
+          const token :string =  data?.token;
+          const payload :Payload = JSON.parse(atob(token.split('.')[1]));
+          this.loadUserAndToken(token, payload);
         }
         return true;
       }),
@@ -69,8 +65,9 @@ export class AuthService {
         delay(1000),
         map(({response, data}) => {
           if(response?.success && data?.refresh_token) {
-            this._authStatus.set(AuthStatus.authenticated);
-            localStorage.setItem('_token' , data.refresh_token);
+            const token :string =  data?.refresh_token;
+            const payload :Payload = JSON.parse(atob(token.split('.')[1]));
+            this.loadUserAndToken(token, payload);
           }
           return true;
         }),
@@ -91,6 +88,29 @@ export class AuthService {
     this._authStatus.set(AuthStatus.notAuthenticated);
     this._user.set(null);
     localStorage.removeItem('_token');
+  }
+
+  loadUserAndToken(token :string, payload :Payload) :void
+  {
+    const sub = parseInt(payload.sub);
+    this._authStatus.set(AuthStatus.authenticated);
+    localStorage.setItem('_token' , token);
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    this.http.get<AccountDetailsResponse>(`http://localhost:5800/v1/accounts/${sub}/details`, { headers })
+    .pipe(
+      map(({data}) => {
+        const userData = data?.at(0);
+        if(userData) {
+          this._user.set({
+            ...userData,
+          })
+        }
+      }))
+    .subscribe();
   }
 
 }
