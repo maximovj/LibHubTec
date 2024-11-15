@@ -1,50 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MenuItem } from 'primeng/api';
 
-import { TieredMenuModule } from 'primeng/tieredmenu';
 import { MenuBarComponent } from '../../../shared/components/menu-bar/menu-bar.component';
+import { CommonModule } from '@angular/common';
+import { TieredMenuComponent } from '../../components/tiered-menu/tired-menu.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
   imports: [
+    TieredMenuComponent,
     RouterModule,
-    TieredMenuModule,
+    CommonModule,
     MenuBarComponent,
   ],
+  styles: `
+  .active {
+    color: red;
+  }
+  `,
   templateUrl: 'user-layout.component.html'
 })
 
 export class UserLayoutComponent implements OnInit {
 
-  public items: MenuItem[] | undefined;
-
   constructor() { }
 
   ngOnInit() {
-    this.items = [
-          {
-              label: 'General',
-              icon: 'pi pi-user',
-              routerLink: 'settings',
-            },
-            {
-              label: 'Books',
-              icon: 'pi pi-book',
-              routerLink: 'my-books',
-            },
-            {
-              label: 'Search',
-              icon: 'pi pi-search',
-              routerLink: 'my-search',
-          },
-          {
-              separator: true
-          },
-          {
-              label: 'Share',
-              icon: 'pi pi-share-alt',
-          }
-      ];
+
   }
+
 }

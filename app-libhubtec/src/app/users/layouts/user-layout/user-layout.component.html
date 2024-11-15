@@ -1,10 +1,17 @@
 <shared-menu-bar></shared-menu-bar>
-<div class="flex flex-column md:flex-row">
-  <div class="w-full md:w-3 flex flex-row align-items-start justify-content-center gap-3 ">
-    <p-tieredMenu [model]="items" />
+<div class="flex flex-column gap-4 md:flex-row h-screen">
+  <!-- Menú a la izquierda -->
+  <div class="w-60">
+    <users-tiered-menu></users-tiered-menu>
   </div>
-  <div class="w-full md:w-9  flex flex-row align-items-start justify-content-start gap-3">
-    <router-outlet></router-outlet>
+
+  <!-- Contenido a la derecha -->
+  <div class="flex-1 px-4">
+    <div class="flex w-full flex-column md:flex-row gap-4 justify-content-center align-items-start">
+      <!-- Contenedor principal -->
+      <div class="flex w-full flex-column p-3 shadow-2 border-round surface-card ">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </div>
 </div>
-
