@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AuthService } from './../../../auth/services/auth-service.service';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -8,6 +9,7 @@ import { BadgeModule } from 'primeng/badge';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
+import { MenuBarComponent } from '../../../shared/components/menu-bar/menu-bar.component';
 
 @Component({
   standalone: true,
@@ -19,34 +21,17 @@ import { MenuItem } from 'primeng/api';
     InputTextModule,
     MenubarModule,
     RouterModule,
+    MenuBarComponent,
   ],
   templateUrl: './layout-book.component.html',
 })
 
 export class LayoutBookComponent implements OnInit {
 
-  public items :MenuItem[] | undefined;
-
   constructor() { }
 
   ngOnInit() {
-    this.items = [
-          {
-              label: 'Inicio',
-              icon: 'pi pi-home',
-              routerLink: '/books/list',
-          },
-          {
-              label: 'Favoritos',
-              icon: 'pi pi-star',
-              routerLink: '/books/list',
-          },
-          {
-              label: 'Notificaciones',
-              icon: 'pi pi-bell',
-              badge: '3',
-              routerLink: '/books/list',
-          }
-      ];
+
   }
+
 }

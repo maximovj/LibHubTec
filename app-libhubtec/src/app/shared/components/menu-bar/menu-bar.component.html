@@ -12,6 +12,12 @@
               <i *ngIf="item.items" [ngClass]="['pi', root ? 'pi-angle-down ml-2' : 'pi-angle-right ml-auto']"></i>
           </a>
       </ng-template>
+      <ng-template pTemplate="end">
+          <div class="flex align-items-center gap-2">
+              <input type="text" pInputText placeholder="Search" class="w-8rem sm:w-auto" />
+              <p-avatar [routerLink]="['/','users',username,'settings']" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+          </div>
+      </ng-template>
   </p-menubar>
 </div>
 <div class="m-4"></div>

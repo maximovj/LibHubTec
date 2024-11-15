@@ -3,12 +3,14 @@ import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
 import { TieredMenuModule } from 'primeng/tieredmenu';
+import { MenuBarComponent } from '../../../shared/components/menu-bar/menu-bar.component';
 
 @Component({
   standalone: true,
   imports: [
     RouterModule,
     TieredMenuModule,
+    MenuBarComponent,
   ],
   templateUrl: 'user-layout.component.html'
 })

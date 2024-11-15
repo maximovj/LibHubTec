@@ -33,6 +33,16 @@ export const routes: Routes = [
         loadComponent: () => import('./books/pages/list-page/list-page.component').then( c => c.BooksListComponent),
       },
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'list',
+      }
+    ]
+  },
+  {
+    path: 'users',
+    children: [
+      {
         path: ':username',
         loadComponent : () => import('./users/layouts/user-layout/user-layout.component').then( c => c.UserLayoutComponent),
         children: [
@@ -55,11 +65,6 @@ export const routes: Routes = [
           }
         ]
       },
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'list',
-      }
     ]
   },
   {
