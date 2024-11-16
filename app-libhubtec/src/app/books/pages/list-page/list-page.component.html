@@ -2,19 +2,19 @@
   @for (item of books(); track $index) {
     <div class="col-12 md:col-6 lg:col-4">
       <div class="card flex justify-content-center">
-        <p-card header="Advanced Card" subheader="Card Subheader" class="w-full">
+        <p-card [header]="item.title" [subheader]="item.author" class="w-full">
             <ng-template pTemplate="header">
                   <div class="card flex justify-content-center">
                     <p-image
-                        src="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
+                        [src]="item.thumbnail | thumbnail"
                         alt="Image"
-                        class="w-full"
+                        height="360"
+                        loading="lazy"
                         [preview]="true" />
                   </div>
             </ng-template>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque
-                quas!
+            <p style="height: 280px; overflow: auto;">
+              {{ item.summary }}
             </p>
             <ng-template pTemplate="footer">
                 <div class="flex gap-3 mt-1">
