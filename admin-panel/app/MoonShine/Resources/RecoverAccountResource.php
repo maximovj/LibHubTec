@@ -19,6 +19,11 @@ use MoonShine\Fields\Number;
 use MoonShine\Fields\Relationships\BelongsTo;
 use MoonShine\Fields\Switcher;
 use MoonShine\Fields\Text;
+use MoonShine\Handlers\ExportHandler;
+use MoonShine\Handlers\ImportHandler;
+use MoonShine\Pages\Crud\DetailPage;
+use MoonShine\Pages\Crud\FormPage;
+use MoonShine\Pages\Crud\IndexPage;
 
 /**
  * @extends ModelResource<RecoverAccount>
@@ -38,14 +43,20 @@ class RecoverAccountResource extends ModelResource
 
     protected bool $errorsAbove = true;
 
-    public function canCreate(): bool
+
+    public function import(): ?ImportHandler
     {
-        return false;
+        return null;
     }
 
-    public function canEdit(): bool
+    public function export(): ?ExportHandler
     {
-        return false;
+        return null;
+    }
+
+    public function getActiveActions(): array
+    {
+        return ['view', 'delete', 'massDelete'];
     }
 
     public function title(): string
@@ -57,6 +68,18 @@ class RecoverAccountResource extends ModelResource
     {
         $refer = Request::header('referer');
         return $refer ?? '/';
+    }
+
+    /**
+     * @return list<MoonShineComponent|Field>
+     */
+    public function filters(): array
+    {
+        return [
+            BelongsTo::make(__('moonshine::ui.resource.recover_account.account_name'),'accounts', 'username', new AccountResource())
+                ->searchable(),
+            Text::make(static fn() => __('moonshine::ui.resource.recover_account.email'), 'email'),
+        ];
     }
 
     /**
@@ -79,6 +102,34 @@ class RecoverAccountResource extends ModelResource
                 Text::make(__('moonshine::ui.resource.recover_account.token'),'token'),
                 Switcher::make(__('moonshine::ui.resource.recover_account.active'),'active')->default(true),
             ]),
+        ];
+    }
+
+    /**
+     * @return list<Field>
+     */
+    public function indexFields(): array
+    {
+        return [
+            ID::make()->sortable(),
+            BelongsTo::make(__('moonshine::ui.resource.recover_account.account_name'),'accounts', 'username', new AccountResource())
+            ->searchable(),
+            Text::make(__('moonshine::ui.resource.recover_account.email'), 'email'),
+            Switcher::make(__('moonshine::ui.resource.recover_account.active'),'active')->default(true),
+        ];
+    }
+
+    /**
+     * @return list<Field>
+     */
+    public function detailFields(): array
+    {
+        return [
+            ID::make()->sortable(),
+            BelongsTo::make(__('moonshine::ui.resource.recover_account.account_name'),'accounts', 'username', new AccountResource())
+            ->searchable(),
+            Text::make(__('moonshine::ui.resource.recover_account.email'), 'email'),
+            Switcher::make(__('moonshine::ui.resource.recover_account.active'),'active')->default(true),
         ];
     }
 
