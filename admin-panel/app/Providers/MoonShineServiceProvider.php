@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\MoonShine\Resources\AccountResource;
 use App\MoonShine\Resources\BookResource;
+use App\MoonShine\Resources\RecoverAccountResource;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -58,6 +59,10 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
             MenuItem::make(
             static fn() => __('moonshine::ui.resource.account_title'),
             new AccountResource()
+            ),
+            MenuItem::make(
+                static fn() => __('moonshine::ui.resource.recover_account_title'),
+                new RecoverAccountResource()
             ),
         ];
     }

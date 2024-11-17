@@ -30,6 +30,8 @@ class AccountResource extends ModelResource
 
     protected string $title = 'Accounts';
 
+    public string $column = 'username';
+
     protected bool $createInModal = true;
 
     protected bool $editInModal = true;

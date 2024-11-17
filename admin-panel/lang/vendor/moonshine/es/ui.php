@@ -89,6 +89,15 @@ return [
             'password' => 'Contraseña',
         ],
 
+        'recover_account_title' => 'Recuperar cuentas',
+        'recover_account' => [
+            'account_name' => 'Nombre de usuario',
+            'email' => 'Correo electrónico',
+            'code' => 'Código',
+            'token' => 'Token',
+            'active' => 'Activo',
+        ],
+
         'main_information' => 'Información principal',
         'change_password' => 'Cambiar contraseña',
 
