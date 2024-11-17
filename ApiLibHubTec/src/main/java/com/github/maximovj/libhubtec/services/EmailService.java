@@ -50,7 +50,7 @@ public class EmailService {
             // Crear el contexto para Thymeleaf
             Context context = new Context();
             context.setVariable("code", code);
-            context.setVariable("token", this.jwtService.hiddenToken(token));
+            context.setVariable("token", token);
             context.setVariable("name", userInfo.getLast_name() + " " + userInfo.getName());
 
             // Procesar la plantilla HTML

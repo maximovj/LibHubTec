@@ -33,7 +33,7 @@ export class AuthService {
       map( ({data, response}) => {
         if(response?.success && data?.token ) {
           const token :string =  data?.token;
-          const payload :Payload = JSON.parse(atob(token.split('.')[1]));
+          const payload :Payload = this.getPayload(token);
           this.loadUserAndToken(token, payload);
         }
         return true;
@@ -66,7 +66,7 @@ export class AuthService {
         map(({response, data}) => {
           if(response?.success && data?.refresh_token) {
             const token :string =  data?.refresh_token;
-            const payload :Payload = JSON.parse(atob(token.split('.')[1]));
+            const payload :Payload = this.getPayload(token);
             this.loadUserAndToken(token, payload);
           }
           return true;
@@ -76,6 +76,10 @@ export class AuthService {
           return err.message;
         })),
       );
+  }
+
+  private getPayload(token :string) :Payload {
+    return JSON.parse(atob(atob(token).split('').reverse().join('').split('.')[1]));
   }
 
   isAuthenticated() :boolean

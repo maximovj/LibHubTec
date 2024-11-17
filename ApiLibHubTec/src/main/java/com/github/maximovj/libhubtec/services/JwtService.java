@@ -54,13 +54,13 @@ public class JwtService {
 
     // Crear un JWT token con claims y subject (usaername / id) especificos
     private String createToken(Map<String, Object> claims, Long id) {
-        return Jwts.builder()
+        return this.hiddenToken(Jwts.builder()
                 .setClaims(claims)
                 .setSubject(String.valueOf(id))
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30)) // Token valid for 30 minutes
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
-                .compact();
+                .compact());
     }
 
     // Obtener una firma clave para JWT token
@@ -90,7 +90,7 @@ public class JwtService {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignKey())
                 .build()
-                .parseClaimsJws(token)
+                .parseClaimsJws(this.showToken(token))
                 .getBody();
     }
 
@@ -121,7 +121,7 @@ public class JwtService {
     }
 
     // Mostrar token original
-    public String showToken(String token)
+    private String showToken(String token)
     {
         String token_decode = this.decode(token);
         String token_reverse = this.reverse(token_decode);
@@ -129,7 +129,7 @@ public class JwtService {
     }
     
     // Ocultar token original
-    public String hiddenToken(String token)
+    private String hiddenToken(String token)
     {
         String token_reverse = this.reverse(token);
         String token_encode = this.encode(token_reverse);
@@ -137,20 +137,20 @@ public class JwtService {
     }
 
     // Codificar String a Base64
-    public String encode(String input) 
+    private String encode(String input) 
     {
         return Base64.getEncoder().encodeToString(input.getBytes());
     }
 
     // Descifrar Base64 a String 
-    public String decode(String base64Encoded) 
+    private String decode(String base64Encoded) 
     {
         byte[] decodedBytes = Base64.getDecoder().decode(base64Encoded);
         return new String(decodedBytes);
     }
 
     // Invertir String
-    public String reverse(String input) 
+    private String reverse(String input) 
     {
         return new StringBuilder(input).reverse().toString();
     }
