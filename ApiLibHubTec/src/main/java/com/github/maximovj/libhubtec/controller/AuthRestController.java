@@ -20,7 +20,6 @@ public class AuthRestController {
 
 	@Autowired
 	private IAuthServiceImpl service; 
-
 	
 	@PostMapping("/auth/authenticate")
 	public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest auth)
@@ -37,6 +36,10 @@ public class AuthRestController {
 	public ResponseEntity<AuthResponse> verifyToken(HttpServletRequest request) {
 		return this.service.verifyToken(request);
 	}
-	
+
+	@GetMapping("/auth/recover-password")
+	public ResponseEntity<AuthResponse> recoverPassword(@RequestBody AuthRequest auth) {
+		return this.service.recoverPassword(auth);
+	}
 
 }

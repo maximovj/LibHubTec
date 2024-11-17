@@ -2,6 +2,7 @@ package com.github.maximovj.libhubtec.services;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements IAuthServiceImpl {
 
+	private final EmailService emailService;
     private final UserInfoRepository userInfoRepository;
 	private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -168,6 +170,41 @@ public class AuthServiceImpl implements IAuthServiceImpl {
 
         log.info("AuthServiceImpl::verifyToken | Proceso  finalizado");
         authResponse.setData(Optional.ofNullable(data));
+        return ResponseEntity.ok(authResponse);
+    }
+
+    @Override
+    public ResponseEntity<AuthResponse> recoverPassword(AuthRequest auth) {
+        log.info("AuthServiceImpl::recoverPassword | Iniciando proceso");
+        AuthResponse authResponse = new AuthResponse();
+
+        Optional<UserInfo> userInfo = this.userInfoRepository.findByEmail(auth.getEmail());
+        System.out.println(userInfo);
+        System.out.println(auth);
+
+        if(auth.getEmail().isEmpty() || userInfo.isEmpty()){
+            authResponse.setResponse(new ApiResponse(
+                "Autenticación", 
+                "Correo electrónico no encontrado", 
+                "/v1/auth/recover-password",
+                "POST", 
+                HttpStatus.UNAUTHORIZED.value(), 
+                "error", 
+                false));
+            log.info("AuthServiceImpl::recoverPassword | Proceso finalizado (fail)");
+            return ResponseEntity.ok(authResponse); 
+        }
+
+        this.emailService.sendEmailRecoverPassword(userInfo.get());
+        authResponse.setResponse(new ApiResponse(
+                "Autenticación", 
+                "Se ha enviando un código a su correo electrónico", 
+                "/v1/auth/recover-password",
+                "POST", 
+                HttpStatus.OK.value(), 
+                "success", 
+                true));
+        log.info("AuthServiceImpl::recoverPassword | Proceso finalizado (success)");
         return ResponseEntity.ok(authResponse);
     }
 

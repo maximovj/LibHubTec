@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.github.maximovj.libhubtec.user.UserInfo;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -119,5 +120,39 @@ public class JwtService {
         }
     }
 
+    // Mostrar token original
+    public String showToken(String token)
+    {
+        String token_decode = this.decode(token);
+        String token_reverse = this.reverse(token_decode);
+        return token_reverse;
+    }
+    
+    // Ocultar token original
+    public String hiddenToken(String token)
+    {
+        String token_reverse = this.reverse(token);
+        String token_encode = this.encode(token_reverse);
+        return token_encode;
+    }
+
+    // Codificar String a Base64
+    public String encode(String input) 
+    {
+        return Base64.getEncoder().encodeToString(input.getBytes());
+    }
+
+    // Descifrar Base64 a String 
+    public String decode(String base64Encoded) 
+    {
+        byte[] decodedBytes = Base64.getDecoder().decode(base64Encoded);
+        return new String(decodedBytes);
+    }
+
+    // Invertir String
+    public String reverse(String input) 
+    {
+        return new StringBuilder(input).reverse().toString();
+    }
 
 }
