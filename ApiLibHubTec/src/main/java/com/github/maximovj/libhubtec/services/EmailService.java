@@ -1,5 +1,7 @@
 package com.github.maximovj.libhubtec.services;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -51,14 +53,17 @@ public class EmailService {
             // Obtener correo electrónico de soporte
             String emailSupport = this.environment.getProperty("app.email.support");
 
-            String token = this.jwtService.generateToken(userInfo.getId());
+            Map<String, Object> claims = new HashMap<>();
+            String name = userInfo.getLast_name() + " " + userInfo.getName();
             String code = String.valueOf(this.generateRandomFiveDigitNumber());
+            claims.put("code", code);
+            String token = this.jwtService.generateTokenWithClaimns(claims, userInfo.getId());
 
             // Crear el contexto para Thymeleaf
             Context context = new Context();
             context.setVariable("code", code);
             context.setVariable("token", token);
-            context.setVariable("name", userInfo.getLast_name() + " " + userInfo.getName());
+            context.setVariable("name", name);
 
             // Procesar la plantilla HTML
             String htmlContent = this.templateEngine.process("email", context);

@@ -36,6 +36,10 @@ public class JwtService {
         return createToken(claims, id);
     }
 
+    public String generateTokenWithClaimns(Map<String, Object> claims, Long subject) {
+        return createToken(claims, subject);
+    }
+
     public String refreshToken(String token) {
         try {
 
