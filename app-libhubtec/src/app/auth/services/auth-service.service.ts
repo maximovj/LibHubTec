@@ -27,7 +27,7 @@ export class AuthService {
     this.checkAuthStatus();
   }
 
-  private getPayload(token :string) :Payload
+  public getPayload(token :string) :Payload
   {
     return JSON.parse(atob(atob(token).split('').reverse().join('').split('.')[1]));
   }
@@ -124,6 +124,23 @@ export class AuthService {
         }),
         catchError( err => throwError(() => {
           this.logout();
+          return err.message;
+        })),
+      );
+  }
+
+  public checkToken(token :string | null) :Observable<boolean>
+  {
+    return this
+      .http
+      .get<VerifyTokenResponse>('http://localhost:5800/v1/auth/verify-token', { headers: {
+        'Authorization': `Bearer ${token}`
+      } })
+      .pipe(
+        map(({response}) => {
+          return response?.success;
+        }),
+        catchError( err => throwError(() => {
           return err.message;
         })),
       );
