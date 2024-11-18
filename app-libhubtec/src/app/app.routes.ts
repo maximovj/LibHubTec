@@ -13,8 +13,18 @@ export const routes: Routes = [
         loadComponent : () => import('./auth/pages/login/login-page.component').then( c => c.LoginPageComponent),
       },
       {
-        path: 'recover-password',
-        loadComponent : () => import('./auth/pages/recover-password/recover-password.component').then( c => c.RecoverPasswordComponent),
+        path: 'recover',
+        loadComponent: () => import('./auth/layout/recover-layout/recover-layout.component').then( c => c.RecoverLayoutComponent),
+        children: [
+          {
+            path: 'account',
+            loadComponent: () => import('./auth/pages/recover-auth/recover-auth.component').then( c => c.RecoverAuthComponent),
+          },
+          {
+            path: 'password',
+            loadComponent : () => import('./auth/pages/recover-password/recover-password.component').then( c => c.RecoverPasswordComponent),
+          },
+        ]
       },
       {
         path: '',

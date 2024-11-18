@@ -36,17 +36,14 @@ export class AppComponent implements OnInit {
     this.primengConfig.ripple = true;
   }
 
-  public finishedAuthCheck = computed<boolean>(() => {
-    if(this.authService.authStatus() === AuthStatus.checking) {
-      return false;
-    }
-
-    return true;
-  });
+  get finishedAuthCheck() :boolean
+  {
+    return this.authService.query();
+  };
 
   public authCheckStatus = effect(() => {
-    const status = this.authService.authStatus();
-    switch(status) {
+    console.log({ status: this.authService.authStatus(), query: this.authService.query() });
+    switch(this.authService.authStatus()) {
       case AuthStatus.checking:
         break;
       case AuthStatus.authenticated:

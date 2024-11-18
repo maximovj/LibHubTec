@@ -8,7 +8,10 @@ export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
+  console.log({ route, state, authStatus: authService.authStatus() });
+
   if(authService.authStatus() ===  AuthStatus.checking) {
+    //router.navigateByUrl('/auth/login'); // Página de carga
     return false;
   }
 

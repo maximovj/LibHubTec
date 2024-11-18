@@ -27,6 +27,10 @@ export class AuthService {
     this.checkAuthentication().subscribe();
   }
 
+  resetAuthStatus() {
+    this._authStatus.set(AuthStatus.checking);
+  }
+
   private getPayload(token :string) :Payload
   {
     return JSON.parse(atob(atob(token).split('').reverse().join('').split('.')[1]));
@@ -88,10 +92,13 @@ export class AuthService {
 
   checkAuthentication() :Observable<boolean>
   {
+    this._query.set(true);
     const token = localStorage.getItem('_token');
 
     if(!token){
-      this._authStatus.set(AuthStatus.notAuthenticated);
+      console.log('Termina')
+      this._authStatus.set(AuthStatus.checking);
+      this._query.set(false);
       return of(false);
     }
 
@@ -104,10 +111,12 @@ export class AuthService {
       .get<VerifyTokenResponse>('http://localhost:5800/v1/auth/verify-token', { headers })
       .pipe(
         tap(() => {
+          console.log('TEST | 11');
           this._authStatus.set(AuthStatus.checking);
         }),
         delay(1000),
         map(({response, data}) => {
+          console.log('checkAuthentication | map');
           if(response?.success && data?.refresh_token) {
             const token :string =  data?.refresh_token;
             const payload :Payload = this.getPayload(token);
@@ -116,9 +125,14 @@ export class AuthService {
           return true;
         }),
         catchError( err => throwError(() => {
+          console.log('checkAuthentication | catchError');
           this.logout();
           return err.message;
         })),
+        tap(() => {
+          console.log('TEST | 11');
+          this._query.set(false);
+        }),
       );
   }
 

@@ -1,4 +1,6 @@
-@if (finishedAuthCheck()) {
+<pre>{{ finishedAuthCheck ? 'true' : 'false'}}</pre>
+@if (!finishedAuthCheck) {
+  <h1>Mostrar página</h1>
   <router-outlet></router-outlet>
 } @else {
   <div class="h-screen flex flex-column align-items-center justify-content-center gap-3" >

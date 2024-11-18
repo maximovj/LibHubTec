@@ -8,9 +8,7 @@ export const isNotAuthenticatedGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  if(authService.authStatus() ===  AuthStatus.checking) {
-    return false;
-  }
+  console.log({ route, state, authStatus: authService.authStatus() });
 
   if(authService.authStatus() === AuthStatus.authenticated) {
     router.navigateByUrl('/books/list');
