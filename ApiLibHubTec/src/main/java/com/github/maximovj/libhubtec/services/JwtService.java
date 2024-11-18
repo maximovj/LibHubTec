@@ -89,6 +89,11 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    public String extractClaim(String token, String claim_name) {
+        Claims claims = extractAllClaims(token);
+        return claims.get(claim_name, String.class);
+    }
+
     // Extraer todos los `claims` desde el token
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
