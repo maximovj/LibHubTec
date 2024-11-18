@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginResponse } from '../interfaces/login-response.interface';
 import { catchError, delay, map, Observable, of, take, tap, throwError } from 'rxjs';
-import { AccountDetailsResponse, Payload, User, VerifyTokenResponse } from '../interfaces';
+import { AccountDetailsResponse, Payload, RecoverAccountResponse, User, VerifyTokenResponse } from '../interfaces';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 
 @Injectable({
@@ -13,14 +13,58 @@ export class AuthService {
 
   private http  = inject(HttpClient);
 
+  private _query = signal<boolean>(false);
+  public query = computed(() => this._query());
+
   private _user = signal<User |null>(null);
   public user = computed(() => this._user());
 
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
   public authStatus = computed(() => this._authStatus());
 
-  constructor() {
+  constructor()
+  {
     this.checkAuthentication().subscribe();
+  }
+
+  private getPayload(token :string) :Payload
+  {
+    return JSON.parse(atob(atob(token).split('').reverse().join('').split('.')[1]));
+  }
+
+  isAuthenticated() :boolean
+  {
+    return this.authStatus() === AuthStatus.authenticated;
+  }
+
+  logout() :void
+  {
+    this._authStatus.set(AuthStatus.notAuthenticated);
+    this._user.set(null);
+    localStorage.removeItem('_token');
+  }
+
+  loadUserAndToken(token :string, payload :Payload) :void
+  {
+    const sub = parseInt(payload.sub);
+    this._authStatus.set(AuthStatus.authenticated);
+    localStorage.setItem('_token' , token);
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    this.http.get<AccountDetailsResponse>(`http://localhost:5800/v1/accounts/${sub}/details`, { headers })
+    .pipe(
+      map(({data}) => {
+        const userData = data?.at(0);
+        if(userData) {
+          this._user.set({
+            ...userData,
+          })
+        }
+      }))
+    .subscribe();
   }
 
   login(req :LoginRequest) :Observable<boolean>
@@ -78,43 +122,17 @@ export class AuthService {
       );
   }
 
-  private getPayload(token :string) :Payload {
-    return JSON.parse(atob(atob(token).split('').reverse().join('').split('.')[1]));
-  }
-
-  isAuthenticated() :boolean
+  recoverAccount(req :LoginRequest) : Observable<boolean>
   {
-    return this.authStatus() === AuthStatus.authenticated;
-  }
-
-  logout() :void
-  {
-    this._authStatus.set(AuthStatus.notAuthenticated);
-    this._user.set(null);
-    localStorage.removeItem('_token');
-  }
-
-  loadUserAndToken(token :string, payload :Payload) :void
-  {
-    const sub = parseInt(payload.sub);
-    this._authStatus.set(AuthStatus.authenticated);
-    localStorage.setItem('_token' , token);
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-
-    this.http.get<AccountDetailsResponse>(`http://localhost:5800/v1/accounts/${sub}/details`, { headers })
+    this._query.set(true);
+    return this.http.post<RecoverAccountResponse>('http://localhost:5800/v1/auth/recover-password', { email: req.email })
     .pipe(
-      map(({data}) => {
-        const userData = data?.at(0);
-        if(userData) {
-          this._user.set({
-            ...userData,
-          })
-        }
-      }))
-    .subscribe();
+      map( ({response}) => response.success),
+      catchError(err => throwError(()=> err.message)),
+      tap(() => {
+        this._query.set(false);
+      })
+    );
   }
 
 }

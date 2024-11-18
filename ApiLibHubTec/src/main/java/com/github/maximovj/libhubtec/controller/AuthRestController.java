@@ -37,7 +37,7 @@ public class AuthRestController {
 		return this.service.verifyToken(request);
 	}
 
-	@GetMapping("/auth/recover-password")
+	@PostMapping("/auth/recover-password")
 	public ResponseEntity<AuthResponse> recoverPassword(@RequestBody AuthRequest auth) {
 		return this.service.recoverPassword(auth);
 	}
