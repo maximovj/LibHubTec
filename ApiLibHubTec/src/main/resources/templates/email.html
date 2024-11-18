@@ -30,12 +30,12 @@
                     <p>Haz click en el botón de abajo para recuperar tu cuenta</p>
                     <p><span class="lead">Código:</span> <strong th:text="${code}">12345</strong></p>
                     <p>En caso de que botón no funcione, copia el enlace del footer y pagalo en una nueva pestaña.</p>
-                    <a th:href="'http://localhost:4200/recover-account?token=' + ${token}" target="_blank" class="btn btn-sm btn-success">Recuperar cuenta</a>
+                    <a th:href="'http://localhost:4200/auth/recover/account?token=' + ${token}" target="_blank" class="btn btn-sm btn-success">Recuperar cuenta</a>
                 </div>
             </div>
             <div class="card-footer">
-                <span th:text="'http://localhost:4200/recover-account?token=' + ${token}">
-                    http://localhost:4200/recover-account?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+                <span th:text="'http://localhost:4200/auth/recover/account?token=' + ${token}">
+                    http://localhost:4200/auth/recover/account?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
                 </span>
             </div>
         </div>
