@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
     RouterModule,
   ],
   styles: ``,
-  templateUrl: './layout-auth.component.html',
+  templateUrl: './auth-layout.component.html',
 })
 
 export class LayoutAuthComponent implements OnInit {

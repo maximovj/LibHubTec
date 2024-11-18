@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl('/books/list');
         break;
       case AuthStatus.notAuthenticated:
-        this.router.navigateByUrl('/auth/login');
+        this.router.navigateByUrl('/login');
         break;
     }
   });

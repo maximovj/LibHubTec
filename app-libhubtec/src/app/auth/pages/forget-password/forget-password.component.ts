@@ -1,4 +1,4 @@
-import { AuthService } from './../../services/auth-service.service';
+import { AuthService } from '../../services/auth-service.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
@@ -23,7 +23,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './recover-password.component.html',
   styles: ``
 })
-export class RecoverPasswordComponent implements OnInit {
+export class ForgetPasswordComponent implements OnInit {
 
   private toastrService = inject(ToastrService);
 

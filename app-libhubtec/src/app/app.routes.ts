@@ -4,22 +4,33 @@ import { isNotAuthenticatedGuard } from './auth/guards/is-not-authenticated.guar
 
 export const routes: Routes = [
   {
+    path: 'login',
+    canActivate: [isNotAuthenticatedGuard],
+    loadComponent : () => import('./auth/pages/login/login-page.component').then( c => c.LoginPageComponent),
+  },
+  {
+    path: 'forget-password',
+    canActivate: [isNotAuthenticatedGuard],
+    loadComponent : () => import('./auth/pages/forget-password/forget-password.component').then( c => c.ForgetPasswordComponent),
+  },
+  {
     path: 'auth',
     canActivate: [isNotAuthenticatedGuard],
-    loadComponent: () => import('./auth/layout/layout-auth.component').then( c => c.LayoutAuthComponent),
+    loadComponent: () => import('./auth/layout/auth-layout/auth-layout.component').then( c => c.LayoutAuthComponent),
     children: [
       {
-        path: 'login',
-        loadComponent : () => import('./auth/pages/login/login-page.component').then( c => c.LoginPageComponent),
-      },
-      {
-        path: 'recover-password',
-        loadComponent : () => import('./auth/pages/recover-password/recover-password.component').then( c => c.RecoverPasswordComponent),
+        path: 'recover',
+        children: [
+          {
+            path: 'account',
+            loadComponent : () => import('./auth/pages/auth-layout/recover-account/recover-account.component').then( c => c.RecoverAccountComponent),
+          },
+        ],
       },
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'login',
+        redirectTo: 'recover',
       }
     ]
   },
@@ -70,6 +81,6 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'auth',
+    redirectTo: 'login',
   }
 ];
