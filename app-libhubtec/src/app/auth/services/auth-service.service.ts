@@ -24,7 +24,7 @@ export class AuthService {
 
   constructor()
   {
-    this.checkAuthentication().subscribe();
+    this.checkAuthStatus();
   }
 
   private getPayload(token :string) :Payload
@@ -86,22 +86,29 @@ export class AuthService {
     );
   }
 
-  checkAuthentication() :Observable<boolean>
+  // Definir el estado de autenticación
+  private checkAuthStatus() :void
   {
     const token = localStorage.getItem('_token');
 
     if(!token){
-      this._authStatus.set(AuthStatus.notAuthenticated);
-      return of(false);
+      // Si no existe un token, se queda sin estado
+      // es decir, no es autenticado, ni, no autenticado.
+      this._authStatus.set(AuthStatus.notStatus);
+      return;
     }
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+    this.verifyToken(token).subscribe();
+  }
 
+  // Válidar / Verificar si el token
+  private verifyToken(token :string | null) :Observable<boolean>
+  {
     return this
       .http
-      .get<VerifyTokenResponse>('http://localhost:5800/v1/auth/verify-token', { headers })
+      .get<VerifyTokenResponse>('http://localhost:5800/v1/auth/verify-token', { headers: {
+        'Authorization': `Bearer ${token}`
+      } })
       .pipe(
         tap(() => {
           this._authStatus.set(AuthStatus.checking);
