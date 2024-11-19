@@ -132,20 +132,18 @@ export class AuthService {
   }
 
   // Verificar mi token de recuperación de cuenta
-  public checkToken(token :string | null) :Observable<boolean>
+  public checkTokenRecoverAccount(token :string | null) :Observable<boolean>
   {
     return this
       .http
-      .get<VerifyTokenResponse>('http://localhost:5800/v1/auth/verify-token', { headers: {
+      .post<VerifyTokenResponse>('http://localhost:5800/v1/recover/verify-token', null, { headers: {
         'Authorization': `Bearer ${token}`
       } })
       .pipe(
         map(({response}) => {
           return response?.success;
         }),
-        catchError( err => throwError(() => {
-          return err.message;
-        })),
+        catchError( () => of(false)),
       );
   }
 

@@ -65,7 +65,7 @@ export class RecoverAccountComponent implements OnInit {
   {
     this.activedRoute.queryParamMap.subscribe(async (params) => {
       this._token = params.get('token');
-      const res$ = this.authService.checkToken(this._token);
+      const res$ = this.authService.checkTokenRecoverAccount(this._token);
       const _isValidToken = await lastValueFrom(res$);
 
       if(!_isValidToken) {
@@ -74,6 +74,7 @@ export class RecoverAccountComponent implements OnInit {
         this.router.navigate(['/login']);
         return;
       }
+
       this.payload = this.authService.getPayload(this._token || '') || null;
     });
   }
