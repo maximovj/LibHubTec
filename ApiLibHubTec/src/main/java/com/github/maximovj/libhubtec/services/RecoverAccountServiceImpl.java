@@ -123,5 +123,6 @@ public class RecoverAccountServiceImpl implements IRecoverAccountServiceImpl {
                 true));
         return ResponseEntity.ok(response);
     }
+    
 }
 

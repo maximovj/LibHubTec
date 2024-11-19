@@ -150,10 +150,10 @@ export class AuthService {
   }
 
   // Enviar correo electrónico con token, código para recuperar mi cuenta
-  recoverAccount(req :LoginRequest) : Observable<boolean>
+  forgetPassword(req :LoginRequest) : Observable<boolean>
   {
     this._query.set(true);
-    return this.http.post<RecoverAccountResponse>('http://localhost:5800/v1/auth/recover-password', { email: req.email })
+    return this.http.post<RecoverAccountResponse>('http://localhost:5800/v1/auth/forget-password', { email: req.email })
     .pipe(
       map( ({response}) => response.success),
       catchError(err => throwError(()=> err.message)),

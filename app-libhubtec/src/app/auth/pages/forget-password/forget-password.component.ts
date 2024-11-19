@@ -53,7 +53,7 @@ export class ForgetPasswordComponent implements OnInit {
       password: ''
     };
 
-    this.authService.recoverAccount(login)
+    this.authService.forgetPassword(login)
     .subscribe(() =>{
       this.myForm.reset();
       this.toastrService.success('Se enviará un código a su corre electrónico.', 'Recuperación de cuenta');

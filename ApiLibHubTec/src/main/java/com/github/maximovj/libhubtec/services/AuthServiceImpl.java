@@ -174,8 +174,8 @@ public class AuthServiceImpl implements IAuthServiceImpl {
     }
 
     @Override
-    public ResponseEntity<AuthResponse> recoverPassword(AuthRequest auth) {
-        log.info("AuthServiceImpl::recoverPassword | Iniciando proceso");
+    public ResponseEntity<AuthResponse> forgetPassword(AuthRequest auth) {
+        log.info("AuthServiceImpl::recoverAccount | Iniciando proceso");
         AuthResponse authResponse = new AuthResponse();
 
         Optional<UserInfo> userInfo = this.userInfoRepository.findByEmail(auth.getEmail());
@@ -204,7 +204,7 @@ public class AuthServiceImpl implements IAuthServiceImpl {
                 HttpStatus.OK.value(), 
                 "success", 
                 true));
-        log.info("AuthServiceImpl::recoverPassword | Proceso finalizado (success)");
+        log.info("AuthServiceImpl::recoverAccount | Proceso finalizado (success)");
         return ResponseEntity.ok(authResponse);
     }
 

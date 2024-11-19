@@ -12,5 +12,6 @@ public interface IAuthServiceImpl {
     public ResponseEntity<AuthResponse> authenticate(AuthRequest auth);
     public ResponseEntity<AuthResponse> refreshToken(AuthRequest auth);
     public ResponseEntity<AuthResponse> verifyToken(HttpServletRequest request);
-    public ResponseEntity<AuthResponse> recoverPassword(AuthRequest auth);
+    public ResponseEntity<AuthResponse> forgetPassword(AuthRequest auth);
+    
 }
