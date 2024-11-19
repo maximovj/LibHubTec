@@ -29,6 +29,7 @@ public class RecoverAccountServiceImpl implements IRecoverAccountServiceImpl {
     private final IAccountDao accountDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final EmailService emailService;
+    private ApiResponse apiResponse;
     private RecoverAccountResponse response;
     private Optional<RecoverAccount> recoverAccountOpt;
     private Optional<Account> accountOpt;
@@ -36,6 +37,10 @@ public class RecoverAccountServiceImpl implements IRecoverAccountServiceImpl {
 
     @Override
     public ResponseEntity<RecoverAccountResponse> recoverAccount(HttpServletRequest httpRequest, RecoverAccountRequest request) {
+        this.apiResponse = new ApiResponse();
+        this.apiResponse.setUri("/v1/recover/account");
+        this.apiResponse.setType("POST");
+
         this.validateTokenAndRecoverAccount(httpRequest);
 
         if (this.recoverAccountOpt.isEmpty() || this.accountOpt.isEmpty()) {
@@ -64,6 +69,10 @@ public class RecoverAccountServiceImpl implements IRecoverAccountServiceImpl {
 
     @Override
     public ResponseEntity<RecoverAccountResponse> verifyToken(HttpServletRequest httpRequest) {
+        this.apiResponse = new ApiResponse();
+        this.apiResponse.setUri("/recover/verify-token");
+        this.apiResponse.setType("POST");
+
         return this.validateTokenAndRecoverAccount(httpRequest);
     }
 
@@ -95,27 +104,23 @@ public class RecoverAccountServiceImpl implements IRecoverAccountServiceImpl {
 
     private ResponseEntity<RecoverAccountResponse> buildErrorResponse(String message, HttpStatus status) {
         this.response = new RecoverAccountResponse();
-        this.response.setResponse(new ApiResponse(
-                "Recuperación de cuenta",
-                message,
-                "/v1/recover/account",
-                "POST",
-                status.value(),
-                "error",
-                false));
+        this.apiResponse.setCtx_title("Recuperación de cuenta");
+        this.apiResponse.setCtx_content(message);
+        this.apiResponse.setCode(status.value());
+        this.apiResponse.setStatus("error");
+        this.apiResponse.setSuccess(false);
+        this.response.setResponse(this.apiResponse);
         return ResponseEntity.status(status).body(this.response);
     }
 
     private ResponseEntity<RecoverAccountResponse> buildSuccessResponse(String message) {
         this.response = new RecoverAccountResponse();
-        this.response.setResponse(new ApiResponse(
-                "Recuperación de cuenta",
-                message,
-                "/v1/recover/account",
-                "POST",
-                HttpStatus.OK.value(),
-                "success",
-                true));
+        this.apiResponse.setCtx_title("Recuperación de cuenta");
+        this.apiResponse.setCtx_content(message);
+        this.apiResponse.setCode(HttpStatus.OK.value());
+        this.apiResponse.setStatus("success");
+        this.apiResponse.setSuccess(true);
+        this.response.setResponse(this.apiResponse);
         return ResponseEntity.ok(this.response);
     }
 
