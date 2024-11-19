@@ -28,6 +28,7 @@ public class RecoverAccountServiceImpl implements IRecoverAccountServiceImpl {
     private final JwtService jwtService;
     private final IAccountDao accountDao;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final EmailService emailService;
     private RecoverAccountResponse response;
     private Optional<RecoverAccount> recoverAccountOpt;
     private Optional<Account> accountOpt;
@@ -57,6 +58,7 @@ public class RecoverAccountServiceImpl implements IRecoverAccountServiceImpl {
         // 5. Actualizar estado y retornar éxito
         this.generateNewPassword(account, request);
         recoverAccountDao.delete(recoverAccount);
+        this.emailService.sendEmailRecoverAccountSuccess(account);
         return buildSuccessResponse("Cuenta recuperada exitosamente.");
     }
 

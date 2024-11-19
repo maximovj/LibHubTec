@@ -85,6 +85,36 @@ public class EmailService {
         }
     }
 
+    public void sendEmailRecoverAccountSuccess(Account account) 
+    {
+        try {
+            // Obtener correo electrónico de soporte
+            String emailSupport = this.environment.getProperty("app.email.support");
+            
+            // Crear el contexto para Thymeleaf
+            Context context = new Context();
+            String name = account.getLast_name() + " " + account.getName();
+            context.setVariable("name", name);
+
+            // Procesar la plantilla HTML
+            String htmlContent = this.templateEngine.process("email-recover-success", context);
+
+            // Crear el mensaje de correo
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
+
+            helper.setTo(account.getEmail());
+            helper.setSubject("Recuperar cuenta de LibHubTec");
+            helper.setText(htmlContent, true);
+            helper.setFrom(emailSupport);
+
+            mailSender.send(mimeMessage);
+        } catch (Exception e) {
+            // TODO: handle exception
+            log.info(e.getMessage());
+        }
+    }
+
     private int generateRandomFiveDigitNumber() 
     {
         return ThreadLocalRandom.current().nextInt(10000, 100000); // Rango [10000, 99999]
