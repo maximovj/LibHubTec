@@ -9,4 +9,5 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public interface IRecoverAccountServiceImpl {
     public ResponseEntity<RecoverAccountResponse> recoverAccount(HttpServletRequest httpRequest, RecoverAccountRequest request);
+    public ResponseEntity<RecoverAccountResponse> verifyToken(HttpServletRequest httpRequest);
 }

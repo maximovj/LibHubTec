@@ -20,11 +20,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RecoverAccountRestController {
 
     @Autowired
-    IRecoverAccountServiceImpl accountServiceImpl;
+    IRecoverAccountServiceImpl service;
 
     @PostMapping("/recover/account")
     public ResponseEntity<RecoverAccountResponse> recoverAccount(HttpServletRequest httpRequest, @RequestBody RecoverAccountRequest request) {
-        return this.accountServiceImpl.recoverAccount(httpRequest, request);
+        return this.service.recoverAccount(httpRequest, request);
+    }
+
+    @PostMapping("/recover/verify-token")
+    public ResponseEntity<RecoverAccountResponse> verifyToken(HttpServletRequest httpRequest) {
+        return this.service.verifyToken(httpRequest);
     }
     
 }
