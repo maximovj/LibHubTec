@@ -11,6 +11,7 @@ import { InputOtpModule } from 'primeng/inputotp';
 import { DividerModule } from 'primeng/divider';
 import { ToastrService } from 'ngx-toastr';
 import { lastValueFrom } from 'rxjs';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   standalone: true,
@@ -32,6 +33,7 @@ import { lastValueFrom } from 'rxjs';
     PasswordModule,
     InputTextModule,
     InputOtpModule,
+    ProgressSpinnerModule,
   ],
 })
 export class RecoverAccountComponent implements OnInit {
@@ -130,6 +132,11 @@ export class RecoverAccountComponent implements OnInit {
     this._isValidCode.set(false);
     this.code.set('');
     this.myForm.reset();
+  }
+
+  getQuery () : boolean
+  {
+    return this.authService.query();
   }
 
 }

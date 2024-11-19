@@ -49,10 +49,16 @@
 
     <div class="mb-6"></div>
 
-    <button
-    label="Establecer contraseña"
-    class="w-full" pButton pRipple>
-    </button>
+    @if (getQuery()) {
+      <div class="flex flex-row justify-content-center  align-items-center">
+        <p-progressSpinner ariaLabel="loading" />
+      </div>
+    } @else {
+      <button
+      label="Establecer contraseña"
+      class="w-full" pButton pRipple>
+      </button>
+    }
   </form>
 } @else {
   <div
