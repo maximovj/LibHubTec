@@ -105,14 +105,22 @@ export class RecoverAccountComponent implements OnInit {
     }
 
     if(this.isValidCode()){
-      alert(JSON.stringify({
-        code: this.payload?.code,
-        sub: this.payload?.sub,
-        token: this._token,
-      }, null, -2));
-      this.toastrService.success('Cuenta recuperado con exito, inicia sesión a tu cuenta.', 'Recuperar cuenta');
-      this.router.navigate(['/login']);
-      this.reset();
+      this.authService.recoverAccountConfirm({
+        code: this.payload?.code || '',
+        confirm_password: this.myForm.get('new_password')?.value,
+        new_password: this.myForm.get('new_password')?.value }, this._token || '')
+        .subscribe({
+          next: () => {
+            this.toastrService.success('Cuenta recuperado con exito, inicia sesión a tu cuenta.', 'Recuperar cuenta');
+            this.router.navigate(['/login']);
+            this.reset();
+          },
+          error: () => {
+            this.toastrService.error('Oops, hubo un error al recuperar tu cuenta.', 'Recuperar cuenta');
+            this.router.navigate(['/login']);
+            this.reset();
+          }
+        });
     }
   }
 

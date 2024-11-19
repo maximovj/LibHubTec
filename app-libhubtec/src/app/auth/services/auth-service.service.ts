@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { LoginResponse } from '../interfaces/login-response.interface';
 import { catchError, delay, map, Observable, of, take, tap, throwError } from 'rxjs';
-import { AccountDetailsResponse, Payload, RecoverAccountResponse, User, VerifyTokenResponse } from '../interfaces';
+import { AccountDetailsResponse, Payload, RecoverAccountRequest, RecoverAccountResponse, User, VerifyTokenResponse } from '../interfaces';
 import { AuthStatus } from '../interfaces/auth-status.enum';
 
 @Injectable({
@@ -44,6 +44,7 @@ export class AuthService {
     localStorage.removeItem('_token');
   }
 
+  // Obtener información de la cuenta enviando: `token`
   loadUserAndToken(token :string, payload :Payload) :void
   {
     const sub = parseInt(payload.sub);
@@ -67,6 +68,7 @@ export class AuthService {
     .subscribe();
   }
 
+  // Entrar al sistema (login) enviando: `email`, `password`
   login(req :LoginRequest) :Observable<boolean>
   {
     return this.http.post<LoginResponse>('http://localhost:5800/v1/auth/authenticate', {
@@ -129,6 +131,7 @@ export class AuthService {
       );
   }
 
+  // Verificar mi token de recuperación de cuenta
   public checkToken(token :string | null) :Observable<boolean>
   {
     return this
@@ -146,10 +149,27 @@ export class AuthService {
       );
   }
 
+  // Enviar correo electrónico con token, código para recuperar mi cuenta
   recoverAccount(req :LoginRequest) : Observable<boolean>
   {
     this._query.set(true);
     return this.http.post<RecoverAccountResponse>('http://localhost:5800/v1/auth/recover-password', { email: req.email })
+    .pipe(
+      map( ({response}) => response.success),
+      catchError(err => throwError(()=> err.message)),
+      tap(() => {
+        this._query.set(false);
+      })
+    );
+  }
+
+  // Recuperar mi cuenta enviando: `code`, `new_password`, `confirm_password`
+  recoverAccountConfirm(req :RecoverAccountRequest, token :string) : Observable<boolean>
+  {
+    this._query.set(true);
+    return this.http.post<RecoverAccountResponse>('http://localhost:5800/v1/recover/account', req, { headers: {
+      'Authorization': `Bearer ${token}`
+    } })
     .pipe(
       map( ({response}) => response.success),
       catchError(err => throwError(()=> err.message)),
