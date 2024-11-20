@@ -1,5 +1,5 @@
 export interface LoginRequest {
-  email       :string;
-  username    ?:string;
-  password    :string;
+  email?:       string | null;
+  username?:    string | null;
+  password?:    string | null;
 }

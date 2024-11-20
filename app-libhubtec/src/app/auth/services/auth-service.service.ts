@@ -47,7 +47,7 @@ export class AuthService {
   // Obtener información de la cuenta enviando: `token`
   loadUserAndToken(token :string, payload :Payload) :void
   {
-    const sub = parseInt(payload.sub);
+    const sub = parseInt(payload.sub || '');
     this._authStatus.set(AuthStatus.authenticated);
     localStorage.setItem('_token' , token);
 

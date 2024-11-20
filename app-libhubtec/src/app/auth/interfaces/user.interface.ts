@@ -1,13 +1,14 @@
 export interface User {
-  id:        number;
-  name:      string;
-  last_name: string;
-  sex:       string;
-  age:       string;
-  grade:     string;
-  shift:     string;
-  photo:     null;
-  bio:       string;
-  username:  string;
-  email:     string;
+  id?:          number  | null;
+  name?:        string  | null;
+  last_name?:   string  | null;
+  sex?:         string  | null;
+  age?:         string  | null;
+  grade?:       string  | null;
+  shift?:       string  | null;
+  photo?:       string  | null;
+  bio?:         string  | null;
+  username?:    string  | null;
+  password?:    string  | null;
+  email?:       string  | null;
 }

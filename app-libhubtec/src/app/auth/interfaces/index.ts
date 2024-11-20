@@ -4,3 +4,4 @@ export * from './account-details-response.interface';
 export * from './payload.interface';
 export * from './recover-account-response';
 export * from './recover-account-request.interface';
+export * from './api-response.inteface';

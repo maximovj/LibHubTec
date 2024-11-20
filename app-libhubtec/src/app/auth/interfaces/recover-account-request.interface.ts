@@ -1,6 +1,6 @@
 export interface RecoverAccountRequest
 {
-  code                  :string;
-  new_password          :string;
-  confirm_password      :string;
+  code?:              string | null;
+  new_password?:      string | null;
+  confirm_password?:  string | null;
 }
