@@ -7,7 +7,7 @@ import { PrimeNGConfig } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { AuthService } from './auth/services/auth-service.service';
-import { AuthStatus } from './auth/interfaces';
+import { AuthStatus } from './shared/interfaces';
 
 @Component({
   selector: 'app-root',

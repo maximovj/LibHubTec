@@ -4,15 +4,15 @@ import { catchError, delay, map, Observable, of, take, tap, throwError } from 'r
 
 import {
   AccountDetailsResponse,
-  AuthStatus,
   LoginRequest,
   LoginResponse,
   Payload,
   RecoverAccountRequest,
   RecoverAccountResponse,
-  User,
   VerifyTokenResponse
 } from '../interfaces';
+
+import { AuthStatus, User } from '../../shared/interfaces';
 
 @Injectable({
   providedIn: 'root'

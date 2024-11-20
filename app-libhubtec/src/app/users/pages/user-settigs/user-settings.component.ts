@@ -1,10 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AuthService } from '../../../auth/services/auth-service.service';
-import { User } from '../../../auth/interfaces';
 
-import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+
+import { AuthService } from '../../../auth/services/auth-service.service';
+import { User } from '../../../shared/interfaces';
 
 @Component({
   standalone: true,
