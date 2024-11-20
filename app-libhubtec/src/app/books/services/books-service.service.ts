@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from "@angular/core";
 import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { BooksResponse } from '../interfaces';
-import { BookEntity } from '../interfaces/book-entity.interface';
+import { BookEntity } from '../interfaces';
 
 @Injectable({ providedIn: "root" })
 export class BooksService {

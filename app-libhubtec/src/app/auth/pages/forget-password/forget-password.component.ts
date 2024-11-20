@@ -1,14 +1,16 @@
-import { AuthService } from '../../services/auth-service.service';
 import { Component, inject, OnInit } from '@angular/core';
-import { CheckboxModule } from 'primeng/checkbox';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginRequest } from '../../interfaces/login-request.interface';
+import { Router, RouterModule } from '@angular/router';
+
+import { ButtonModule } from 'primeng/button';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { ToastrService } from 'ngx-toastr';
+
+import { AuthService } from '../../services/auth-service.service';
+import { LoginRequest } from '../../interfaces';
 
 @Component({
   standalone: true,

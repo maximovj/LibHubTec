@@ -1,17 +1,20 @@
-import { Payload } from './../../../interfaces/payload.interface';
-import { AuthService } from './../../../services/auth-service.service';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
+import { DividerModule } from 'primeng/divider';
+import { InputOtpModule } from 'primeng/inputotp';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { InputOtpModule } from 'primeng/inputotp';
-import { DividerModule } from 'primeng/divider';
-import { ToastrService } from 'ngx-toastr';
-import { lastValueFrom } from 'rxjs';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
+import { ToastrService } from 'ngx-toastr';
+
+import { AuthService } from './../../../services/auth-service.service';
+import { Payload } from '../../../interfaces';
 
 @Component({
   standalone: true,

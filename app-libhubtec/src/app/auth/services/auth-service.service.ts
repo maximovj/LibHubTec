@@ -1,10 +1,18 @@
-import { LoginRequest } from './../interfaces/login-request.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { LoginResponse } from '../interfaces/login-response.interface';
 import { catchError, delay, map, Observable, of, take, tap, throwError } from 'rxjs';
-import { AccountDetailsResponse, Payload, RecoverAccountRequest, RecoverAccountResponse, User, VerifyTokenResponse } from '../interfaces';
-import { AuthStatus } from '../interfaces/auth-status.enum';
+
+import {
+  AccountDetailsResponse,
+  AuthStatus,
+  LoginRequest,
+  LoginResponse,
+  Payload,
+  RecoverAccountRequest,
+  RecoverAccountResponse,
+  User,
+  VerifyTokenResponse
+} from '../interfaces';
 
 @Injectable({
   providedIn: 'root'

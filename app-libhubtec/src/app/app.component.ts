@@ -1,15 +1,13 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
 import { Component, computed, effect, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router, RouterOutlet } from '@angular/router';
 
 import { ButtonModule } from 'primeng/button';
 import { PrimeNGConfig } from 'primeng/api';
-import { MenuBarComponent } from './shared/components/menu-bar/menu-bar.component';
-import { AuthService } from './auth/services/auth-service.service';
-import { AuthStatus } from './auth/interfaces/auth-status.enum';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
+import { AuthService } from './auth/services/auth-service.service';
+import { AuthStatus } from './auth/interfaces';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +17,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     ButtonModule,
     CommonModule,
     RouterOutlet,
-    MenuBarComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
