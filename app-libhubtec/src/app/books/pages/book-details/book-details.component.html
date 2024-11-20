@@ -1,61 +1,69 @@
-<span class="text-2xl font-bold block m-4 text-center">{{ book.title }} - {{ book.author }}</span>
 
-<div class="grid">
-  <div class="col-12 md:col-4" >
-    <div class="flex justify-content-center">
-        <p-image
-          [src]="book.thumbnail | thumbnail"
-          alt="Image"
-          [imageClass]="'w-full'"
-          loading="lazy"
-          [preview]="true" />
+@if (fetch_query()) {
+  <div class="flex flex-column justify-content-center  align-items-center">
+    <p-progressSpinner ariaLabel="loading" />
+    <span class="block text-base font-bold">Cargando información...</span>
+  </div>
+} @else {
+  <span class="text-2xl font-bold block m-4 text-center">{{ book.title }} - {{ book.author }}</span>
+  <div class="grid">
+    <div class="col-12 md:col-4" >
+      <div class="flex justify-content-center">
+          <p-image
+            [src]="book.thumbnail | thumbnail"
+            alt="Image"
+            [imageClass]="'w-full'"
+            loading="lazy"
+            [preview]="true" />
+      </div>
+    </div>
+    <div class="col-12 md:col-8">
+      <p-card>
+          <div class="grid">
+            <div class="col-12 lg:col-6">
+              <label class="font-bold">Autor</label>
+              <input [value]="book.author" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <div class="col-12 lg:col-6">
+                <label class="font-bold">Título</label>
+                <input [value]="book.title" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <div class="col-12 lg:col-6">
+              <label class="font-bold">Resumen</label>
+              <textarea [value]="book.summary" rows="12" readonly class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            </div>
+            <div class="col-12 lg:col-6">
+              <label class="font-bold">Descripción</label>
+              <textarea [value]="book.description" rows="12" readonly class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
+            </div>
+            <div class="col-12 lg:col-6">
+              <label class="font-bold">Registrado en:</label>
+              <input [value]="book.createdAt | date: 'shortDate'" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <div class="col-12 lg:col-6">
+                <label class="font-bold">Actualizado en:</label>
+                <input [value]="book.updatedAt| date: 'shortDate'" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <div class="col-12 lg:col-6">
+              <label class="font-bold">Stock:</label>
+              <input [value]="10" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+            <div class="col-12 lg:col-6">
+                <label class="font-bold">Precio:</label>
+                <input [value]="'30.00 MX'" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+            </div>
+        </div>
+        <ng-template pTemplate="footer">
+          <div class="flex gap-3 mt-1">
+            @if (reserved) {
+              <p-button (onClick)="onReserveBook()" label="Cancelar" severity="secondary" />
+            } @else {
+              <p-button (onClick)="onReserveBook()" label="Reservar" />
+            }
+          </div>
+      </ng-template>
+      </p-card>
     </div>
   </div>
-  <div class="col-12 md:col-8">
-    <p-card>
-        <div class="grid">
-          <div class="col-12 lg:col-6">
-            <label class="font-bold">Autor</label>
-            <input [value]="book.author" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-          <div class="col-12 lg:col-6">
-              <label class="font-bold">Título</label>
-              <input [value]="book.title" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-          <div class="col-12 lg:col-6">
-            <label class="font-bold">Resumen</label>
-            <textarea [value]="book.summary" rows="12" readonly class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
-          </div>
-          <div class="col-12 lg:col-6">
-            <label class="font-bold">Descripción</label>
-            <textarea [value]="book.description" rows="12" readonly class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"></textarea>
-          </div>
-          <div class="col-12 lg:col-6">
-            <label class="font-bold">Registrado en:</label>
-            <input [value]="book.createdAt | date: 'shortDate'" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-          <div class="col-12 lg:col-6">
-              <label class="font-bold">Actualizado en:</label>
-              <input [value]="book.updatedAt| date: 'shortDate'" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-          <div class="col-12 lg:col-6">
-            <label class="font-bold">Stock:</label>
-            <input [value]="10" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-          <div class="col-12 lg:col-6">
-              <label class="font-bold">Precio:</label>
-              <input [value]="'30.00 MX'" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
-          </div>
-      </div>
-      <ng-template pTemplate="footer">
-        <div class="flex gap-3 mt-1">
-          @if (reserved) {
-            <p-button (onClick)="onReserveBook()" label="Cancelar" severity="secondary" />
-          } @else {
-            <p-button (onClick)="onReserveBook()" label="Reservar" />
-          }
-        </div>
-    </ng-template>
-    </p-card>
-  </div>
-</div>
+}
+

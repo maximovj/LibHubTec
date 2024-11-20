@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from "@angular/core";
-import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, of, pipe, tap, throwError } from 'rxjs';
 import { BooksResponse } from '../interfaces';
 import { BookEntity } from '../interfaces';
 
@@ -9,6 +9,9 @@ export class BooksService {
 
   private _books = signal<BookEntity[]>([]);
   public  books = computed(() =>  [...this._books()]);
+
+  private _query = signal<boolean>(false);
+  public query = computed(() => this._query());
 
   private http = inject(HttpClient);
 
@@ -41,35 +44,30 @@ export class BooksService {
   // Cargar un libro por id
   public getBookById(id :number) :Observable<boolean>
   {
+    this._query.set(true);
+
     const _token = this.getToken();
 
-    if(!_token) return of(false);
-
-    this._books.set([
-      {
-        id: 1,
-        thumbnail: "WLn9uTWsNZH8inuUYuOAFlxcKFt2CDPkrp5Z6VBy.jpg",
-        title: "Ciberactivismo",
-        author: "Mario Táscon y Yolanda Quintana",
-        summary: "La historia del internet, como hacer activismo desde la red.",
-        description: "Es un libro genial, tipo manual para las personas activistas.",
-        updatedAt: new Date("2024-11-15T23:10:19"),
-        createdAt: new Date("2024-11-15T23:10:19"),
-    },
-    ]);
+    if(!_token) {
+      this._query.set(false);
+      return of(false);
+    }
 
     return this.http.get<BooksResponse>(`http://localhost:5800/v1/books/${id}/book-details`, { headers: {
       'Authorization' : `Bearer ${_token}`,
     }})
     .pipe(
+      delay(1000),
       map(({ response, data}) => {
-        console.log({ response, data });
-        //if(response.success && data){
-        //  this._books.set(data);
-        //}
+        if(response.success && data){
+          this._books.set(data);
+        }
         return response?.success;
       }),
       catchError( (err) => throwError(() => err.message)),
+      tap(() => {
+        this._query.set(false);
+      })
     );
   }
 
