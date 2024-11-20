@@ -19,7 +19,7 @@
             <ng-template pTemplate="footer">
                 <div class="flex gap-3 mt-1">
                     <p-button label="Cancel" severity="secondary" class="w-full" styleClass="w-full" />
-                    <p-button label="Save" class="w-full" styleClass="w-full" />
+                    <p-button (onClick)="bntGoTo(item.id)" label="Ver" class="w-full" styleClass="w-full" />
                 </div>
             </ng-template>
         </p-card>

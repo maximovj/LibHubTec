@@ -44,6 +44,15 @@ export const routes: Routes = [
         loadComponent: () => import('./books/pages/list-page/list-page.component').then( c => c.BooksListComponent),
       },
       {
+        path: 'p',
+        children: [
+          {
+            path: ':id',
+            loadComponent: () => import('./books/pages/book-details/book-details.component').then( c => c.BookDetailsComponent),
+          }
+        ],
+      },
+      {
         path: '',
         pathMatch: 'full',
         redirectTo: 'list',

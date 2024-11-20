@@ -6,6 +6,7 @@ import { ButtonModule } from 'primeng/button';
 
 import { ToastrService } from 'ngx-toastr';
 import { ThumbnailPipe } from '../../pipes/thumbnail.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -30,6 +31,7 @@ export class BooksListComponent implements OnInit {
 
   private toastrService = inject(ToastrService);
   private booksService = inject(BooksService);
+  private router = inject(Router);
 
   public books = computed(() => [...this.booksService.books()]);
 
@@ -44,6 +46,11 @@ export class BooksListComponent implements OnInit {
       },
       error: (err) => console.log(err),
     });
+  }
+
+  bntGoTo(id :number) :void
+  {
+    this.router.navigateByUrl(`/books/p/${id}`);
   }
 
 }
