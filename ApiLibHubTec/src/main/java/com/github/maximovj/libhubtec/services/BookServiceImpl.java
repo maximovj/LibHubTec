@@ -1,5 +1,6 @@
 package com.github.maximovj.libhubtec.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,42 +23,73 @@ import lombok.extern.slf4j.Slf4j;
 public class BookServiceImpl implements IBookServiceImpl {
 
     private final IBookDao dao;
+    private ApiResponse apiResponse;
 
     @Override
     @Transactional(readOnly = true)
     public ResponseEntity<BookResponse> findAllBooks() {
         log.info("@findAllBooks : Iniciando");
-        
-        BookResponse response = new BookResponse();
+        List<Book> books = new ArrayList<>();
+        this.apiResponse = new ApiResponse();
+        this.apiResponse.setUri("/v1/books");
+        this.apiResponse.setType("GET");
         
         try {
-            response.setResponse(new ApiResponse(
-                "Listar libros", 
-                "Cuentas listados correctamente", 
-                "/v1/books", 
-                "GET", 
-                HttpStatus.OK.value(), 
-                "success", 
-                true
-            ));
-
-            List<Book> books = (List<Book>) dao.findAll();
-            response.setData(Optional.ofNullable(books));
+            books = (List<Book>) dao.findAll();
         } catch (Exception e) {
-            response.setResponse(new ApiResponse(
-                "Listar libros", 
-                "Error al obtener los libros", 
-                "/v1/books", 
-                "GET", 
-                HttpStatus.NO_CONTENT.value(), 
-                "error", 
-                false
-            ));
-            
-            log.error("@findAllBooks : Error", e);
+            return this.buildErrorResponse("Erro al obtener la lista de libros", HttpStatus.BAD_REQUEST);
         }
 
         log.info("@findAllBooks : Finalizado");
+        return this.buildSuccessResponse("Lista de libros listando correctamente", Optional.of(books));
+    }
+
+    @Override
+    public ResponseEntity<BookResponse> findBookById(Long id) {
+        log.info("findBookById | iniciando");
+        List<Book> books = new ArrayList<>();
+        this.apiResponse = new ApiResponse();
+        this.apiResponse.setUri("/v1/books/"+id+"/books-details");
+        this.apiResponse.setType("GET");
+
+        try {
+            Optional<Book> book = this.dao.findById(id);
+            books.add(book.get());
+        } catch (Exception e) {
+
+            System.out.println(e.getMessage());
+            log.info("findBookById | error");
+            return this.buildErrorResponse("Oops hubo un error al intentar obtener la información del libro", HttpStatus.NOT_FOUND);
+        }
+
+        log.info("findBookById | finalizado");
+        return this.buildSuccessResponse("Información del libro obtenido correctamente", Optional.of(books));
+    }
+    
+    private ResponseEntity<BookResponse> buildSuccessResponse(String msg, Optional<List<Book>> data)
+    {
+        BookResponse response = new BookResponse();
+        this.apiResponse.setCtx_title("Libros");
+        this.apiResponse.setCtx_content(msg);
+        this.apiResponse.setCode(HttpStatus.OK.value());
+        this.apiResponse.setSuccess(true);
+        this.apiResponse.setStatus("success");
+        response.setResponse(apiResponse);
+        response.setData(data);
         return ResponseEntity.ok(response);
     }
+
+    private ResponseEntity<BookResponse> buildErrorResponse(String msg, HttpStatus httpStatus)
+    {
+        BookResponse response = new BookResponse();
+        this.apiResponse.setCtx_title("Libros");
+        this.apiResponse.setCtx_content(msg);
+        this.apiResponse.setCode(httpStatus.value());
+        this.apiResponse.setSuccess(true);
+        this.apiResponse.setStatus("success");
+        response.setResponse(apiResponse);
+        response.setData(null);
+        return ResponseEntity.status(httpStatus).body(response);
+    }
+
 }

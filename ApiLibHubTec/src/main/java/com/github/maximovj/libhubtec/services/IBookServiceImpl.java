@@ -6,5 +6,6 @@ import com.github.maximovj.libhubtec.response.BookResponse;
 public interface IBookServiceImpl {
 	
 	public ResponseEntity<BookResponse> findAllBooks();
+	public ResponseEntity<BookResponse> findBookById(Long id);
 
 }
