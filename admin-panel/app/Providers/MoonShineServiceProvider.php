@@ -7,6 +7,7 @@ namespace App\Providers;
 use App\MoonShine\Resources\AccountResource;
 use App\MoonShine\Resources\BookResource;
 use App\MoonShine\Resources\RecoverAccountResource;
+use App\MoonShine\Resources\ReserveBookResource;
 use MoonShine\Providers\MoonShineApplicationServiceProvider;
 use MoonShine\MoonShine;
 use MoonShine\Menu\MenuGroup;
@@ -25,7 +26,10 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
      */
     protected function resources(): array
     {
-        return [];
+        return [
+            new BookResource(),
+            new ReserveBookResource(),
+        ];
     }
 
     /**
@@ -64,6 +68,7 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                 static fn() => __('moonshine::ui.resource.recover_account_title'),
                 new RecoverAccountResource()
             ),
+            MenuItem::make(static fn() => 'Reserve Books', new ReserveBookResource()),
         ];
     }
 

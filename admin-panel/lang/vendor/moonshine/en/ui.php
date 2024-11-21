@@ -98,6 +98,31 @@ return [
             'active' => 'Active',
         ],
 
+        'reserve_book_title' => 'Reserve Books',
+        'reserve_book' => [
+            'book_id' => 'Book',
+            'account_id' => 'Account',
+            'account_username' => 'Username',
+            'account_email' => 'Email',
+            'account_name' => 'Name',
+            'account_last_name' => 'Last name',
+            'book_title' => 'Book title',
+            'book_author' => 'Book author',
+            'book_count' => 'Book count',
+            'book_price' => 'Book price',
+            'date_range' => 'Date range',
+            'date_from' => 'Date from',
+            'date_to' => 'Date to',
+            'status' => [
+                '_' => 'Status',
+                'pending' => 'Pending',
+                'processing' => 'Processing',
+                'paid' => 'Paid',
+                'debt' => 'Debt',
+            ],
+            'active' => 'Active',
+        ],
+
         'main_information' => 'Main information',
         'change_password' => 'Change password',
 

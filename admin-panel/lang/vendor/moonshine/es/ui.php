@@ -98,6 +98,31 @@ return [
             'active' => 'Activo',
         ],
 
+        'reserve_book_title' => 'Reservar libros',
+        'reserve_book' => [
+            'book_id' => 'Libro',
+            'account_id' => 'Cuenta',
+            'account_username' => 'Nombre de usuario',
+            'account_email' => 'Correo electrónico',
+            'account_name' => 'Nombre (s)',
+            'account_last_name' => 'Apellido (s)',
+            'book_title' => 'Título del libro',
+            'book_author' => 'Autor del libro',
+            'book_price' => 'Precio del libro',
+            'book_count' => 'Cantidad de libro',
+            'date_range' => 'Rango de fechas',
+            'date_from' => 'Fecha desde',
+            'date_to' => 'Fecha hasta',
+            'status' => [
+                '_' => 'Estado',
+                'pending' => 'Pendiente',
+                'processing' => 'Procesando',
+                'paid' => 'Pagado',
+                'debt' => 'Adeudo',
+            ],
+            'active' => 'Activa',
+        ],
+
         'main_information' => 'Información principal',
         'change_password' => 'Cambiar contraseña',
 
