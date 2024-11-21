@@ -68,7 +68,10 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                 static fn() => __('moonshine::ui.resource.recover_account_title'),
                 new RecoverAccountResource()
             ),
-            MenuItem::make(static fn() => 'Reserve Books', new ReserveBookResource()),
+            MenuItem::make(
+                static fn() => __('moonshine::ui.resource.reserve_book_title'),
+                new ReserveBookResource()
+            ),
         ];
     }
 

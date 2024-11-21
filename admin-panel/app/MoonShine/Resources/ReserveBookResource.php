@@ -9,6 +9,7 @@ use App\Models\Account;
 use App\Models\Book;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ReserveBook;
+use Illuminate\Support\Facades\Request;
 use MoonShine\Attributes\Icon;
 use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
@@ -42,6 +43,17 @@ class ReserveBookResource extends ModelResource
     protected bool $detailInModal = false;
 
     protected bool $isAsync = true;
+
+    public function title(): string
+    {
+        return __('moonshine::ui.resource.reserve_book_title');
+    }
+
+    public function redirectAfterSave(): string
+    {
+        $refer = Request::header('referer');
+        return $refer ?? '/';
+    }
 
     public function import(): ?ImportHandler
     {
