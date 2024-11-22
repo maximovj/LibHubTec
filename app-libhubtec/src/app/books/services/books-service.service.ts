@@ -2,7 +2,7 @@ import { ReserveBookRequest } from './../interfaces/reserve-book-request.interfa
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from "@angular/core";
 import { catchError, delay, map, Observable, of, pipe, tap, throwError } from 'rxjs';
-import { BooksResponse, ReserveBookResponse } from '../interfaces';
+import { BooksResponse, ReserveBookData, ReserveBookResponse } from '../interfaces';
 import { BookEntity } from '../interfaces';
 
 @Injectable({ providedIn: "root" })
@@ -73,7 +73,35 @@ export class BooksService {
   }
 
   // Registrar una reservación de libro
-  public registerReserveBook(reserveBookRequest :ReserveBookRequest) : Observable<boolean>
+  public registerReserveBook(reserveBookRequest :ReserveBookRequest) : Observable<ReserveBookData[] | null>
+  {
+    this._query.set(true);
+    const _token = this.getToken();
+
+    if(!_token) {
+      this._query.set(false);
+      return of(null);
+    }
+
+    return this.http.post<ReserveBookResponse>('http://localhost:5800/v1/reserve/book/register', reserveBookRequest, {
+      headers: {
+        'Authorization' : `Bearer ${_token}`,
+      }
+    })
+    .pipe(
+      delay(1000),
+      map(({data}) => {
+        return data;
+      }),
+      catchError(err => throwError(() => { this._query.set(false); return err.message; } )),
+      tap(() => {
+        this._query.set(false);
+      })
+    );
+  }
+
+  // Cancelar una reservación de libro
+  public cancelReserveBook(reserveBookRequest :ReserveBookRequest) : Observable<boolean>
   {
     this._query.set(true);
     const _token = this.getToken();
@@ -83,10 +111,11 @@ export class BooksService {
       return of(false);
     }
 
-    return this.http.post<ReserveBookResponse>('http://localhost:5800/v1/reserve/book/register', reserveBookRequest, {
+    return this.http.delete<ReserveBookResponse>('http://localhost:5800/v1/reserve/book/cancel',{
       headers: {
         'Authorization' : `Bearer ${_token}`,
-      }
+      },
+      body: reserveBookRequest,
     })
     .pipe(
       delay(1000),

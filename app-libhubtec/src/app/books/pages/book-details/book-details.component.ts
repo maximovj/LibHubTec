@@ -10,7 +10,7 @@ import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
-import { BookEntity, ReserveBookRequest } from '../../interfaces';
+import { BookEntity, ReserveBookData, ReserveBookRequest } from '../../interfaces';
 import { BooksService } from './../../services/books-service.service';
 import { ThumbnailPipe } from '../../pipes/thumbnail.pipe';
 
@@ -47,6 +47,8 @@ export class BookDetailsComponent implements OnInit {
 
   public reserved :boolean = false;
 
+  public reserve_book_id ?:number;
+
   constructor() { }
 
   ngOnInit() {
@@ -70,6 +72,7 @@ export class BookDetailsComponent implements OnInit {
     const user_id =  this.authService.user()?.id;
 
     const reserveBookRequest : ReserveBookRequest = {
+      reserve_book_id: this.reserve_book_id,
       account_id: user_id,
       book_id: this.book.id,
       date_from: '2024-01-11',
@@ -77,16 +80,29 @@ export class BookDetailsComponent implements OnInit {
     };
 
     if(this.reserved){
-      this.reserved = !this.reserved;
-      this.toastrService.info('Liberando libro de la biblioteca');
+      this.booksService.cancelReserveBook(reserveBookRequest)
+      .subscribe({
+        next: () => {
+            this.reserved = false;
+            this.toastrService.success('Reservación de libro cancelado exitosamente.');
+        },
+        error: () => {
+          this.reserved = true;
+          this.toastrService.error('Oops hubo un error durante la cancelación.');
+        },
+      });
       return;
     }
 
     this.booksService.registerReserveBook(reserveBookRequest)
     .subscribe({
-      next: () => {
-        this.reserved = true;
-        this.toastrService.success('Libro reservado exitosamente.');
+      next: (data : ReserveBookData[] | null) => {
+        if(data?.at(0)){
+          const _data = data!.at(0);
+          this.reserve_book_id = _data?.id;
+          this.reserved = true;
+          this.toastrService.success('Libro reservado exitosamente.');
+        }
       },
       error: () => {
         this.reserved = false;
