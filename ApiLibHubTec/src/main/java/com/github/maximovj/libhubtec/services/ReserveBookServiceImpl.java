@@ -134,7 +134,7 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
 
     @Override
     public ResponseEntity<ReserveBookResponse> listReserveBook(Long account_id) {
-        log.info("cancelReserveBook | Iniciando");
+        log.info("listReserveBook | Iniciando");
         this.defineApiResponse("/v1/reserve/book/cancel", "POST");
         List<ReserveBook> list = new ArrayList<>();
 
@@ -149,7 +149,7 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
         
         list = this.reserveBookDao.findByAccount(this.account.get());
         
-        log.info("cancelReserveBook | Finalizado");
+        log.info("listReserveBook | Finalizado");
         return this.buildSuccessResponse(HttpStatus.OK, "Listando reservación de libros para la cuenta", Optional.ofNullable(list));
     }
 
