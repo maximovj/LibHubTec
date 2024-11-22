@@ -1,7 +1,6 @@
 package com.github.maximovj.libhubtec.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +11,7 @@ import com.github.maximovj.libhubtec.services.IReserveBookServiceImpl;
 
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -27,6 +27,12 @@ public class ReserveBookRestController implements IReserveBookServiceImpl {
     @Override
     public ResponseEntity<ReserveBookResponse> registerReserveBook(@RequestBody @Valid ReserveBookRequest request) {
         return this.bookServiceImpl.registerReserveBook(request);
+    }
+
+    @DeleteMapping("/reserve/book/cancel")
+    @Override
+    public ResponseEntity<ReserveBookResponse> cancelReserveBook(@RequestBody @Valid ReserveBookRequest request) {
+        return this.bookServiceImpl.cancelReserveBook(request);
     }
     
 }

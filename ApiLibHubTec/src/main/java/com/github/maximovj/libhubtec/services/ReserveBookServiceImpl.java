@@ -1,18 +1,15 @@
 package com.github.maximovj.libhubtec.services;
 
 import java.math.BigDecimal;
-import java.net.http.WebSocket.Listener;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.expression.Lists;
 
 import com.github.maximovj.libhubtec.dao.IAccountDao;
 import com.github.maximovj.libhubtec.dao.IBookDao;
@@ -39,28 +36,7 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
     private ApiResponse apiResponse;
     private Optional<Account> account;
     private Optional<Book> book;
-
-    @Override
-    public ResponseEntity<ReserveBookResponse> registerReserveBook(ReserveBookRequest request) {
-        log.info("registerReserveBook | Iniciando");
-        this.defineApiResponse("/v1/reserve/book/register", "POST");
-        List<ReserveBook> list = new ArrayList<>();
-
-        this.validateAccountAndBook(request);
-        if(!this.book.isPresent() || !this.account.isPresent())
-        {
-            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops cuenta o libro no encontrado en el sistema", null);
-        }
-
-        ReserveBook reserveBook = this.defineReserveBook(this.account.get(), this.book.get());
-        reserveBook.setDate_from(LocalDate.parse(request.getDate_from()).atStartOfDay());
-        reserveBook.setDate_to(LocalDate.parse(request.getDate_to()).atStartOfDay());
-        list.add(reserveBook);
-        this.reserveBookDao.save(reserveBook);
-
-        log.info("registerReserveBook | Finalizado");
-        return this.buildSuccessResponse(HttpStatus.CREATED, "Libro reservado exitosamente", Optional.ofNullable(list));
-    }
+    private Optional<ReserveBook> reserveBook;
 
     private ReserveBook defineReserveBook(Account account, Book book) 
     {
@@ -115,17 +91,45 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
         return ResponseEntity.status(status).body(_response);
     }
 
-    private ResponseEntity<ReserveBookResponse> validateAccountAndBook(ReserveBookRequest request)
-    {
+    @Override
+    public ResponseEntity<ReserveBookResponse> registerReserveBook(ReserveBookRequest request) {
+        log.info("registerReserveBook | Iniciando");
+        this.defineApiResponse("/v1/reserve/book/register", "POST");
+        List<ReserveBook> list = new ArrayList<>();
+
         this.account = this.accountDao.findById(request.getAccount_id());
         this.book = this.bookDao.findById(request.getBook_id());
-
-        if(!book.isPresent() || !account.isPresent())
+        if(!this.book.isPresent() || !this.account.isPresent())
         {
             return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops cuenta o libro no encontrado en el sistema", null);
         }
 
-        return this.buildSuccessResponse(HttpStatus.FOUND, "La cuenta y libro son válidos", null);
+        ReserveBook reserveBook = this.defineReserveBook(this.account.get(), this.book.get());
+        reserveBook.setDate_from(LocalDate.parse(request.getDate_from()).atStartOfDay());
+        reserveBook.setDate_to(LocalDate.parse(request.getDate_to()).atStartOfDay());
+        list.add(reserveBook);
+        this.reserveBookDao.save(reserveBook);
+
+        log.info("registerReserveBook | Finalizado");
+        return this.buildSuccessResponse(HttpStatus.CREATED, "Libro reservado exitosamente", Optional.ofNullable(list));
+    }
+
+    @Override
+    public ResponseEntity<ReserveBookResponse> cancelReserveBook(ReserveBookRequest request) {
+        log.info("cancelReserveBook | Iniciando");
+        this.defineApiResponse("/v1/reserve/book/cancel", "POST");
+        List<ReserveBook> list = new ArrayList<>();
+        
+        this.reserveBook = this.reserveBookDao.findById(request.getReserve_book_id());
+        if(!this.reserveBook.isPresent()) {
+            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops reservación no encontrado en el sistema", null);
+        }
+
+        list.add(this.reserveBook.get());
+        this.reserveBookDao.delete(this.reserveBook.get());
+
+        log.info("cancelReserveBook | Finalizado");
+        return this.buildSuccessResponse(HttpStatus.OK, "Reservación de libro cancelado exitosamente", Optional.ofNullable(list));
     }
 
 }

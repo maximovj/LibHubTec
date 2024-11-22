@@ -9,4 +9,6 @@ public interface IReserveBookServiceImpl {
 
     public ResponseEntity<ReserveBookResponse> registerReserveBook(ReserveBookRequest request);
 
+    public ResponseEntity<ReserveBookResponse> cancelReserveBook(ReserveBookRequest request);
+
 }
