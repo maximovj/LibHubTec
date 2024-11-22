@@ -1,3 +1,4 @@
+import { AuthService } from './../../../auth/services/auth-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, OnInit } from '@angular/core';
@@ -9,7 +10,7 @@ import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
-import { BookEntity } from '../../interfaces';
+import { BookEntity, ReserveBookRequest } from '../../interfaces';
 import { BooksService } from './../../services/books-service.service';
 import { ThumbnailPipe } from '../../pipes/thumbnail.pipe';
 
@@ -30,6 +31,8 @@ import { ThumbnailPipe } from '../../pipes/thumbnail.pipe';
 
 export class BookDetailsComponent implements OnInit {
 
+  private authService = inject(AuthService);
+
   private toastrService = inject(ToastrService);
 
   private booksService = inject(BooksService);
@@ -42,7 +45,7 @@ export class BookDetailsComponent implements OnInit {
 
   public book!: BookEntity;
 
-  public reserved :boolean = true;
+  public reserved :boolean = false;
 
   constructor() { }
 
@@ -64,14 +67,32 @@ export class BookDetailsComponent implements OnInit {
 
   onReserveBook() :void
   {
+    const user_id =  this.authService.user()?.id;
+
+    const reserveBookRequest : ReserveBookRequest = {
+      account_id: user_id,
+      book_id: this.book.id,
+      date_from: '2024-01-11',
+      date_to: '2024-11-11',
+    };
+
     if(this.reserved){
       this.reserved = !this.reserved;
       this.toastrService.info('Liberando libro de la biblioteca');
       return;
     }
 
-    this.reserved = !this.reserved;
-    this.toastrService.info('Reservando libro de la biblioteca para usted');
+    this.booksService.registerReserveBook(reserveBookRequest)
+    .subscribe({
+      next: () => {
+        this.reserved = true;
+        this.toastrService.success('Libro reservado exitosamente.');
+      },
+      error: () => {
+        this.reserved = false;
+        this.toastrService.error('Oops hubo un error la reservación.');
+      },
+    });
   }
 
 }

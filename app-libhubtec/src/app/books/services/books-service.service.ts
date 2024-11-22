@@ -1,7 +1,8 @@
+import { ReserveBookRequest } from './../interfaces/reserve-book-request.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from "@angular/core";
 import { catchError, delay, map, Observable, of, pipe, tap, throwError } from 'rxjs';
-import { BooksResponse } from '../interfaces';
+import { BooksResponse, ReserveBookResponse } from '../interfaces';
 import { BookEntity } from '../interfaces';
 
 @Injectable({ providedIn: "root" })
@@ -65,6 +66,34 @@ export class BooksService {
         return response?.success;
       }),
       catchError( (err) => throwError(() => err.message)),
+      tap(() => {
+        this._query.set(false);
+      })
+    );
+  }
+
+  // Registrar una reservación de libro
+  public registerReserveBook(reserveBookRequest :ReserveBookRequest) : Observable<boolean>
+  {
+    this._query.set(true);
+    const _token = this.getToken();
+
+    if(!_token) {
+      this._query.set(false);
+      return of(false);
+    }
+
+    return this.http.post<ReserveBookResponse>('http://localhost:5800/v1/reserve/book/register', reserveBookRequest, {
+      headers: {
+        'Authorization' : `Bearer ${_token}`,
+      }
+    })
+    .pipe(
+      delay(1000),
+      map(({response}) => {
+        return response.success;
+      }),
+      catchError(err => throwError(() => err.message )),
       tap(() => {
         this._query.set(false);
       })
