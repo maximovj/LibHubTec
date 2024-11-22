@@ -132,4 +132,25 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
         return this.buildSuccessResponse(HttpStatus.OK, "Reservación de libro cancelado exitosamente", Optional.ofNullable(list));
     }
 
+    @Override
+    public ResponseEntity<ReserveBookResponse> listReserveBook(Long account_id) {
+        log.info("cancelReserveBook | Iniciando");
+        this.defineApiResponse("/v1/reserve/book/cancel", "POST");
+        List<ReserveBook> list = new ArrayList<>();
+
+        if(account_id == null) {
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Cuenta id no proporcionada", null);
+        }
+
+        this.account = this.accountDao.findById(account_id);
+        if(!this.account.isPresent()) {
+            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops cuenta no encontrado en el sistema", null);
+        }
+        
+        list = this.reserveBookDao.findByAccount(this.account.get());
+        
+        log.info("cancelReserveBook | Finalizado");
+        return this.buildSuccessResponse(HttpStatus.OK, "Listando reservación de libros para la cuenta", Optional.ofNullable(list));
+    }
+
 }

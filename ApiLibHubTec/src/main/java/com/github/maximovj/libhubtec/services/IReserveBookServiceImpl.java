@@ -11,4 +11,6 @@ public interface IReserveBookServiceImpl {
 
     public ResponseEntity<ReserveBookResponse> cancelReserveBook(ReserveBookRequest request);
 
+    public ResponseEntity<ReserveBookResponse> listReserveBook(Long account_id);
+
 }

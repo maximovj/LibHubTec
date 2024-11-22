@@ -14,6 +14,9 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -33,6 +36,12 @@ public class ReserveBookRestController implements IReserveBookServiceImpl {
     @Override
     public ResponseEntity<ReserveBookResponse> cancelReserveBook(@RequestBody @Valid ReserveBookRequest request) {
         return this.bookServiceImpl.cancelReserveBook(request);
+    }
+
+    @GetMapping("/reserve/book/list")
+    @Override
+    public ResponseEntity<ReserveBookResponse> listReserveBook(@RequestParam Long account_id) {
+        return this.bookServiceImpl.listReserveBook(account_id);
     }
     
 }
