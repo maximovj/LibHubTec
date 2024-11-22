@@ -42,7 +42,7 @@ return new class extends Migration
             // Control de reservación
             $table->timestamp('date_from', 0)->nullable()->default(DB::raw('CURRENT_TIMESTAMP')); // fecha de inicio (recoger)
             $table->timestamp('date_to', 0)->nullable()->default(DB::raw('CURRENT_TIMESTAMP')); // fecha final (entregar)
-            $table->string('status')->nullable()->default('pendiente'); // estado: pendiente, procesando, pagado, adeudo
+            $table->string('status')->nullable()->default('pending'); // estado: pendiente, procesando, pagado, adeudo
             $table->boolean('active')->nullable()->default(true);
             $table->timestamps();
         });
