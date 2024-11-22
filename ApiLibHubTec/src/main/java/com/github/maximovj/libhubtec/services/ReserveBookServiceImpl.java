@@ -104,6 +104,12 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
             return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops cuenta o libro no encontrado en el sistema", null);
         }
 
+        this.reserveBook = this.reserveBookDao.findByAccountAndBook(account.get(), book.get());
+        
+        if(this.reserveBook.isPresent()) {
+            return this.buildErrorResponse(HttpStatus.CONFLICT, "Oops ya tienes una reservación", null);
+        }
+
         ReserveBook reserveBook = this.defineReserveBook(this.account.get(), this.book.get());
         reserveBook.setDate_from(LocalDate.parse(request.getDate_from()).atStartOfDay());
         reserveBook.setDate_to(LocalDate.parse(request.getDate_to()).atStartOfDay());
