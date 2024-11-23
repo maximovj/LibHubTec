@@ -65,7 +65,7 @@ export class BooksService {
         }
         return response?.success;
       }),
-      catchError( (err) => throwError(() => err.message)),
+      catchError( (err) => throwError(() => { this._query.set(true); return err.message; })),
       tap(() => {
         this._query.set(false);
       })
@@ -122,9 +122,63 @@ export class BooksService {
       map(({response}) => {
         return response.success;
       }),
-      catchError(err => throwError(() => err.message )),
+      catchError(err => throwError(() => { this._query.set(false); return err.message; })),
       tap(() => {
         this._query.set(false);
+      })
+    );
+  }
+
+  // Cargar un libro por id
+  public getBookDetailsById(id :number) :Observable<any>
+  {
+    const _token = this.getToken();
+    if(!_token) {
+      this._query.set(false);
+      return of(null);
+    }
+
+    return this.http.get<BooksResponse>(`http://localhost:5800/v1/books/${id}/book-details`, { headers: {
+      'Authorization' : `Bearer ${_token}`,
+    }})
+    .pipe(
+      map(({ response, data}) => {
+        if(response.success && data){
+          return data.at(0);
+        }
+        return of(null);
+      }),
+      catchError( (err) => throwError(() => err.message)),
+    );
+  }
+
+  public findReserveBookByBookAndAccount(book_id: number, account_id: number): Observable<ReserveBookData | null> {
+    const _token = this.getToken();
+
+    // Si no hay token, emite directamente `null`
+    if (!_token) {
+      this._query.set(false);
+      return of(null);
+    }
+
+    return this.http.get<ReserveBookResponse>(
+      `http://localhost:5800/v1/reserve/book/find/${book_id}/account/${account_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${_token}`,
+        },
+      }
+    ).pipe(
+      map(({ response, data }) => {
+        // Si hay éxito y datos válidos, retorna el primer elemento
+        if (response.success && data && data.length > 0) {
+          return data[0];
+        }
+        // De lo contrario, retorna `null`
+        return null;
+      }),
+      catchError((err) => {
+        return of(null); // Emite `null` en caso de error
       })
     );
   }

@@ -10,7 +10,7 @@ import { CardModule } from 'primeng/card';
 import { ImageModule } from 'primeng/image';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
-import { BookEntity, ReserveBookData, ReserveBookRequest } from '../../interfaces';
+import { BookDetailsEntity, BookEntity, ReserveBookData, ReserveBookRequest } from '../../interfaces';
 import { BooksService } from './../../services/books-service.service';
 import { ThumbnailPipe } from '../../pipes/thumbnail.pipe';
 
@@ -47,24 +47,18 @@ export class BookDetailsComponent implements OnInit {
 
   public reserved :boolean = false;
 
-  public reserve_book_id ?:number;
+  public reserve_book_id ?:number | null;
+
+  public book_details!: BookDetailsEntity;
 
   constructor() { }
 
   ngOnInit() {
-    this.activedRoute.params.subscribe((params) => {
-      const id_book = params['id'];
-      this.booksService.getBookById(id_book).subscribe({
-        next: () => {
-          this.book = {...this.booksService.books()[0], thumbnail: undefined};
-          this.toastrService.success('Información del libro capturado');
-        },
-        error: () => {
-          this.router.navigateByUrl('/books/list');
-          this.toastrService.error('Error en la captura de la información del libro');
-        },
-      });
-    });
+    this.book_details = this.activedRoute.snapshot.data['book_details'];
+    this.book = this.book_details?.book;
+    this.reserved = this.book_details.isReserved || false;
+    this.reserve_book_id = this.book_details.reserve_book_id;
+    console.log({ data: this.book_details, book : this.book_details?.book });
   }
 
   onReserveBook() :void

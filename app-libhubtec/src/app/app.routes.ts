@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
 import { isNotAuthenticatedGuard } from './auth/guards/is-not-authenticated.guard';
+import { BookDetailsResolve } from './books/resolvers/book-details.resolve';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,7 @@ export const routes: Routes = [
         children: [
           {
             path: ':id',
+            resolve: { book_details: BookDetailsResolve },
             loadComponent: () => import('./books/pages/book-details/book-details.component').then( c => c.BookDetailsComponent),
           }
         ],
