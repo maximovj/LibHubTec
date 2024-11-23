@@ -1,5 +1,6 @@
 package com.github.maximovj.libhubtec.services;
 
+import java.lang.StackWalker.Option;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -157,6 +158,34 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
         
         log.info("listReserveBook | Finalizado");
         return this.buildSuccessResponse(HttpStatus.OK, "Listando reservación de libros para la cuenta", Optional.ofNullable(list));
+    }
+
+    @Override
+    public ResponseEntity<ReserveBookResponse> findReserveBook(Long book_id, Long account_id) {
+        log.info("findReserveBook | Iniciando");
+        List<ReserveBook> list = new ArrayList<>();
+        this.apiResponse  = new ApiResponse();
+        this.apiResponse.setUri("/v1/reserve/book/find/" + book_id + "/account/" + account_id);
+        this.apiResponse.setType("GET");
+
+        if(book_id == null || account_id == null ){
+            return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops libro y cuenta no proporcionados", null);
+        }
+
+        this.book = this.bookDao.findById(book_id);
+        this.account = this.accountDao.findById(account_id);
+        if(!this.book.isPresent() || !this.account.isPresent()) {
+            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops libro o cuenta no encontrado en el sistema", null);
+        }
+
+        this.reserveBook =  this.reserveBookDao.findByAccountAndBook(this.account.get(), this.book.get());
+        if(!this.reserveBook.isPresent()) {
+            return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops reservación de libro no encontrado en el sistema", null);
+        }
+
+        list.add(this.reserveBook.get());
+        log.info("findReserveBook | Finalizado");
+        return this.buildSuccessResponse(HttpStatus.OK, "Reservación de libro obtenido correctamente", Optional.ofNullable(list));
     }
 
 }

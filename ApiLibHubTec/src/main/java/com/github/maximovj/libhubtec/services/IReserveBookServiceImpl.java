@@ -13,4 +13,6 @@ public interface IReserveBookServiceImpl {
 
     public ResponseEntity<ReserveBookResponse> listReserveBook(Long account_id);
 
+    public ResponseEntity<ReserveBookResponse> findReserveBook(Long book_id, Long account_id);
+
 }
