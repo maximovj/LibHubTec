@@ -1,14 +1,18 @@
-import { catchError, delay, firstValueFrom, map, Observable, of, startWith } from 'rxjs';
+
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { catchError, delay, map, Observable, of, startWith } from 'rxjs';
+
 import { AuthService } from '../../../auth/services/auth-service.service';
 import { BooksService } from './../../../books/services/books-service.service';
-import { Component, inject, OnInit } from '@angular/core';
-import { ReserveBookData } from '../../../books/interfaces';
-import { CommonModule } from '@angular/common';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   standalone: true,
   imports: [
     CommonModule,
+    LoadingComponent,
   ],
   templateUrl: "./user-books.component.html",
 })

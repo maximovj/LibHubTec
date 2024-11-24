@@ -2,7 +2,7 @@
 
 <div *ngIf="listReserveBook$ | async as state">
   <ng-container *ngIf="state.loading; else content" >
-    <p>Cargando los libros</p>
+    <shared-loading text="Cargando libros reservados..."></shared-loading>
   </ng-container>
   <ng-template #content>
     <div *ngIf="state.err; else books;">
