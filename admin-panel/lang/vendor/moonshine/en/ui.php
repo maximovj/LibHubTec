@@ -123,6 +123,19 @@ return [
             'active' => 'Active',
         ],
 
+        'notification_account_title' => 'Notification accounts',
+        'notification_account' => [
+            'user' => 'User',
+            'account' => 'Account',
+            'subject' => 'Subject',
+            'content' => 'Content',
+            'attach' => 'Attach',
+            'signature' => 'Signature',
+            'status' => 'Status',
+            'send_email' => 'Send email',
+            'tags' => 'Tags',
+        ],
+
         'main_information' => 'Main information',
         'change_password' => 'Change password',
 

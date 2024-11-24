@@ -123,6 +123,19 @@ return [
             'active' => 'Activa',
         ],
 
+        'notification_account_title' => 'Notificar cuentas',
+        'notification_account' => [
+            'user' => 'Usuario',
+            'account' => 'Cuenta',
+            'subject' => 'Asunto',
+            'content' => 'Contenido',
+            'attach' => 'Archivo adjunto',
+            'signature' => 'Firma comercial',
+            'status' => 'Estado',
+            'send_email' => 'Enviar correo electrónico',
+            'tags' => 'Etiquetas',
+        ],
+
         'main_information' => 'Información principal',
         'change_password' => 'Cambiar contraseña',
 
