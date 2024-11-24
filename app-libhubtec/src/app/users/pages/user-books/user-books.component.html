@@ -1,0 +1,22 @@
+<h1>Ver mis libros</h1>
+
+<div *ngIf="listReserveBook$ | async as state">
+  <ng-container *ngIf="state.loading; else content" >
+    <p>Cargando los libros</p>
+  </ng-container>
+  <ng-template #content>
+    <div *ngIf="state.err; else books;">
+      <p>Error en la consulta : {{ state.err.message }}</p>
+    </div>
+    <ng-template #books>
+      <div *ngIf="state.data!.length > 0; else noBooks">
+        <ul *ngFor="let item of state.data; let i = index;">
+          <li> {{ item.book.title }}</li>
+        </ul>
+      </div>
+      <ng-template #noBooks>
+        <p>Aún no tienes libros reservados</p>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+</div>

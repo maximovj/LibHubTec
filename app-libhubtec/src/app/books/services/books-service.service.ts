@@ -1,9 +1,10 @@
 import { ReserveBookRequest } from './../interfaces/reserve-book-request.interface';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from "@angular/core";
-import { catchError, delay, map, Observable, of, pipe, tap, throwError } from 'rxjs';
+import { catchError, delay, map, Observable, of, pipe, switchMap, tap, throwError } from 'rxjs';
 import { BooksResponse, ReserveBookData, ReserveBookResponse } from '../interfaces';
 import { BookEntity } from '../interfaces';
+import { User } from '../../shared/interfaces';
 
 @Injectable({ providedIn: "root" })
 export class BooksService {
@@ -149,6 +150,26 @@ export class BooksService {
         return of(null);
       }),
       catchError( (err) => throwError(() => err.message)),
+    );
+  }
+
+  // Obtener la lista de libros reservados para una cuenta
+  public getListReservedBooksByAccount(account :User | null) : Observable<ReserveBookData[] | null>
+  {
+    const _token = this.getToken();
+    if(!_token) {
+      return of(null);
+    }
+
+    return this.http.get<ReserveBookResponse>(`http://localhost:5800/v1/reserve/book/list/${account?.id}/account`, {
+      headers: {
+        'Authorization' : `Bearer ${_token}`,
+      }
+    })
+    .pipe(
+      map(({data}) => {
+          return data;
+      }),
     );
   }
 
