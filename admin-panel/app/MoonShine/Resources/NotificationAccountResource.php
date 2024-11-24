@@ -18,6 +18,7 @@ use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
 use MoonShine\Enums\JsEvent;
+use MoonShine\Enums\PageType;
 use MoonShine\Fields\Checkbox;
 use MoonShine\Fields\Enum;
 use MoonShine\Fields\File;
@@ -41,6 +42,8 @@ use MoonShine\Support\AlpineJs;
 class NotificationAccountResource extends ModelResource
 {
     protected string $model = NotificationAccount::class;
+
+    protected ?PageType $redirectAfterSave = PageType::INDEX;
 
     protected string $title = 'NotificationAccount'; // Section title
 
@@ -69,12 +72,6 @@ class NotificationAccountResource extends ModelResource
         return null;
     }
 
-    public function redirectAfterSave(): string
-    {
-        $referer = Request::header('referer');
-        return $referer ?? '/';
-    }
-
     public function getActiveActions(): array
     {
         return ['create', 'view', 'delete'];
@@ -83,6 +80,33 @@ class NotificationAccountResource extends ModelResource
     public function title(): string
     {
         return __('moonshine::ui.resource.notification_account_title');
+    }
+
+    public function filters(): array
+    {
+        return [
+            BelongsTo::make(
+                static fn() => __('moonshine::ui.resource.notification_account.user'),
+                'user',
+                fn($item) => "$item->name | $item->email",
+                resource: new MoonShineUserResource())
+                ->valuesQuery(fn(Builder $query, Field $field) => $query
+                    ->join('notification_accounts', 'moonshine_users.id', '=', 'notification_accounts.moonshine_user_id')
+                    ->select(['moonshine_users.id', 'moonshine_users.name', 'moonshine_users.email'])
+                    ->distinct())
+                ->searchable()
+                ->default(MoonshineUser::find(auth()->id())),
+            BelongsTo::make(
+                static fn() => __('moonshine::ui.resource.notification_account.account'),
+                'account',
+                fn($item) => "$item->username | $item->email",
+                resource: new AccountResource())
+                ->valuesQuery(fn(Builder $query, Field $field) => $query
+                    ->join('notification_accounts', 'accounts.id', '=', 'notification_accounts.account_id')
+                    ->select(['accounts.id', 'accounts.username', 'accounts.email'])
+                    ->distinct())
+                ->searchable(),
+        ];
     }
 
     /**
