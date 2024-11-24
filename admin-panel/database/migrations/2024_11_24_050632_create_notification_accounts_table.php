@@ -34,7 +34,7 @@ return new class extends Migration
             $table->text("content")->nullable();
             $table->string("attach")->nullable();
             $table->string("signature")->nullable();
-            $table->enum("status", ["pendiente", "enviado","reenviado", "leído"])->default("pendiente");
+            $table->enum("status", ["pending", "send","resend", "read"])->default("pending");
             $table->boolean("send_email")->nullable()->default(false);
             $table->json("tags")->nullable();
             $table->timestamps();

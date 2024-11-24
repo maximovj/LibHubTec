@@ -4,10 +4,10 @@ namespace App\Enums;
 
 enum NotificationAccountStatus : string
 {
-    case Pending = "pendiente";
-    case Send = "enviado";
-    case Resend = "reenviado";
-    case Read = "leído";
+    case Pending = "pending";
+    case Send = "send";
+    case Resend = "resend";
+    case Read = "read";
 
     public function toString(): ?string
     {
