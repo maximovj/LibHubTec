@@ -46,7 +46,7 @@ class NotificationAccountResource extends ModelResource
 
     protected string $column = 'id';
 
-    protected bool $createInModal = true;
+    protected bool $createInModal = false;
 
     protected bool $editInModal = true;
 
@@ -117,6 +117,7 @@ class NotificationAccountResource extends ModelResource
                 Image::make(static fn() => __('moonshine::ui.resource.notification_account.signature'),'signature'),
                 Enum::make(static fn() => __('moonshine::ui.resource.notification_account.status'), 'status')
                     ->attach(NotificationAccountStatus::class)
+                    ->disabled()
                     ->onApply(function(Model $item){
                         $item->status = NotificationAccountStatus::Send;
                         return $item;
