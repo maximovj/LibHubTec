@@ -39,9 +39,9 @@ public class ReserveBookRestController implements IReserveBookServiceImpl {
         return this.bookServiceImpl.cancelReserveBook(request);
     }
 
-    @GetMapping("/reserve/book/list")
+    @GetMapping("/reserve/book/list/{account_id}/account")
     @Override
-    public ResponseEntity<ReserveBookResponse> listReserveBook(@RequestParam Long account_id) {
+    public ResponseEntity<ReserveBookResponse> listReserveBook(@PathVariable Long account_id) {
         return this.bookServiceImpl.listReserveBook(account_id);
     }
 
