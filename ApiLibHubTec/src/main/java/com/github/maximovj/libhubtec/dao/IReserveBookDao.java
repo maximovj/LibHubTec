@@ -12,8 +12,8 @@ import com.github.maximovj.libhubtec.model.ReserveBook;
 public interface IReserveBookDao extends CrudRepository<ReserveBook, Long> 
 {
 
-    Optional<ReserveBook> findByAccountAndBook(Account account, Book book);
+    public Optional<ReserveBook> findByAccountAndBook(Account account, Book book);
     
-    List<ReserveBook> findByAccount(Account account);
+    public List<ReserveBook> findByAccount(Account account);
     
 }
