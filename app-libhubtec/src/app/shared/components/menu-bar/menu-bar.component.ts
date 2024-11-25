@@ -41,15 +41,12 @@ export class MenuBarComponent implements OnInit {
           {
               label: 'Inicio',
               icon: 'pi pi-home',
-              routerLink: '/books/list',
+              routerLink: '/home',
           },
           {
               label: 'Libros',
               icon: 'pi pi-book',
-              command: () => {
-                this.tieredMenuService.setActive('my-books');
-                this.router.navigateByUrl(`/users/${this.authService.user()?.username}/my-books`);
-              }
+              routerLink: '/books/list',
           },
           {
               label: 'Notificaciones',
