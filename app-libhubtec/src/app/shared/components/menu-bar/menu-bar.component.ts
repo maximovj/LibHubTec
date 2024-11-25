@@ -48,7 +48,7 @@ export class MenuBarComponent implements OnInit {
               label: 'Notificaciones',
               icon: 'pi pi-bell',
               badge: '3',
-              routerLink: '/books/list',
+              routerLink: '/notifications/list',
           }
       ];
   }

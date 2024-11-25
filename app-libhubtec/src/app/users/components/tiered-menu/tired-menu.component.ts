@@ -46,6 +46,11 @@ export class TieredMenuComponent implements OnInit {
           routerLink: 'my-books',
         },
         {
+          label: 'Notifications',
+          icon: 'pi pi-bell',
+          routerLink: 'notifications',
+        },
+        {
           label: 'Search',
           icon: 'pi pi-search',
           routerLink: 'my-search',
