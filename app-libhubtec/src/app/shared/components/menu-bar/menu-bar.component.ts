@@ -64,4 +64,10 @@ export class MenuBarComponent implements OnInit {
   {
     return this.authService.user()?.username || '';
   }
+
+  btnGoToSettings() : void
+  {
+    this.tieredMenuService.setActive('settings');
+    this.router.navigateByUrl(`/users/${this.authService.user()?.username}/settings`);
+  }
 }

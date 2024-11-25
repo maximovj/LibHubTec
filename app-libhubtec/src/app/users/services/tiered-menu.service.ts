@@ -6,7 +6,7 @@ export class TieredMenuService {
 
   private router = inject(Router);
 
-  public _routerLinkActive = signal<string>('settings');
+  private _routerLinkActive = signal<string>('settings');
   public routerLinkActive = computed(()=> this._routerLinkActive());
 
   public setActive(routerLink: string) :void
@@ -14,7 +14,7 @@ export class TieredMenuService {
     this._routerLinkActive.set(routerLink.replace('/', ''));
   }
 
-  activeRouterLinkByUrl() :void
+  public activeRouterLinkByUrl() :void
   {
     const url = this.router.url;
     const segments = url.split('/');

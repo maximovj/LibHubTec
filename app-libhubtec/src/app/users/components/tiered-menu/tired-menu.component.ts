@@ -30,7 +30,7 @@ export class TieredMenuComponent implements OnInit {
   private tieredMenuService = inject(TieredMenuService);
   private service = inject(AuthService);
 
-  public routerLinkActive = computed(()=> this.tieredMenuService._routerLinkActive());
+  public routerLinkActive = computed(()=> this.tieredMenuService.routerLinkActive());
 
   public items: MenuItem[] | undefined;
 
