@@ -42,17 +42,17 @@ export class TieredMenuComponent implements OnInit {
           routerLink: 'settings',
         },
         {
-          label: 'Books',
+          label: 'Mis libros',
           icon: 'pi pi-book',
           routerLink: 'my-books',
         },
         {
-          label: 'Notifications',
+          label: 'Notificaciones',
           icon: 'pi pi-bell',
           routerLink: 'notifications',
         },
         {
-          label: 'Search',
+          label: 'Busqueda',
           icon: 'pi pi-search',
           routerLink: 'my-search',
         },
@@ -60,7 +60,7 @@ export class TieredMenuComponent implements OnInit {
           separator: true
         },
         {
-          label: 'Share',
+          label: 'Compartir',
           icon: 'pi pi-share-alt',
         },
         {
