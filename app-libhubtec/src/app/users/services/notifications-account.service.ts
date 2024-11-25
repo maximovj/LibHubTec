@@ -1,5 +1,5 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
-import { NotificationAccount, NotificationAccountResponse } from "../interfaces";
+import { NotificationAccount, NotificationAccountResponse } from "../../users/interfaces";
 import { HttpClient } from "@angular/common/http";
 import { catchError, delay, map, Observable, of, throwError } from "rxjs";
 import { User } from "../../shared/interfaces";

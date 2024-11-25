@@ -62,21 +62,6 @@ export const routes: Routes = [
     ]
   },
   {
-    path: 'notifications',
-    loadComponent: () => import('./notifications/layouts/notifications-layout/notifications-layout.component').then( c => c.NotificationsLayout),
-    children: [
-      {
-        path: 'list',
-        loadComponent: () => import('./notifications/pages/notifications-list/notifications-list.component').then( c => c.NotificationsListPage),
-      },
-      {
-        path: '',
-        pathMatch: "full",
-        redirectTo: 'list'
-      }
-    ],
-  },
-  {
     path: 'users',
     children: [
       {

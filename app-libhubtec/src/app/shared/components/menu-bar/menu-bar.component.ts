@@ -52,13 +52,10 @@ export class MenuBarComponent implements OnInit {
               label: 'Notificaciones',
               icon: 'pi pi-bell',
               badge: '3',
-              routerLink: '/notifications/list',
-              /*
               command: () => {
                 this.tieredMenuService.setActive('notifications');
                 this.router.navigateByUrl(`/users/${this.authService.user()?.username}/notifications`);
               }
-              */
           }
       ];
   }
