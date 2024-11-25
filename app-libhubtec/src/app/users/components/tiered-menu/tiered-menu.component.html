@@ -2,8 +2,8 @@
   <ng-template pTemplate="item" let-item let-hasSubmenu="hasSubmenu">
     <ng-container *ngIf="item.routerLink; else withoutRouterLink;">
       <a
-      [ngClass]="{'menuitem-active': item.label === itemActive()}"
-      (click)="setActive(item.label)"
+      [ngClass]="{'menuitem-active': item.routerLink === routerLinkActive()}"
+      (click)="setActive(item.routerLink)"
       [routerLink]="item.routerLink" class="p-ripple p-element p-menuitem-link ng-star-inserted p-menuitem-link-active" pRipple>
         <span [class]="item.icon"></span>
         <span class="ml-2">{{ item.label }}</span>

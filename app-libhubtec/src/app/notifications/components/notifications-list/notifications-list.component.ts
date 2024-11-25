@@ -1,22 +1,34 @@
-import { ToastrService } from 'ngx-toastr';
-import { AuthService } from './../../../auth/services/auth-service.service';
-import { Component, inject, OnInit } from "@angular/core";
-import { MenuBarComponent } from "../../../shared/components/menu-bar/menu-bar.component";
-import { NotificationsAccountService } from "../../services/notifications-account.service";
+import { Component, inject, Input, OnInit } from "@angular/core";
+import { CommonModule } from '@angular/common';
 import { catchError, delay, map, Observable, of, startWith } from 'rxjs';
-import { NotificationAccount, NotificationAccountStatus } from '../../interfaces';
-import { NotificationsListComponent } from '../../components/notifications-list/notifications-list.component';
+
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
+import { TooltipModule } from 'primeng/tooltip';
+import { ChipModule } from 'primeng/chip';
+import { ToastrService } from 'ngx-toastr';
+
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
+import { AuthService } from '../../../auth/services/auth-service.service';
+import { NotificationsAccountService } from "../../services/notifications-account.service";
+import { NotificationAccount, NotificationAccountStatus } from "../../interfaces";
 
 @Component({
+  selector: "user-notifications-list",
   standalone: true,
-  styles: ``,
   templateUrl: "./notifications-list.component.html",
   imports: [
-    MenuBarComponent,
-    NotificationsListComponent,
+    CommonModule,
+    LoadingComponent,
+    CardModule,
+    ButtonModule,
+    DividerModule,
+    TooltipModule,
+    ChipModule,
   ],
 })
-export class NotificationsListPage implements OnInit {
+export class NotificationsListComponent implements OnInit {
 
   private toastrService = inject(ToastrService);
 
@@ -25,6 +37,9 @@ export class NotificationsListPage implements OnInit {
   private notificationAccountService = inject(NotificationsAccountService);
 
   public listNotifications$ ?:Observable<any>;
+
+  @Input("styleClassGrid")
+  public styleClassGrid :string = "col-12 md:col-6";
 
   constructor() { }
 

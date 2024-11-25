@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { AvatarModule } from 'primeng/avatar';
@@ -8,7 +8,9 @@ import { BadgeModule } from 'primeng/badge';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
+
 import { AuthService } from '../../../auth/services/auth-service.service';
+import { TieredMenuService } from '../../../users/services/tiered-menu.service';
 
 @Component({
   selector: 'shared-menu-bar',
@@ -27,6 +29,8 @@ import { AuthService } from '../../../auth/services/auth-service.service';
 })
 export class MenuBarComponent implements OnInit {
 
+  private router = inject(Router);
+  private tieredMenuService = inject(TieredMenuService);
   private authService = inject(AuthService);
   public items :MenuItem[] | undefined;
 
@@ -49,6 +53,12 @@ export class MenuBarComponent implements OnInit {
               icon: 'pi pi-bell',
               badge: '3',
               routerLink: '/notifications/list',
+              /*
+              command: () => {
+                this.tieredMenuService.setActive('notifications');
+                this.router.navigateByUrl(`/users/${this.authService.user()?.username}/notifications`);
+              }
+              */
           }
       ];
   }

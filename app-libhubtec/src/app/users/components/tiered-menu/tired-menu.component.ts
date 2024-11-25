@@ -1,3 +1,4 @@
+import { TieredMenuService } from '../../services/tiered-menu.service';
 import { CommonModule } from '@angular/common';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -26,10 +27,10 @@ import { AuthService } from '../../../auth/services/auth-service.service';
 
 export class TieredMenuComponent implements OnInit {
 
+  private tieredMenuService = inject(TieredMenuService);
   private service = inject(AuthService);
 
-  public _itemActive = signal<string>('General');
-  public itemActive = computed(()=> this._itemActive());
+  public routerLinkActive = computed(()=> this.tieredMenuService._routerLinkActive());
 
   public items: MenuItem[] | undefined;
 
@@ -70,10 +71,13 @@ export class TieredMenuComponent implements OnInit {
     ];
   }
 
-  ngOnInit() { }
-
-  setActive(label: string) :void
-  {
-    this._itemActive.set(label);
+  ngOnInit() {
+    this.tieredMenuService.activeRouterLinkByUrl();
   }
+
+  setActive(routerLink: string) :void
+  {
+    this.tieredMenuService.setActive(routerLink);
+  }
+
 }
