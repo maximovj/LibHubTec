@@ -4,12 +4,12 @@
       [fullScreen]="false"
       [autoPlay]="true"
       [circular]="true"
-      [showItemNavigators]="true"
+      [showItemNavigators]="false"
       [showThumbnails]="false"
       [showIndicators]="true"
       [showIndicatorsOnItem]="true"
       [responsiveOptions]="responsiveOptions"
-      [containerStyle]="{ 'width': '100%', 'height': '100%' }">
+      containerClass="w-full">
           <ng-template pTemplate="item" let-item>
               <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
           </ng-template>
@@ -18,5 +18,6 @@
                   <img [src]="item.thumbnailImageSrc" style="display: block;" />
               </div>
           </ng-template>
+
   </p-galleria>
 </div>

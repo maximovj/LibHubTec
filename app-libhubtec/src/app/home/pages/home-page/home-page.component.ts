@@ -3,7 +3,8 @@ import { Component, OnInit } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { MenuBarComponent } from "../../../shared/components/menu-bar/menu-bar.component";
 
-import { ImagesPreviewsComponent } from "../../components/gallery-images/gallery-images.component";
+import { GalleryImagesComponent } from "../../components/gallery-images/gallery-images.component";
+import { CardModule } from "primeng/card";
 
 @Component({
   standalone: true,
@@ -12,8 +13,9 @@ import { ImagesPreviewsComponent } from "../../components/gallery-images/gallery
   imports: [
     CommonModule,
     RouterModule,
+    CardModule,
     MenuBarComponent,
-    ImagesPreviewsComponent,
+    GalleryImagesComponent,
   ],
 })
 export class HomePage implements OnInit {

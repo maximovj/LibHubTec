@@ -16,7 +16,7 @@ import { ImageModule } from "primeng/image";
     GalleriaModule,
   ]
 })
-export class ImagesPreviewsComponent implements OnInit {
+export class GalleryImagesComponent implements OnInit {
 
   images: any[] | undefined;
 
@@ -48,6 +48,30 @@ export class ImagesPreviewsComponent implements OnInit {
         thumbnailImageSrc: 'https://placehold.co/60x60?text=Imagen+del+evento+%20+2',
         alt: 'Description for Image 2',
         title: 'Title 2'
+      },
+      {
+        itemImageSrc: 'https://placehold.co/300x200?text=Imagen+del+evento+%20+3',
+        thumbnailImageSrc: 'https://placehold.co/60x60?text=Imagen+del+evento+%20+3',
+        alt: 'Description for Image 3',
+        title: 'Title 3'
+      },
+      {
+        itemImageSrc: 'https://placehold.co/300x200?text=Imagen+del+evento+%20+4',
+        thumbnailImageSrc: 'https://placehold.co/60x60?text=Imagen+del+evento+%20+4',
+        alt: 'Description for Image 4',
+        title: 'Title 4'
+      },
+      {
+        itemImageSrc: 'https://placehold.co/300x200?text=Imagen+del+evento+%20+5',
+        thumbnailImageSrc: 'https://placehold.co/60x60?text=Imagen+del+evento+%20+5',
+        alt: 'Description for Image 5',
+        title: 'Title 5'
+      },
+      {
+        itemImageSrc: 'https://placehold.co/300x200?text=Imagen+del+evento+%20+6',
+        thumbnailImageSrc: 'https://placehold.co/60x60?text=Imagen+del+evento+%20+6',
+        alt: 'Description for Image 6',
+        title: 'Title 6'
       },
     ];
   }
