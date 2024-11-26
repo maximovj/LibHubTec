@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\MoonShine\Resources\AccountResource;
+use App\MoonShine\Resources\AnnouncementResource;
 use App\MoonShine\Resources\BookResource;
 use App\MoonShine\Resources\NotificationAccountResource;
 use App\MoonShine\Resources\RecoverAccountResource;
@@ -77,6 +78,9 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                 static fn() => __('moonshine::ui.resource.notification_account_title'),
                 new NotificationAccountResource(),
             ),
+            MenuItem::make(
+                static fn () => __('moonshine::ui.resource.announcement_title'),
+                new AnnouncementResource())
         ];
     }
 

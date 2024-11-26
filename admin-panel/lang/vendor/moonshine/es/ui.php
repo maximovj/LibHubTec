@@ -136,6 +136,17 @@ return [
             'tags' => 'Etiquetas',
         ],
 
+        'announcement_title' => 'Anuncios',
+        'announcement' => [
+            'user' => 'Usuario',
+            'title' => 'Título',
+            'content' => 'Contenido',
+            'link' => 'Enlace',
+            'pictures' => 'Imágenes',
+            'tags' => 'Etiquetas',
+            'deleted' => 'Eliminado',
+        ],
+
         'main_information' => 'Información principal',
         'change_password' => 'Cambiar contraseña',
 

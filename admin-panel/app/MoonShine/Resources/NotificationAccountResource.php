@@ -6,9 +6,9 @@ namespace App\MoonShine\Resources;
 
 use App\Enums\NotificationAccountStatus;
 use MoonShine\Fields\Image;
-use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\NotificationAccount;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Request;
 use MoonShine\ActionButtons\ActionButton;
 use MoonShine\Attributes\Icon;

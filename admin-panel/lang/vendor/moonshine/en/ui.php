@@ -136,6 +136,17 @@ return [
             'tags' => 'Tags',
         ],
 
+        'announcement_title' => 'Announcements',
+        'announcement' => [
+            'user' => 'User',
+            'title' => 'Title',
+            'content' => 'Content',
+            'link' => 'Link',
+            'pictures' => 'Pictures',
+            'tags' => 'Tags',
+            'deleted' => 'Deleted',
+        ],
+
         'main_information' => 'Main information',
         'change_password' => 'Change password',
 
