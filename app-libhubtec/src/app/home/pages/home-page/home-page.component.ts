@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { MenuBarComponent } from "../../../shared/components/menu-bar/menu-bar.component";
 
-import * as PrimeNGModule from "primeng";
+import { ImagesPreviewsComponent } from "../../components/gallery-images/gallery-images.component";
 
 @Component({
   standalone: true,
@@ -13,6 +13,7 @@ import * as PrimeNGModule from "primeng";
     CommonModule,
     RouterModule,
     MenuBarComponent,
+    ImagesPreviewsComponent,
   ],
 })
 export class HomePage implements OnInit {

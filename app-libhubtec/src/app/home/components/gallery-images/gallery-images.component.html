@@ -1,0 +1,22 @@
+<div class="card">
+  <p-galleria
+      [value]="images"
+      [fullScreen]="false"
+      [autoPlay]="true"
+      [circular]="true"
+      [showItemNavigators]="true"
+      [showThumbnails]="false"
+      [showIndicators]="true"
+      [showIndicatorsOnItem]="true"
+      [responsiveOptions]="responsiveOptions"
+      [containerStyle]="{ 'width': '100%', 'height': '100%' }">
+          <ng-template pTemplate="item" let-item>
+              <img [src]="item.itemImageSrc" style="width: 100%; display: block;" />
+          </ng-template>
+          <ng-template pTemplate="thumbnail" let-item>
+              <div class="grid grid-nogutter justify-content-center">
+                  <img [src]="item.thumbnailImageSrc" style="display: block;" />
+              </div>
+          </ng-template>
+  </p-galleria>
+</div>
