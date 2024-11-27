@@ -8,6 +8,7 @@ use MoonShine\Fields\Image;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Announcement;
 use Illuminate\Database\Eloquent\Builder;
+use MoonShine\ActionButtons\ActionButton;
 use MoonShine\Attributes\Icon;
 use MoonShine\Resources\ModelResource;
 use MoonShine\Decorations\Block;
@@ -25,6 +26,7 @@ use MoonShine\Fields\Url;
 use MoonShine\Handlers\ExportHandler;
 use MoonShine\Handlers\ImportHandler;
 use MoonShine\Models\MoonshineUser;
+use MoonShine\MoonShineUI;
 use MoonShine\Resources\MoonShineUserResource;
 
 /**
@@ -113,8 +115,8 @@ class AnnouncementResource extends ModelResource
                     fn()=> __('moonshine::ui.resource.announcement.tags'),
                     'tags')->tags(),
                 Switcher::make(
-                    fn()=> __('moonshine::ui.resource.announcement.deleted'),
-                    'deleted'),
+                    fn()=> __('moonshine::ui.resource.announcement.is_published'),
+                    'is_published'),
             ]),
         ];
     }
@@ -145,8 +147,8 @@ class AnnouncementResource extends ModelResource
                 fn()=> __('moonshine::ui.resource.announcement.tags'),
                 'tags')->tags(),
             Switcher::make(
-                fn()=> __('moonshine::ui.resource.announcement.deleted'),
-                'deleted'),
+                fn()=> __('moonshine::ui.resource.announcement.is_published'),
+                'is_published'),
         ];
     }
 

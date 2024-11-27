@@ -27,8 +27,7 @@ return new class extends Migration
             $table->json('pictures')->nullable();
             $table->string('link')->nullable();
             $table->string('tags')->nullable();
-            $table->boolean('deleted')->default(false);
-            $table->softDeletes();
+            $table->boolean('is_published')->default(false);
             $table->timestamps();
         });
     }

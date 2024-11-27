@@ -144,7 +144,7 @@ return [
             'link' => 'Enlace',
             'pictures' => 'Imágenes',
             'tags' => 'Etiquetas',
-            'deleted' => 'Eliminado',
+            'is_published' => 'Publicado',
         ],
 
         'main_information' => 'Información principal',

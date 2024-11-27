@@ -144,7 +144,7 @@ return [
             'link' => 'Link',
             'pictures' => 'Pictures',
             'tags' => 'Tags',
-            'deleted' => 'Deleted',
+            'is_published' => 'Published',
         ],
 
         'main_information' => 'Main information',
