@@ -108,7 +108,7 @@ class AnnouncementResource extends ModelResource
                     'pictures')
                     ->hint('Insert pictures with a 6 limit')
                     ->vertical()
-                    ->onlyValue('picture', Image::make('picture'))
+                    ->onlyValue('picture', Image::make('picture')->allowedExtensions(['jpg','png', 'jpeg']))
                     ->creatable(limit: 6)
                     ->removable(),
                 Text::make(
@@ -164,15 +164,9 @@ class AnnouncementResource extends ModelResource
             'moonshine_user_id' => ['exists:moonshine_users,id', 'nullable'],
             'title' => ['required', 'string', 'min:4', 'max:160'],
             'content' => ['required', 'string', 'min:4'],
+            'pictures.picture' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:5648'], // 5MB max.
             'link' => ['sometimes', 'url', 'nullable'],
         ];
-    }
-
-    protected function beforeDeleting(Model $item): Model
-    {
-        $item->deleted = true;
-        $item->save();
-        return $item;
     }
 
 }
