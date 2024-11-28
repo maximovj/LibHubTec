@@ -18,25 +18,51 @@
   </aside>
 
   <!-- Contenido principal -->
-  <main class="w-full lg:w-9 bg-withe">
-      <p-card styleClass="mb-4">
-        <article>
-          <h2>Mi primer artículo en el blog</h2>
-          <p class="text-700 text-sm">Publicado el 25 de noviembre de 2024</p>
-          <home-images-previes class="w-full h-auto border-round-sm mt-3"></home-images-previes>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Morbi euismod magna ac lorem rutrum accumsan. Integer malesuada nulla sit amet diam. Cras metus. Sed aliquet risus a tortor. Integer id quam. Maecenas fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla a mi.</p>
-          <p>Nullam tincidunt, ante ut viverra luctus, magna mi dapibus nulla, vel malesuada elit odio ac augue. Donec euismod nisl sit amet neque sollicitudin bibendum. Donec auctor venenatis turpis. Cras interdum erat non nulla egestas, sed scelerisque nulla consectetur.</p>
-        </article>
-      </p-card>
-      <p-card>
-        <article>
-          <h2>Mi primer artículo en el blog</h2>
-          <p class="text-700 text-sm">Publicado el 25 de noviembre de 2024</p>
-          <home-images-previes class="w-full h-auto border-round-sm mt-3"></home-images-previes>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Morbi euismod magna ac lorem rutrum accumsan. Integer malesuada nulla sit amet diam. Cras metus. Sed aliquet risus a tortor. Integer id quam. Maecenas fermentum consequat mi. Donec fermentum. Pellentesque malesuada nulla a mi.</p>
-          <p>Nullam tincidunt, ante ut viverra luctus, magna mi dapibus nulla, vel malesuada elit odio ac augue. Donec euismod nisl sit amet neque sollicitudin bibendum. Donec auctor venenatis turpis. Cras interdum erat non nulla egestas, sed scelerisque nulla consectetur.</p>
-        </article>
-      </p-card>
+  <main class="w-full lg:w-9 bg-withe" *ngIf="announcements | async as state">
+
+      <ng-container *ngIf="state.loading; else content" >
+        <p-card>
+          <article>
+            <shared-loading></shared-loading>
+          </article>
+        </p-card>
+      </ng-container>
+      <ng-template #content>
+        <ng-container *ngIf="state.data.length === 0; else announcements">
+          <p-card>
+            <article>
+              <h2>Aún no hay anuncios importantes</h2>
+            </article>
+          </p-card>
+        </ng-container>
+        <ng-template #announcements>
+          <div *ngFor="let announcement of state.data;">
+            <p-card [hidden]="!announcement.isPublished" styleClass="mb-4">
+              <article>
+                <h2>{{ announcement.title }}</h2>
+                <p class="text-700 text-sm">Publicado el {{ announcement.createdAt | date:'medium' }}</p>
+                <home-images-previes [pictures]="announcement.pictures" class="w-full h-auto border-round-sm mt-3"></home-images-previes>
+                <p>{{ announcement.content }}</p>
+                @if(announcement.tags){
+                  <ng-container *ngIf="announcement.tags?.split(',').length === 0; else tags;">
+                    <p-card>
+                      <article>
+                        <h2>Aún no hay anuncios importantes</h2>
+                      </article>
+                    </p-card>
+                  </ng-container>
+                  <ng-template #tags>
+                    <div class="card flex align-items-center gap-2 flex-wrap">
+                      <p-chip *ngFor="let tag of announcement.tags.split(',')" [label]="tag" />
+                    </div>
+                  </ng-template>
+                }
+              </article>
+            </p-card>
+          </div>
+        </ng-template>
+      </ng-template>
+
   </main>
 
 </div>
