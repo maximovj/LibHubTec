@@ -46,7 +46,7 @@ public class AnnouncementServiceImpl implements IAnnouncementServiceImpl {
         this.apiResponse.setUri("/v1/announcements");
         this.apiResponse.setType("GET");
 
-        list = (List<Announcement>) this.announcementDao.findAll();
+        list = (List<Announcement>) this.announcementDao.findByIsPublishedTrueOrderByUpdatedAtDesc();
         
         log.info("listAnnouncements : Finalizado");
         return this.buildSuccessResponse("Listando anuncios correctamente", Optional.ofNullable(list));
