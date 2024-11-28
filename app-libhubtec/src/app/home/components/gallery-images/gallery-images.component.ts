@@ -48,4 +48,9 @@ export class GalleryImagesComponent implements OnInit {
     });
   }
 
+  public imgError(event: Event): void {
+    const target = event.target as HTMLImageElement;
+    target.src = 'images/no_thumbnail.jpg';
+  }
+
 }

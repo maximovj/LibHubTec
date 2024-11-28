@@ -11,7 +11,7 @@
       [responsiveOptions]="responsiveOptions"
       containerClass="w-full">
           <ng-template pTemplate="item" let-item>
-              <img [src]="item.itemImageSrc | thumbnail" style="width: 100%; display: block;" />
+              <img [src]="item.itemImageSrc | thumbnail" (error)="imgError($event)" style="width: 100%; display: block;" />
           </ng-template>
           <ng-template pTemplate="thumbnail" let-item>
               <div class="grid grid-nogutter justify-content-center">
