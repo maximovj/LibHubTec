@@ -10,6 +10,7 @@ import { catchError, delay, map, Observable, of, startWith } from 'rxjs';
 import { Announcement } from '../../interfaces';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import { ChipModule } from 'primeng/chip';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   standalone: true,
@@ -18,6 +19,7 @@ import { ChipModule } from 'primeng/chip';
   imports: [
     CommonModule,
     RouterModule,
+    ButtonModule,
     CardModule,
     ChipModule,
     MenuBarComponent,

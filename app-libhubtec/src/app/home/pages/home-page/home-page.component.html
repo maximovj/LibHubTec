@@ -43,6 +43,14 @@
                 <p class="text-700 text-sm">Publicado el {{ announcement.createdAt | date:'medium' }}</p>
                 <home-images-previes [pictures]="announcement.pictures" class="w-full h-auto border-round-sm mt-3"></home-images-previes>
                 <p>{{ announcement.content }}</p>
+
+                @if(announcement.link) {
+                  <a [href]="announcement.link" target="_blank" rel="noopener noreferrer"  class="card flex justify-content-start align-items-center gap-1 my-4">
+                    <p-button icon="pi pi-external-link" severity="success" size="small" [style]="{'width': '10px','height':'10px'}" />
+                    <span>Enlace externo</span>
+                  </a>
+                }
+
                 @if(announcement.tags){
                   <ng-container *ngIf="announcement.tags?.split(',').length === 0; else tags;">
                     <p-card>
