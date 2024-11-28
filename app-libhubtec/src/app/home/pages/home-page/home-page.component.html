@@ -61,7 +61,7 @@
                   </ng-container>
                   <ng-template #tags>
                     <div class="card flex align-items-center gap-2 flex-wrap">
-                      <p-chip *ngFor="let tag of announcement.tags.split(',')" [label]="tag" />
+                      <p-chip *ngFor="let tag of announcement.tags.split(',')" [label]="'#'+tag" />
                     </div>
                   </ng-template>
                 }
