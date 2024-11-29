@@ -1,3 +1,4 @@
+import { AuthService } from './../../../auth/services/auth-service.service';
 import { AnnouncementService } from './../../services/announcement-service.service';
 import { CommonModule } from "@angular/common";
 import { Component, inject, OnInit } from "@angular/core";
@@ -11,6 +12,7 @@ import { Announcement } from '../../interfaces';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 import { ChipModule } from 'primeng/chip';
 import { ButtonModule } from 'primeng/button';
+import { User } from '../../../shared/interfaces';
 
 @Component({
   standalone: true,
@@ -30,12 +32,17 @@ import { ButtonModule } from 'primeng/button';
 export class HomePage implements OnInit {
 
   private announcementService = inject(AnnouncementService);
+  private authService = inject(AuthService);
 
   public announcements !:Observable<any>;
+
+  public user : User | null = null;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.user = this.authService.user();
+    console.log('user:',this.user);
     this.announcements = this.announcementService
       .listAllAnnountcements()
       .pipe(

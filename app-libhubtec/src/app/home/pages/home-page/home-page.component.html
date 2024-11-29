@@ -12,9 +12,9 @@
   <!-- Barra lateral -->
   <aside class="w-3 p-3 bg-withe shadow-3 hidden lg:block">
       <h3>Acerca de mí</h3>
-      <img src="https://placehold.co/300x200?text=Foto+de+Perfil" alt="Foto de perfil" class="w-full h-auto border-round-sm">
+      <img [src]="'http://localhost:8000/storage/'+user?.photo" alt="Foto de perfil" class="w-full h-auto border-round-sm">
       <h3>Bio</h3>
-      <p>Soy un entusiasta de la tecnología y me gusta compartir mis ideas sobre varios temas.</p>
+      <p>{{ user?.bio }}</p>
   </aside>
 
   <!-- Contenido principal -->

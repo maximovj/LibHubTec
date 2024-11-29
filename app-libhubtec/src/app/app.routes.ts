@@ -63,10 +63,12 @@ export const routes: Routes = [
   },
   {
     path: "home",
+    canActivate: [isAuthenticatedGuard],
     loadComponent: () => import('./home/pages/home-page/home-page.component').then( c => c.HomePage),
   },
   {
     path: 'users',
+    canActivate: [isAuthenticatedGuard],
     children: [
       {
         path: ':username',
