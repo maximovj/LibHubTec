@@ -15,7 +15,11 @@
       <ng-template pTemplate="end">
           <div class="flex align-items-center gap-2">
               <input type="text" pInputText placeholder="Search" class="w-8rem sm:w-auto" />
-              <p-avatar (click)="btnGoToSettings()" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+              @if(user?.photo){
+                <p-avatar (click)="btnGoToSettings()" [image]="user?.photo | picture" class="cursor-pointer" shape="circle" />
+              } @else {
+                <p-avatar (click)="btnGoToSettings()" [label]="usernameLabel" shape="circle" class="cursor-pointer" />
+              }
           </div>
       </ng-template>
   </p-menubar>

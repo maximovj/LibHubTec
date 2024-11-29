@@ -11,6 +11,9 @@ import { MenuItem } from 'primeng/api';
 
 import { AuthService } from '../../../auth/services/auth-service.service';
 import { TieredMenuService } from '../../../users/services/tiered-menu.service';
+import { User } from '../../interfaces';
+import { PicturePipe } from '../../pipes/picture.pipe';
+import { LoadingImageComponent } from '../loading-image/loading-image.component';
 
 @Component({
   selector: 'shared-menu-bar',
@@ -24,19 +27,27 @@ import { TieredMenuService } from '../../../users/services/tiered-menu.service';
     InputTextModule,
     MenubarModule,
     RouterModule,
+    PicturePipe,
+    LoadingImageComponent,
   ],
   styles: ``
 })
 export class MenuBarComponent implements OnInit {
 
   private router = inject(Router);
+
   private tieredMenuService = inject(TieredMenuService);
+
   private authService = inject(AuthService);
+
   public items :MenuItem[] | undefined;
+
+  public user ?: User | null = this.authService.user();
 
   constructor() { }
 
   ngOnInit() {
+    ;
     this.items = [
           {
               label: 'Inicio',
@@ -60,9 +71,9 @@ export class MenuBarComponent implements OnInit {
       ];
   }
 
-  get username(): string
+  get usernameLabel(): string
   {
-    return this.authService.user()?.username || '';
+    return this.authService.user()?.username?.charAt(0).toUpperCase() || 'A';
   }
 
   btnGoToSettings() : void
