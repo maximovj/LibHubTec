@@ -5,7 +5,7 @@ import { Component, inject, OnInit } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { MenuBarComponent } from "../../../shared/components/menu-bar/menu-bar.component";
 
-import { GalleryImagesComponent } from "../../components/gallery-images/gallery-images.component";
+import { GalleryImagesComponent } from "../../../shared/components/gallery-images/gallery-images.component";
 import { CardModule } from "primeng/card";
 import { catchError, delay, map, Observable, of, startWith } from 'rxjs';
 import { Announcement } from '../../interfaces';
@@ -13,6 +13,7 @@ import { LoadingComponent } from '../../../shared/components/loading/loading.com
 import { ChipModule } from 'primeng/chip';
 import { ButtonModule } from 'primeng/button';
 import { User } from '../../../shared/interfaces';
+import { LoadingImageComponent } from '../../../shared/components/loading-image/loading-image.component';
 
 @Component({
   standalone: true,
@@ -27,6 +28,7 @@ import { User } from '../../../shared/interfaces';
     MenuBarComponent,
     LoadingComponent,
     GalleryImagesComponent,
+    LoadingImageComponent,
   ],
 })
 export class HomePage implements OnInit {

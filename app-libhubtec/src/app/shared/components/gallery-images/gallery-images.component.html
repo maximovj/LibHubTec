@@ -5,19 +5,18 @@
       [autoPlay]="true"
       [circular]="true"
       [showItemNavigators]="false"
-      [showThumbnails]="false"
+      [showThumbnails]="true"
       [showIndicators]="true"
       [showIndicatorsOnItem]="true"
       [responsiveOptions]="responsiveOptions"
       containerClass="w-full">
           <ng-template pTemplate="item" let-item>
-              <img [src]="item.itemImageSrc | thumbnail" (error)="imgError($event)" style="width: 100%; display: block;" />
+              <shared-loading-image [imgSrc]="item.itemImageSrc" [imgAlt]="item.alt" ></shared-loading-image>
           </ng-template>
           <ng-template pTemplate="thumbnail" let-item>
               <div class="grid grid-nogutter justify-content-center">
-                  <img [src]="item.thumbnailImageSrc" style="display: block;" />
+                  <shared-loading-image [imgSrc]="item.itemImageSrc" [imgAlt]="item.alt" style="width: 60px; height: 60px;" ></shared-loading-image>
               </div>
           </ng-template>
-
   </p-galleria>
 </div>

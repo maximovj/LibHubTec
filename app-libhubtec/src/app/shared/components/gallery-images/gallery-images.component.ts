@@ -1,9 +1,10 @@
+import { LoadingComponent } from './../loading/loading.component';
 import { CommonModule } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
 import { CardModule } from "primeng/card";
 import { GalleriaModule } from "primeng/galleria";
 import { ImageModule } from "primeng/image";
-import { ThumbnailPipe } from "../../../books/pipes/thumbnail.pipe";
+import { LoadingImageComponent } from '../loading-image/loading-image.component';
 
 @Component({
   selector: 'home-images-previes',
@@ -15,7 +16,8 @@ import { ThumbnailPipe } from "../../../books/pipes/thumbnail.pipe";
     CardModule,
     ImageModule,
     GalleriaModule,
-    ThumbnailPipe,
+    LoadingComponent,
+    LoadingImageComponent,
   ]
 })
 export class GalleryImagesComponent implements OnInit {
