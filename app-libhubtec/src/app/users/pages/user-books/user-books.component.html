@@ -18,13 +18,12 @@
                   <ng-template pTemplate="content" class="m-0 p-0 b-0">
                     <div class="flex flex-column md:flex-row justify-content-start gap-3 align-items-start">
                       <div class="card flex justify-content-center">
-                        <p-image
-                            [src]="null | picture"
-                            alt="Image"
-                            height="160"
-                            [imageClass]="'w-full'"
-                            loading="lazy"
-                            [preview]="true" />
+                        <shared-loading-image
+                         [imgSrc]="item.book.thumbnail"
+                         [imgAlt]="item.book.thumbnail"
+                         imgHeight="160"
+                         [pImageEnable]="true"
+                        ></shared-loading-image>
                       </div>
                       <div>
                         <span class="font-bold text-2xl block">{{ item.book_author}}</span>

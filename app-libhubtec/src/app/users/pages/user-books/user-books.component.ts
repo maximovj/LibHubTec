@@ -1,17 +1,19 @@
 
 import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { catchError, delay, map, Observable, of, startWith } from 'rxjs';
 
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ImageModule } from 'primeng/image';
+
 import { AuthService } from '../../../auth/services/auth-service.service';
 import { BooksService } from './../../../books/services/books-service.service';
 import { LoadingComponent } from '../../../shared/components/loading/loading.component';
-import { ImageModule } from 'primeng/image';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { PicturePipe } from '../../../shared/pipes/picture.pipe';
-import { Router, RouterModule } from '@angular/router';
+import { LoadingImageComponent } from '../../../shared/components/loading-image/loading-image.component';
+import { ReserveBookData } from '../../../books/interfaces';
 
 @Component({
   standalone: true,
@@ -22,7 +24,7 @@ import { Router, RouterModule } from '@angular/router';
     CardModule,
     ButtonModule,
     LoadingComponent,
-    PicturePipe,
+    LoadingImageComponent,
   ],
   templateUrl: "./user-books.component.html",
 })
@@ -34,7 +36,7 @@ export class UserBooksComponent implements OnInit {
 
   public booksService = inject(BooksService);
 
-  public listReserveBook$ ?:Observable<any>;
+  public listReserveBook$ !:Observable<any>;
 
   constructor() { }
 
@@ -44,7 +46,7 @@ export class UserBooksComponent implements OnInit {
     .getListReservedBooksByAccount(user)
     .pipe(
       delay(1000),
-      map( data => {
+      map( (data :ReserveBookData[] )  => {
         console.log(data);
         return { loading: false, data, err: null };
       }),

@@ -12,7 +12,7 @@
   <!-- Barra lateral -->
   <aside class="w-3 p-3 bg-withe shadow-3 hidden lg:block">
       <h3>Acerca de mí</h3>
-      <shared-loading-image [imgSrc]="user?.photo" [imgClass]="'w-full h-auto border-round-sm'" ></shared-loading-image>
+      <shared-loading-image [imgSrc]="user?.photo || ''" imgHeight="90" [pImageEnable]="true" ></shared-loading-image>
       <h3>Bio</h3>
       <p>{{ user?.bio }}</p>
   </aside>

@@ -5,12 +5,12 @@
         <p-card [header]="item.title" [subheader]="item.author" class="w-full">
             <ng-template pTemplate="header">
                   <div class="card flex justify-content-center">
-                    <p-image
-                        [src]="item.thumbnail | picture"
-                        alt="Image"
-                        height="360"
-                        loading="lazy"
-                        [preview]="true" />
+                    <shared-loading-image
+                     [imgSrc]="item.thumbnail"
+                     [imgAlt]="item.thumbnail"
+                     [imgHeight]="'360'"
+                     [pImageEnable]="true"
+                    ></shared-loading-image>
                   </div>
             </ng-template>
             <p style="height: 280px; overflow: auto;">

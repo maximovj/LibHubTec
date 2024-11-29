@@ -1,12 +1,14 @@
-import { BooksService } from './../../services/books-service.service';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { ImageModule } from 'primeng/image';
-import { CardModule } from 'primeng/card';
+import { Router } from '@angular/router';
+
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ImageModule } from 'primeng/image';
 
 import { ToastrService } from 'ngx-toastr';
-import { PicturePipe } from '../../../shared/pipes/picture.pipe';
-import { Router } from '@angular/router';
+
+import { BooksService } from './../../services/books-service.service';
+import { LoadingImageComponent } from '../../../shared/components/loading-image/loading-image.component';
 
 @Component({
   standalone: true,
@@ -14,7 +16,7 @@ import { Router } from '@angular/router';
     ImageModule,
     CardModule,
     ButtonModule,
-    PicturePipe,
+    LoadingImageComponent,
   ],
   styles: `
     .book-thumbnail {
