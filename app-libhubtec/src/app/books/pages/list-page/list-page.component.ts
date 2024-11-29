@@ -1,3 +1,4 @@
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -31,8 +32,11 @@ import { LoadingImageComponent } from '../../../shared/components/loading-image/
 
 export class BooksListComponent implements OnInit {
 
+  private activatedRoute = inject(ActivatedRoute);
   private toastrService = inject(ToastrService);
+
   private booksService = inject(BooksService);
+
   private router = inject(Router);
 
   public books = computed(() => [...this.booksService.books()]);
@@ -40,14 +44,20 @@ export class BooksListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.booksService
-    .loadBooks()
-    .subscribe({
-      next: (succes) => {
-        this.toastrService.success('Lista de libros cargados exitosamente.', 'Libros');
-      },
-      error: (err) => console.log(err),
+    this.activatedRoute.queryParamMap.subscribe((queryParam)=> {
+      const search_query = queryParam.get('q');
+
+      this.booksService
+      .searchBooks(search_query)
+      .subscribe({
+        next: () => {
+          this.toastrService.success('Lista de libros cargados exitosamente.', 'Libros');
+        },
+        error: (err) => console.log(err),
+      });
     });
+
+
   }
 
   bntGoTo(id :number) :void

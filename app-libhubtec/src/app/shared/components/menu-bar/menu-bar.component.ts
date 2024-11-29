@@ -13,7 +13,7 @@ import { AuthService } from '../../../auth/services/auth-service.service';
 import { TieredMenuService } from '../../../users/services/tiered-menu.service';
 import { User } from '../../interfaces';
 import { PicturePipe } from '../../pipes/picture.pipe';
-import { LoadingImageComponent } from '../loading-image/loading-image.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'shared-menu-bar',
@@ -28,7 +28,7 @@ import { LoadingImageComponent } from '../loading-image/loading-image.component'
     MenubarModule,
     RouterModule,
     PicturePipe,
-    LoadingImageComponent,
+    FormsModule,
   ],
   styles: ``
 })
@@ -43,6 +43,8 @@ export class MenuBarComponent implements OnInit {
   public items :MenuItem[] | undefined;
 
   public user ?: User | null = this.authService.user();
+
+  public search :string = '';
 
   constructor() { }
 
@@ -81,4 +83,12 @@ export class MenuBarComponent implements OnInit {
     this.tieredMenuService.setActive('settings');
     this.router.navigateByUrl(`/users/${this.authService.user()?.username}/settings`);
   }
+
+  public onSearch() :void
+  {
+    const search = this.search;
+    this.router.navigateByUrl(`/books/list?q=${search}`);
+  }
+
+
 }
