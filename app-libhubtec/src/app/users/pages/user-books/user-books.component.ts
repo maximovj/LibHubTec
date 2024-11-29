@@ -10,7 +10,7 @@ import { LoadingComponent } from '../../../shared/components/loading/loading.com
 import { ImageModule } from 'primeng/image';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
-import { ThumbnailPipe } from '../../../books/pipes/thumbnail.pipe';
+import { PicturePipe } from '../../../shared/pipes/picture.pipe';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -22,7 +22,7 @@ import { Router, RouterModule } from '@angular/router';
     CardModule,
     ButtonModule,
     LoadingComponent,
-    ThumbnailPipe,
+    PicturePipe,
   ],
   templateUrl: "./user-books.component.html",
 })

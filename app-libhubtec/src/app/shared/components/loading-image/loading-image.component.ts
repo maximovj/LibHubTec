@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { Component, Input, OnInit } from "@angular/core";
-import { ThumbnailPipe } from "../../../books/pipes/thumbnail.pipe";
+import { PicturePipe } from "../../pipes/picture.pipe";
 
 @Component({
   selector: 'shared-loading-image',
@@ -8,7 +8,7 @@ import { ThumbnailPipe } from "../../../books/pipes/thumbnail.pipe";
   styles: ``,
   template: `
     <img
-      [src]="imgSrc | thumbnail"
+      [src]="imgSrc | picture"
       [class]="imgClass"
       [alt]="imgAlt"
       style="width: 100%; display: block;"
@@ -16,7 +16,7 @@ import { ThumbnailPipe } from "../../../books/pipes/thumbnail.pipe";
   `,
   imports: [
     CommonModule,
-    ThumbnailPipe,
+    PicturePipe,
   ]
 })
 export class LoadingImageComponent implements OnInit {

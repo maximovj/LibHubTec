@@ -5,7 +5,7 @@ import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 
 import { ToastrService } from 'ngx-toastr';
-import { ThumbnailPipe } from '../../pipes/thumbnail.pipe';
+import { PicturePipe } from '../../../shared/pipes/picture.pipe';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
     ImageModule,
     CardModule,
     ButtonModule,
-    ThumbnailPipe,
+    PicturePipe,
   ],
   styles: `
     .book-thumbnail {

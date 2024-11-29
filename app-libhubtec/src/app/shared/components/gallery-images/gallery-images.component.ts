@@ -7,7 +7,7 @@ import { ImageModule } from "primeng/image";
 import { LoadingImageComponent } from '../loading-image/loading-image.component';
 
 @Component({
-  selector: 'home-images-previes',
+  selector: 'shared-gallery-images',
   standalone: true,
   styles: ``,
   templateUrl: "./gallery-images.component.html",

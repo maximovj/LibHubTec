@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'thumbnail',
+  name: 'picture',
   standalone: true,
 })
 
-export class ThumbnailPipe implements PipeTransform {
+export class PicturePipe implements PipeTransform {
   private url_storage = 'http://localhost:8000/storage';
 
   transform(value: string | undefined | null): any {

@@ -12,7 +12,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 import { BookDetailsEntity, BookEntity, ReserveBookData, ReserveBookRequest } from '../../interfaces';
 import { BooksService } from './../../services/books-service.service';
-import { ThumbnailPipe } from '../../pipes/thumbnail.pipe';
+import { PicturePipe } from '../../../shared/pipes/picture.pipe';
 
 
 @Component({
@@ -24,7 +24,7 @@ import { ThumbnailPipe } from '../../pipes/thumbnail.pipe';
     ImageModule,
     CardModule,
     ButtonModule,
-    ThumbnailPipe,
+    PicturePipe,
     ProgressSpinnerModule,
   ],
 })

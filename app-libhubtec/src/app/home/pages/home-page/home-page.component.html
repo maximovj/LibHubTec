@@ -41,7 +41,7 @@
               <article>
                 <h2>{{ announcement.title }}</h2>
                 <p class="text-700 text-sm">Publicado el {{ announcement.createdAt | date:'medium' }}</p>
-                <home-images-previes [pictures]="announcement.pictures" class="w-full h-auto border-round-sm mt-3"></home-images-previes>
+                <shared-gallery-images [pictures]="announcement.pictures" class="w-full h-auto border-round-sm mt-3"></shared-gallery-images>
                 <p>{{ announcement.content }}</p>
 
                 @if(announcement.link) {
