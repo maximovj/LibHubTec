@@ -147,6 +147,15 @@ return [
             'is_published' => 'Published',
         ],
 
+        'search_title' => 'Searches',
+        'search' => [
+            'account' => 'Account',
+            'query' => 'Query',
+            'search' => 'Search',
+            'base_url' => 'Base URL',
+            'result' => 'Result',
+        ],
+
         'main_information' => 'Main information',
         'change_password' => 'Change password',
 

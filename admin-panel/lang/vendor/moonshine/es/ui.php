@@ -147,6 +147,15 @@ return [
             'is_published' => 'Publicado',
         ],
 
+        'search_title' => 'Búsquedas',
+        'search' => [
+            'account' => 'Cuenta',
+            'query' => 'Consulta',
+            'search' => 'Busqueda',
+            'base_url' => 'Base URL',
+            'result' => 'Resultado',
+        ],
+
         'main_information' => 'Información principal',
         'change_password' => 'Cambiar contraseña',
 
