@@ -10,6 +10,7 @@ import { AuthService } from './../../../auth/services/auth-service.service';
 import { SearchesService } from './../../services/searches.service';
 import { SearchEntity } from '../../interfaces';
 import { Router } from '@angular/router';
+import { LoadingComponent } from '../../../shared/components/loading/loading.component';
 
 @Component({
   standalone: true,
@@ -18,7 +19,7 @@ import { Router } from '@angular/router';
     CardModule,
     BadgeModule,
     ButtonModule,
-
+    LoadingComponent,
   ],
   templateUrl: './user-search.component.html',
 })
