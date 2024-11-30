@@ -11,5 +11,8 @@ public interface INotificacionAccountDao extends CrudRepository<NotificationAcco
 
     // Listar todas las notificaciones de una cuenta en especifico
     public List<NotificationAccount> findAllByAccount(Account account);
+
+    // Contar las notificaciones de una cuenta en especifico
+    public Long countByAccount(Account account);
     
 }

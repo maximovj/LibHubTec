@@ -4,30 +4,62 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.github.maximovj.libhubtec.dao.IAccountDao;
+import com.github.maximovj.libhubtec.dao.INotificacionAccountDao;
 import com.github.maximovj.libhubtec.model.Account;
 import com.github.maximovj.libhubtec.response.AccountResponse;
 import com.github.maximovj.libhubtec.response.ApiResponse;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements IAccountServiceImpl {
 
-	private Logger log = LoggerFactory.getLogger(getClass());
+	private final INotificacionAccountDao notificacionAccountDao;
+	private final IAccountDao iAccountDao;
 	private AccountResponse response;
-	
-	@Autowired
-	private IAccountDao iAccountDao;
+	private ApiResponse apiResponse;
+
+	// Crear una respuesa exitosa
+	private ResponseEntity<AccountResponse> buildSuccessResponse(String content, Optional<List<Account>> data, Long notifications)
+	{
+		AccountResponse response = new AccountResponse();
+		this.apiResponse.setCtx_title("Cuenta");
+		this.apiResponse.setCode(HttpStatus.OK.value());
+		this.apiResponse.setStatus("success");
+		this.apiResponse.setSuccess(true);
+		this.apiResponse.setCtx_content(content);
+		response.setResponse(apiResponse);
+		response.setData(data);
+		response.setNotifications(Long.valueOf(notifications));
+		return ResponseEntity.ok(response);
+	}
+
+	// Crear una respuesa de error
+	private ResponseEntity<AccountResponse> buildErrorResponse(HttpStatus status, String content)
+	{
+		AccountResponse response = new AccountResponse();
+		this.apiResponse.setCtx_title("Cuenta");
+		this.apiResponse.setCode(status.value());
+		this.apiResponse.setStatus("success");
+		this.apiResponse.setSuccess(true);
+		this.apiResponse.setCtx_content(content);
+		response.setResponse(apiResponse);
+		response.setData(null);
+		response.setNotifications(null);
+		return ResponseEntity.status(status).body(response);
+	}
 
 	@Override
 	public ResponseEntity<AccountResponse> FindAccountAll() {
-		this.log.info("@FindAccountAll : Iniciando");
+		log.info("@FindAccountAll : Iniciando");
 		List<Account> accounts =  new ArrayList<Account>();
 		
 		this.response = new AccountResponse();
@@ -55,49 +87,37 @@ public class AccountServiceImpl implements IAccountServiceImpl {
 					"error", 
 					false));
 			
-			this.log.error("@FindAccountAll : Error");
+			log.error("@FindAccountAll : Error");
 			e.getStackTrace();
 		}
 		
 		this.response.setData(Optional.ofNullable(accounts));
-		this.log.info("@FindAccountAll : Finalizado");
+		log.info("@FindAccountAll : Finalizado");
 		return ResponseEntity.ok(this.response);
 	}
 
 	@Override
 	public ResponseEntity<AccountResponse> getAccountDetails(Long id) {
-		this.log.info("@getAccountDetails : Iniciando");
+		log.info("@getAccountDetails : Iniciando");
 		List<Account> accounts =  new ArrayList<Account>();
-		this.response = new AccountResponse();
-		
-		try {
-			this.response.setResponse(new ApiResponse(
-					"Listar cuentas", 
-					"Cuenta obtenida correctamente", 
-					"/v1/accounts", 
-					"GET", 
-					HttpStatus.OK.value(), 
-					"success", 
-					true));
-			accounts.add(iAccountDao.findById(id).get());
-		} catch (Exception e) {
-			
-			this.response.setResponse(new ApiResponse(
-					"Listar cuentas", 
-					"Error al obtener la cuenta", 
-					"/v1/accounts", 
-					"GET", 
-					HttpStatus.NO_CONTENT.value(), 
-					"error", 
-					false));
-			
-			this.log.error("@getAccountDetails : Error");
-			e.getStackTrace();
+		this.apiResponse = new ApiResponse();
+		this.apiResponse.setUri("/v1/account/"+id+"/details");
+		this.apiResponse.setType("GET");
+
+		if(id == null) {
+			return this.buildErrorResponse(HttpStatus.BAD_REQUEST, "Oops cuenta no proporcionada");
 		}
 
-		this.response.setData(Optional.ofNullable(accounts));
-		this.log.info("@getAccountDetails : Finalizado");
-		return ResponseEntity.ok(this.response);
+		Optional<Account> account = this.iAccountDao.findById(id);
+		if(!account.isPresent()) {
+			return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops cuenta no encontrado en el sistema");
+		}
+
+
+		Long notifications = this.notificacionAccountDao.countByAccount(account.get());
+		accounts.add(account.get());
+		log.info("@getAccountDetails : Finalizado");
+		return this.buildSuccessResponse("Información de la cuenta proporcionada correctamente", Optional.ofNullable(accounts), notifications);
 	}
 	
 }
