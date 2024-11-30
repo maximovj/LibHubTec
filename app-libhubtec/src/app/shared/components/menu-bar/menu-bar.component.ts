@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { AvatarGroupModule } from 'primeng/avatargroup';
@@ -43,6 +43,8 @@ export class MenuBarComponent implements OnInit {
   public items :MenuItem[] | undefined;
 
   public user ?: User | null = this.authService.user();
+
+  public notifications = computed( () => this.authService.notifications() );
 
   public search :string = '';
 

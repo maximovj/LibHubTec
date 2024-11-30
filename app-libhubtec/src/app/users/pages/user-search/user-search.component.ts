@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, inject, OnInit } from '@angular/core';
 import { catchError, delay, map, Observable, of, startWith } from 'rxjs';
 
@@ -32,11 +33,17 @@ export class UserSearchComponent implements OnInit {
 
   private authService = inject(AuthService);
 
-  public searches$ ?:Observable<any>;
+  private toastrService = inject(ToastrService);
+
+  public searches$ !:Observable<any>;
 
   constructor() { }
 
   ngOnInit() {
+    this.loadSearches();
+  }
+
+  private loadSearches() :void {
     const user = this.authService.user();
     this.searches$ = this.searchesService.listSearches(user)
       .pipe(
@@ -53,6 +60,24 @@ export class UserSearchComponent implements OnInit {
   {
     const search_query = `${item.base_url}`;
     this.router.navigateByUrl(search_query);
+  }
+
+  onDelete(item :SearchEntity | null) :void
+  {
+    if(!item) {
+      return;
+    }
+
+    this.searchesService.deleteSearches(item.id)
+      .subscribe({
+        next: () => {
+          this.loadSearches();
+          this.toastrService.success('Búsqueda eliminada');
+        },
+        error: () => {
+          this.toastrService.error('Oops hubo un error en el proceso');
+        }
+      });
   }
 
 

@@ -5,6 +5,7 @@ import { ApiResponse } from "../../shared/interfaces";
 export interface AccountDetailsResponse {
   response:   ApiResponse;
   data?:      AccountDetailsData[];
+  notifications?: number;
 }
 
 export interface AccountDetailsData {

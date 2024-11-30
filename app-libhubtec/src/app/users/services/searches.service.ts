@@ -34,6 +34,24 @@ export class SearchesService {
     );
   }
 
+  public deleteSearches( search_id :number | null) : Observable<boolean>
+  {
+    const _token = this.getToken();
+    if(!_token || !search_id) {
+      return of(false);
+    }
+
+    const headers = new HttpHeaders().set('Authorization', _token);
+
+    return this.httpClient.delete<SearchResponse>(`http://localhost:5800/v1/searches/${search_id}`, { headers })
+      .pipe(
+        map(({response}) => {
+          return response.success;
+        }),
+        catchError((err) => throwError( ()=> err.message )),
+      );
+  }
+
   private getToken() :string | null
   {
     const _token = localStorage.getItem('_token');

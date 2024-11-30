@@ -27,6 +27,9 @@ export class AuthService {
   private _user = signal<User |null>(null);
   public user = computed(() => this._user());
 
+  private _notifications = signal<number|null>(null);
+  public notifications = computed(()=> this._notifications());
+
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
   public authStatus = computed(() => this._authStatus());
 
@@ -65,13 +68,14 @@ export class AuthService {
 
     this.http.get<AccountDetailsResponse>(`http://localhost:5800/v1/accounts/${sub}/details`, { headers })
     .pipe(
-      map(({data}) => {
+      map(({data, notifications}) => {
         const userData = data?.at(0);
         if(userData) {
           this._user.set({
             ...userData,
           })
         }
+        this._notifications.set(notifications || 0);
       }))
     .subscribe();
   }
