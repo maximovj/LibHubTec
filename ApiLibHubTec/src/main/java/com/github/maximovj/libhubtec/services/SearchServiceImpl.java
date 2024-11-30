@@ -73,5 +73,26 @@ public class SearchServiceImpl implements ISearchServiceImpl {
 
         return this.buildSuccessReponse("Listando búsquedas exitosamente", Optional.ofNullable(list));
     }
+
+    @Override
+    public ResponseEntity<SearchResponse> deleteSearch(Long search_id) {
+        this.apiResponse = new ApiResponse();
+        this.apiResponse.setUri("/v1/searches/"+search_id);
+        this.apiResponse.setType("DELETE");
+        List<Search> list = new ArrayList<>();
+
+        if(search_id == null) {
+            return this.buildErrorReponse(HttpStatus.BAD_REQUEST, "Oops búesqueda no proporcionada");
+        }
+
+        Optional<Search> search = this.searchDao.findById(search_id);
+        if(!search.isPresent()) {
+            return this.buildErrorReponse(HttpStatus.NOT_FOUND, "Oops búsqueda no encontrada en el sistema");
+        }
+
+        list.add(search.get());
+        this.searchDao.delete(search.get());
+        return this.buildSuccessReponse("Búsqueda eliminado correctamente", Optional.ofNullable(list));
+    }
     
 }

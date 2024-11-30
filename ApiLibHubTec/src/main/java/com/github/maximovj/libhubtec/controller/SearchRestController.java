@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.maximovj.libhubtec.response.SearchResponse;
 import com.github.maximovj.libhubtec.services.ISearchServiceImpl;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -22,6 +24,12 @@ public class SearchRestController implements ISearchServiceImpl {
     @Override
     public ResponseEntity<SearchResponse> listSearches(@PathVariable Long account_id) {
         return this.searchServiceImpl.listSearches(account_id);
+    }
+
+    @DeleteMapping("/searches/{search_id}")
+    @Override
+    public ResponseEntity<SearchResponse> deleteSearch(@PathVariable Long search_id) {
+        return this.searchServiceImpl.deleteSearch(search_id);
     }
     
 }
