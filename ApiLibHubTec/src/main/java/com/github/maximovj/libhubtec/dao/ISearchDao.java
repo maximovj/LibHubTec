@@ -1,6 +1,7 @@
 package com.github.maximovj.libhubtec.dao;
 
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
@@ -16,5 +17,11 @@ public interface ISearchDao extends CrudRepository<Search,Long> {
     // Buscar búsquedas existentes con account_id
     @Query("SELECT s FROM Search s WHERE s.account_id = :accountId AND s.query = :query AND s.search = :search")
     Optional<Search> findByAccountIdAndQueryAndSearch(Long accountId, String query, String search);
+
+    // Buscar búsquedas existentes con account_id
+    @Query("SELECT s FROM Search s WHERE s.account_id = :accountId")
+    List<Search> findByAccountId(Long accountId);
+
+
     
 }

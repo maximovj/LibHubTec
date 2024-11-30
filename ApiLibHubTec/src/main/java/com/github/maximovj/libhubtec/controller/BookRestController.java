@@ -11,6 +11,8 @@ import com.github.maximovj.libhubtec.response.BookResponse;
 import com.github.maximovj.libhubtec.services.IBookServiceImpl;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -21,12 +23,14 @@ public class BookRestController {
 	private IBookServiceImpl bookService;
 
 	@GetMapping("/books")
-	public ResponseEntity<BookResponse> findAllBooks(){
+	public ResponseEntity<BookResponse> findAllBooks()
+	{
 		return this.bookService.findAllBooks();
 	}
 
 	@GetMapping("/books/search")
-	public ResponseEntity<BookResponse> searchBooks(HttpServletRequest httpRequest){
+	public ResponseEntity<BookResponse> searchBooks(HttpServletRequest httpRequest)
+	{
 		return this.bookService.searchBooks(httpRequest);
 	}
 
