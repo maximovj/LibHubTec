@@ -92,19 +92,22 @@ class NotificationAccountResource extends ModelResource
                 resource: new MoonShineUserResource())
                 ->valuesQuery(fn(Builder $query, Field $field) => $query
                     ->join('notification_accounts', 'moonshine_users.id', '=', 'notification_accounts.moonshine_user_id')
-                    ->select(['moonshine_users.id', 'moonshine_users.name', 'moonshine_users.email'])
+                    ->select(['moonshine_users.id', 'moonshine_users.name', 'moonshine_users.email', 'moonshine_users.avatar'])
                     ->distinct())
                 ->searchable()
+                ->withImage('avatar','public','moonshine_users')
                 ->default(MoonshineUser::find(auth()->id())),
             BelongsTo::make(
                 static fn() => __('moonshine::ui.resource.notification_account.account'),
                 'account',
                 fn($item) => "$item->username | $item->email",
                 resource: new AccountResource())
+
                 ->valuesQuery(fn(Builder $query, Field $field) => $query
                     ->join('notification_accounts', 'accounts.id', '=', 'notification_accounts.account_id')
-                    ->select(['accounts.id', 'accounts.username', 'accounts.email'])
+                    ->select(['accounts.id', 'accounts.username', 'accounts.email', 'accounts.photo'])
                     ->distinct())
+                ->withImage('photo','public','accounts')
                 ->searchable(),
         ];
     }

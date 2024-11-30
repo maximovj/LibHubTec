@@ -86,6 +86,7 @@ class ReserveBookResource extends ModelResource
                     'book',
                     fn($item) => "$item->title | $item->author",
                     new BookResource())
+                    ->withImage('thumbnail','public','books')
                     ->default(Book::find(1))
                     ->setValue(Book::find(1))
                     ->searchable()
@@ -94,6 +95,8 @@ class ReserveBookResource extends ModelResource
                         if($book){
                             $fields->findByColumn('book_title')?->setValue($book->title);
                             $fields->findByColumn('book_author')?->setValue($book->author);
+                            $fields->findByColumn('book_stock')?->setValue($book->stock);
+                            $fields->findByColumn('book_price')?->setValue($book->price);
                         }
                         return $fields;
                     }),
@@ -102,6 +105,7 @@ class ReserveBookResource extends ModelResource
                     'account',
                     fn($item) => " $item->name $item->last_name | $item->email",
                     new AccountResource())
+                    ->withImage('photo','public','accounts')
                     ->default(Account::find(1))
                     ->setValue(Account::find(1))
                     ->searchable()
@@ -162,12 +166,17 @@ class ReserveBookResource extends ModelResource
                     ->required()
                     ->min(0)
                     ->placeholder(__('moonshine::ui.resource.reserve_book.book_price'))
-                    ->buttons(),
+                    ->buttons()
+                    ->reactive()
+                    ->onApply(fn(Model $item) => $item->book_price = $item->book->price)
+                    ->readonly(),
+                /*
                 Number::make(static fn() => __('moonshine::ui.resource.reserve_book.book_count'), 'book_count')
                     ->required()
                     ->min(0)
                     ->placeholder(__('moonshine::ui.resource.reserve_book.book_count'))
                     ->buttons(),
+                */
                 DateRange::make(static fn() => __('moonshine::ui.resource.reserve_book.date_range'))
                     ->required()
                     ->fromTo('date_from', 'date_to')

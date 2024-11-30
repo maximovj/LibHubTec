@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('author')->nullable();
             $table->string('summary')->nullable();
             $table->string('description')->nullable();
+            $table->unsignedInteger('stock')->nullable()->default(0);
+            $table->decimal('price', 18, 2)->nullable()->default(0.0);
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 package com.github.maximovj.libhubtec.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -31,6 +32,8 @@ public class Book implements Serializable {
 	private String author;
 	private String summary;
 	private String description;
+	private Integer stock;
+	private BigDecimal price;
 	
 	@Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;

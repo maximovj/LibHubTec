@@ -16,7 +16,10 @@ use MoonShine\Components\MoonShineComponent;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\Textarea;
 use MoonShine\Fields\Image;
+use MoonShine\Fields\Number;
 use MoonShine\Fields\Preview;
+use MoonShine\Handlers\ExportHandler;
+use MoonShine\Handlers\ImportHandler;
 
 /**
  * @extends ModelResource<Book>
@@ -42,6 +45,21 @@ class BookResource extends ModelResource
         return __('moonshine::ui.resource.book_title');
     }
 
+    protected function onBoot(): void
+    {
+        //MoonShineUI::toast('Página cargada', 'success');
+    }
+
+    public function import(): ?ImportHandler
+    {
+        return null;
+    }
+
+    public function export(): ?ExportHandler
+    {
+        return null;
+    }
+
     public function redirectAfterSave(): string
     {
         $refer = Request::header('referer');
@@ -56,12 +74,36 @@ class BookResource extends ModelResource
         return [
             Block::make([
                 ID::make()->sortable(),
-                Image::make(static fn() => __('moonshine::ui.resource.book.thumbnail'), 'thumbnail'),
-
-                Text::make(static fn() => __('moonshine::ui.resource.book.title'), 'title'),
-                Text::make(static fn() => __('moonshine::ui.resource.book.author'), 'author'),
-                Textarea::make(static fn() => __('moonshine::ui.resource.book.summary'), 'summary'),
-                Textarea::make(static fn() => __('moonshine::ui.resource.book.description'), 'description'),
+                Image::make(
+                    static fn() => __('moonshine::ui.resource.book.thumbnail'),
+                    'thumbnail')
+                    ->disk(config('moonshine.disk', 'public'))
+                    ->dir('books')
+                    ->allowedExtensions(['jpg', 'png', 'jpeg']),
+                Text::make(
+                    static fn() => __('moonshine::ui.resource.book.title'),
+                    'title'),
+                Text::make(
+                    static fn() => __('moonshine::ui.resource.book.author'),
+                    'author'),
+                Textarea::make(
+                    static fn() => __('moonshine::ui.resource.book.summary'),
+                    'summary'),
+                Textarea::make(
+                    static fn() => __('moonshine::ui.resource.book.description'),
+                    'description'),
+                Number::make(
+                    'Stock',
+                    'stock')
+                    ->placeholder('Stock')
+                    ->min(0)
+                    ->buttons(),
+                Number::make(
+                    'Price',
+                    'price')
+                    ->placeholder('Price')
+                    ->min(0)
+                    ->buttons(),
             ]),
         ];
     }

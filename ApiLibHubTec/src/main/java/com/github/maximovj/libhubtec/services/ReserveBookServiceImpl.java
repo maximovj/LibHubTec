@@ -1,6 +1,5 @@
 package com.github.maximovj.libhubtec.services;
 
-import java.lang.StackWalker.Option;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,6 +10,7 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.maximovj.libhubtec.dao.IAccountDao;
 import com.github.maximovj.libhubtec.dao.IBookDao;
@@ -52,7 +52,7 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
         reserveBook.setBook_author(book.getAuthor());
         reserveBook.setBook_title(book.getAuthor());
         reserveBook.setBook_count(Integer.valueOf(1));
-        reserveBook.setBook_price(BigDecimal.valueOf(0));
+        reserveBook.setBook_price(book.getPrice());
 
         reserveBook.setDate_from(LocalDateTime.now());
         reserveBook.setDate_to(LocalDateTime.now());
@@ -92,6 +92,7 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
         return ResponseEntity.status(status).body(_response);
     }
 
+    @Transactional()
     @Override
     public ResponseEntity<ReserveBookResponse> registerReserveBook(ReserveBookRequest request) {
         log.info("registerReserveBook | Iniciando");
@@ -104,23 +105,32 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
         {
             return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops cuenta o libro no encontrado en el sistema", null);
         }
+        
+        Integer result = book.get().getStock() - Integer.valueOf(1);
+        if( result.intValue() <= 0) {
+            return this.buildErrorResponse(HttpStatus.CONFLICT, "Oops no hay suficientes libros", null);
+        }
 
         this.reserveBook = this.reserveBookDao.findByAccountAndBook(account.get(), book.get());
-        
         if(this.reserveBook.isPresent()) {
             return this.buildErrorResponse(HttpStatus.CONFLICT, "Oops ya tienes una reservación", null);
         }
 
+        // Registar reservación de libro
         ReserveBook reserveBook = this.defineReserveBook(this.account.get(), this.book.get());
         reserveBook.setDate_from(LocalDate.parse(request.getDate_from()).atStartOfDay());
         reserveBook.setDate_to(LocalDate.parse(request.getDate_to()).atStartOfDay());
         list.add(reserveBook);
         this.reserveBookDao.save(reserveBook);
 
+        // Actualizar los datos del libro
+        this.book.get().setStock(result);
+        this.bookDao.save(book.get());
         log.info("registerReserveBook | Finalizado");
         return this.buildSuccessResponse(HttpStatus.CREATED, "Libro reservado exitosamente", Optional.ofNullable(list));
     }
 
+    @Transactional()
     @Override
     public ResponseEntity<ReserveBookResponse> cancelReserveBook(ReserveBookRequest request) {
         log.info("cancelReserveBook | Iniciando");
@@ -132,8 +142,14 @@ public class ReserveBookServiceImpl implements IReserveBookServiceImpl {
             return this.buildErrorResponse(HttpStatus.NOT_FOUND, "Oops reservación no encontrado en el sistema", null);
         }
 
+
         list.add(this.reserveBook.get());
         this.reserveBookDao.delete(this.reserveBook.get());
+
+        // Actualizar los datos del libro
+        Integer result = book.get().getStock() + Integer.valueOf(1);
+        this.book.get().setStock(result);
+        this.bookDao.save(book.get());
 
         log.info("cancelReserveBook | Finalizado");
         return this.buildSuccessResponse(HttpStatus.OK, "Reservación de libro cancelado exitosamente", Optional.ofNullable(list));

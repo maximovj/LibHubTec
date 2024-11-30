@@ -19,6 +19,8 @@ use MoonShine\Fields\Number;
 use MoonShine\Fields\Select;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\Textarea;
+use MoonShine\Handlers\ExportHandler;
+use MoonShine\Handlers\ImportHandler;
 
 /**
  * @extends ModelResource<Account>
@@ -43,6 +45,21 @@ class AccountResource extends ModelResource
     public function title(): string
     {
         return __('moonshine::ui.resource.account_title');
+    }
+
+    protected function onBoot(): void
+    {
+        //MoonShineUI::toast('Página cargada', 'success');
+    }
+
+    public function import(): ?ImportHandler
+    {
+        return null;
+    }
+
+    public function export(): ?ExportHandler
+    {
+        return null;
     }
 
     public function redirectAfterSave(): string
@@ -96,7 +113,10 @@ class AccountResource extends ModelResource
                     'vespertino' => 'Vespertino',
                 ])
                 ->default('matutino'),
-                Image::make(static fn() => __('moonshine::ui.resource.account.photo'), 'photo'),
+                Image::make(static fn() => __('moonshine::ui.resource.account.photo'), 'photo')
+                    ->disk(config('moonshine.disk', 'public'))
+                    ->dir('accounts')
+                    ->allowedExtensions(['jpg', 'png', 'jpeg']),
                 Textarea::make(static fn() => __('moonshine::ui.resource.account.bio'), 'bio'),
                 Text::make(static fn() => __('moonshine::ui.resource.account.username'), 'username'),
                 Text::make(static fn() => __('moonshine::ui.resource.account.email'), 'email'),
