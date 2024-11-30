@@ -1,5 +1,8 @@
 package com.github.maximovj.libhubtec.services;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.maximovj.libhubtec.dao.IAccountDao;
 import com.github.maximovj.libhubtec.dao.IBookDao;
+import com.github.maximovj.libhubtec.dao.ISearchDao;
+import com.github.maximovj.libhubtec.model.Account;
 import com.github.maximovj.libhubtec.model.Book;
+import com.github.maximovj.libhubtec.model.Search;
 import com.github.maximovj.libhubtec.response.ApiResponse;
 import com.github.maximovj.libhubtec.response.BookResponse;
 
@@ -24,6 +31,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class BookServiceImpl implements IBookServiceImpl {
 
+    private final ISearchDao searchDao;
+    private final IAccountDao accountDao;
+    private final JwtService jwtService;
     private final IBookDao dao;
     private ApiResponse apiResponse;
 
@@ -59,15 +69,18 @@ public class BookServiceImpl implements IBookServiceImpl {
         String author = httpRequest.getParameter("author");
 
         if(query_search != null &&  !query_search.isEmpty()) {
-            books = (List<Book>) dao.searchByKeyword(query_search);   
+            books = (List<Book>) dao.searchByKeyword(query_search);
+            this.createNewSearch(httpRequest, "q", query_search, books);
         } else
         if(author != null &&  !author.isEmpty()) {
             books = (List<Book>) dao.findAllByAuthorLike(author);
+            this.createNewSearch(httpRequest, "author", query_search, books);
         } else
         if(title != null &&  !title.isEmpty()) {
             books = (List<Book>) dao.findAllByTitleLike(title);
+            this.createNewSearch(httpRequest, "title", query_search, books);
         } else {
-            books = (List<Book>) dao.findAll(Sort.by("updatedAt"));       
+            books = (List<Book>) dao.findAll(Sort.by("updatedAt"));     
         }
         
         log.info("@searchBooks : Finalizado");
@@ -95,7 +108,53 @@ public class BookServiceImpl implements IBookServiceImpl {
         log.info("findBookById | finalizado");
         return this.buildSuccessResponse("Información del libro obtenido correctamente", Optional.of(books));
     }
+
+    private void createNewSearch(HttpServletRequest httpRequest, String _query, String _search, List<Book> books) 
+    {
+        Search search = new Search();
+        String encodedSearch = "";
+        String base_url = "";
+        
+        try {
+            encodedSearch = URLEncoder.encode(_search, "UTF-8");
+            base_url = "/v1/books/search?"+_query+"="+encodedSearch;
+        } catch (UnsupportedEncodingException e) {
+            encodedSearch = "";
+            base_url = "";
+            e.printStackTrace();
+        }
+
+        String authorizationHeader = httpRequest.getHeader("Authorization");
+        String token = null;
     
+        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            token = authorizationHeader.substring(7);
+            
+            String userId = this.jwtService.extractUsername(token);
+            Optional<Account> account = accountDao.findById(Long.valueOf(userId));
+            if(account.isPresent() && base_url.length() > 16 &&  books.size() > 0 && encodedSearch.length() > 3) {
+
+                Optional<Search> op_search = this.searchDao.findByAccountIdAndQueryAndSearch(account.get().getId(), _query, _search);
+                
+                if(op_search.isPresent()) {
+                    op_search.get().setUpdated_at(LocalDateTime.now());
+                    this.searchDao.save(op_search.get());
+                } else {
+                    search.setAccount_id(account.get().getId());
+                    search.setSearch(_search);
+                    search.setQuery(_query);
+                    search.setBase_url(base_url);
+                    search.setResult(books.size());
+                    search.setCreated_at(LocalDateTime.now());
+                    search.setUpdated_at(LocalDateTime.now());
+                    log.info("Búsqueda guardado: ", search);
+                    this.searchDao.save(search);
+                }
+
+            }
+        }
+    }
+
     private ResponseEntity<BookResponse> buildSuccessResponse(String msg, Optional<List<Book>> data)
     {
         BookResponse response = new BookResponse();
