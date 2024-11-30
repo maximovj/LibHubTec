@@ -1,0 +1,32 @@
+<h1>Mis búsquedas</h1>
+
+<ng-container *ngIf="searches$ | async as state">
+  <ng-container *ngIf="state.loading; else content;">
+    <p>Cargando informacón...</p>
+  </ng-container>
+  <ng-template #content>
+    <ng-container *ngIf="state.errr; else searches;">
+      <p class="text-center font-bold text-xl">Error: {{ state.err.message }}</p>
+    </ng-container>
+    <ng-template #searches>
+      <ng-container *ngIf="state.data.length > 0; else noSearches;">
+        @for (item of state.data; track $index) {
+          <div class="card">
+            <p-card>
+              <div class="flex flex-row justify-content-between align-items-center">
+                <p class="text-center font-bold text-xl"> {{ item.search }}</p>
+                <div class="flex flex-row justify-content-between align-items-center gap-3">
+                  <i class="pi pi-sparkles text-3xl" pBadge value="2"></i>
+                  <p-button icon="pi pi-search" [rounded]="true" />
+                </div>
+              </div>
+            </p-card>
+          </div>
+        }
+      </ng-container>
+      <ng-template #noSearches>
+        <p class="text-center font-bold text-xl">No hay búsquedas realizadas</p>
+      </ng-template>
+    </ng-template>
+  </ng-template>
+</ng-container>
