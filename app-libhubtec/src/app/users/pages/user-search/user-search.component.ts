@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from './../../../auth/services/auth-service.service';
 import { SearchesService } from './../../services/searches.service';
 import { SearchEntity } from '../../interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -24,7 +25,10 @@ import { SearchEntity } from '../../interfaces';
 
 export class UserSearchComponent implements OnInit {
 
+  private router = inject(Router);
+
   private searchesService = inject(SearchesService);
+
   private authService = inject(AuthService);
 
   public searches$ ?:Observable<any>;
@@ -43,5 +47,12 @@ export class UserSearchComponent implements OnInit {
         catchError( (err) => of({ loading: false, data: null, err }) )
       );
   }
+
+  onSearch(item :SearchEntity) :void
+  {
+    const search_query = `${item.base_url}`;
+    this.router.navigateByUrl(search_query);
+  }
+
 
 }
