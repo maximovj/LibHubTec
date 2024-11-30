@@ -117,7 +117,7 @@ public class BookServiceImpl implements IBookServiceImpl {
         
         try {
             encodedSearch = URLEncoder.encode(_search, "UTF-8");
-            base_url = "/v1/books/search?"+_query+"="+encodedSearch;
+            base_url = "/books/list?"+_query+"="+encodedSearch;
         } catch (UnsupportedEncodingException e) {
             encodedSearch = "";
             base_url = "";
