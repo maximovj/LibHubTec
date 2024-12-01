@@ -16,6 +16,7 @@ use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Decorations\Heading;
 use MoonShine\Enums\PageType;
 use MoonShine\Fields\DateRange;
 use MoonShine\Fields\Fields;
@@ -39,9 +40,9 @@ class ReserveBookResource extends ModelResource
 
     protected string $title = 'ReserveBooks';
 
-    protected bool $createInModal = true;
+    protected bool $createInModal = false;
 
-    protected bool $editInModal = true;
+    protected bool $editInModal = false;
 
     protected bool $detailInModal = false;
 
@@ -77,6 +78,7 @@ class ReserveBookResource extends ModelResource
     {
         return [
             Block::make([
+                Heading::make('* Todos los campos son obligatorios'),
                 ID::make()->sortable(),
                 BelongsTo::make(
                     static fn() => __('moonshine::ui.resource.reserve_book.book_id'),

@@ -13,6 +13,7 @@ use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Decorations\Heading;
 use MoonShine\Enums\PageType;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\Textarea;
@@ -70,6 +71,7 @@ class BookResource extends ModelResource
     {
         return [
             Block::make([
+                Heading::make('* Todos los campos son obligatorios'),
                 ID::make()->sortable(),
                 Image::make(
                     static fn() => __('moonshine::ui.resource.book.thumbnail'),
@@ -111,6 +113,47 @@ class BookResource extends ModelResource
                     ->min(0)
                     ->buttons(),
             ]),
+        ];
+    }
+
+    /**
+     * @return list<MoonShineComponent|Field>
+     */
+    public function indexFields(): array
+    {
+        return [
+            ID::make()->sortable(),
+            Image::make(
+                static fn() => __('moonshine::ui.resource.book.thumbnail'),
+                'thumbnail')
+                ->disk(config('moonshine.disk', 'public'))
+                ->dir('books')
+                ->allowedExtensions(['jpg', 'png', 'jpeg'])
+                ->required(),
+            Text::make(
+                static fn() => __('moonshine::ui.resource.book.title'),
+                'title')
+                ->placeholder(__('moonshine::ui.resource.book.title'))
+                ->required(),
+            Text::make(
+                static fn() => __('moonshine::ui.resource.book.author'),
+                'author')
+                ->placeholder(__('moonshine::ui.resource.book.author'))
+                ->required(),
+            Number::make(
+                static fn() => __('moonshine::ui.resource.book.stock'),
+                'stock')
+                ->required()
+                ->placeholder(__('moonshine::ui.resource.book.stock'))
+                ->min(0)
+                ->buttons(),
+            Number::make(
+                static fn() => __('moonshine::ui.resource.book.price'),
+                'price')
+                ->required()
+                ->placeholder(__('moonshine::ui.resource.book.price'))
+                ->min(0)
+                ->buttons(),
         ];
     }
 

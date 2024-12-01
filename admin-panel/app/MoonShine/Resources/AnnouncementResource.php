@@ -16,6 +16,7 @@ use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Decorations\Heading;
 use MoonShine\Enums\PageType;
 use MoonShine\Fields\Fields;
 use MoonShine\Fields\Json;
@@ -80,6 +81,7 @@ class AnnouncementResource extends ModelResource
     {
         return [
             Block::make([
+                Heading::make('* Todos los campos son obligatorios'),
                 ID::make()->sortable(),
                 BelongsTo::make(
                     fn()=> __('moonshine::ui.resource.announcement.user'),

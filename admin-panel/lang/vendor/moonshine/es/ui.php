@@ -75,6 +75,8 @@ return [
             'price' => 'Precio',
         ],
 
+        'account_tab_info_personal' => 'Información personal',
+        'account_tab_user_details' => 'Detalles de la cuenta',
         'account_title' => 'Cuentas',
         'account' => [
             'name' => 'Nombres',
