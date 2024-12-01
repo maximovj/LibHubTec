@@ -15,6 +15,6 @@ class NotificationAccountSeeder extends Seeder
     {
         NotificationAccount::truncate();
 
-        NotificationAccount::factory(33)->create();
+        NotificationAccount::factory(100)->create();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Book;
 use App\Models\ReserveBook;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,6 +16,8 @@ class ReserveBookSeeder extends Seeder
     {
         ReserveBook::truncate();
 
-        ReserveBook::factory(30)->create();
+        $stock = Book::stock();
+
+        ReserveBook::factory($stock)->create();
     }
 }

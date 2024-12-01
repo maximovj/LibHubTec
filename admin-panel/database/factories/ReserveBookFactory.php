@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Account;
 use App\Models\Book;
+use App\Models\ReserveBook;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -25,6 +26,11 @@ class ReserveBookFactory extends Factory
         if($book->stock <= 0) {
             return [];
         }
+
+        if(ReserveBook::isAlreadyExists($account, $book)) {
+            return [];
+        }
+
 
         $book->stock = $book->stock - 1;
         $book->save();

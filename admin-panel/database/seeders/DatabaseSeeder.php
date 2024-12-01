@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             AccountSeeder::class,
             ReserveBookSeeder::class,
             NotificationAccountSeeder::class,
+            RecoverAccountSeeder::class,
             AnnouncementSeeder::class,
             SearchSeeder::class,
         ]);

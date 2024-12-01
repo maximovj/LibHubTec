@@ -24,7 +24,7 @@ class SearchFactory extends Factory
     public function definition(): array
     {
         $account = Account::inRandomOrder()->first();
-        $search = Arr::random(['Orfanato', 'Victor', 'Activismo', 'El gato negro', 'de la vida']);
+        $search = Arr::random(['Orfanato', 'Victor', 'Activismo', 'El gato negro', 'de la vida', 'quaerat', 'tempora', 'Doloribus']);
         $search_urlencode = urlencode($search);
         $result = Book::where(function($query) use ($search){
             return $query

@@ -55,6 +55,6 @@ class BookSeeder extends Seeder
             'price' => 206,
         ]);
 
-        Book::factory(10)->create();
+        Book::factory(20)->create();
     }
 }

@@ -14,6 +14,6 @@ class AnnouncementSeeder extends Seeder
     public function run(): void
     {
         Announcement::truncate();
-        Announcement::factory(33)->create();
+        Announcement::factory(100)->create();
     }
 }

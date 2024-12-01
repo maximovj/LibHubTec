@@ -47,5 +47,12 @@ class ReserveBook extends Model
         return $query->sum('book_price');
     }
 
+    public function scopeIsAlreadyExists($query, Account $account, Book $book)
+    {
+        return $query->where('account_id', '=', $account->id)
+                    ->where('book_id', '=', $book->id)
+                    ->exists();
+    }
+
 
 }
