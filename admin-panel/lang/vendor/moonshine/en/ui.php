@@ -94,6 +94,10 @@ return [
             'stock' => 'Stock',
             'price' => 'Price',
         ],
+        'book_metric' => [
+            'book_count' => 'Books',
+            'book_stock' => 'Stock',
+        ],
 
         'account_tab_info_personal' => 'Information personal',
         'account_tab_user_details' => 'User details',

@@ -13,6 +13,8 @@ use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Decorations\Column;
+use MoonShine\Decorations\Grid;
 use MoonShine\Decorations\Heading;
 use MoonShine\Enums\PageType;
 use MoonShine\Fields\Text;
@@ -68,8 +70,22 @@ class BookResource extends ModelResource
     public function metrics(): array
     {
         return [
-            ValueMetric::make(__('moonshine::ui.resource.book_title'))
-                ->value(Book::count()),
+            Grid::make([
+                Column::make([
+                    Block::make([
+                        ValueMetric::make(__('moonshine::ui.resource.book_metric.book_count'))
+                        ->value(Book::count())
+                        ->columnSpan(6),
+                    ])
+                ])->columnSpan(6),
+                Column::make([
+                    Block::make([
+                        ValueMetric::make(__('moonshine::ui.resource.book_metric.book_stock'))
+                        ->value(Book::stock())
+                        ->columnSpan(6),
+                    ])
+                ])->columnSpan(6),
+            ]),
         ];
     }
 

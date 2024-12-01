@@ -94,6 +94,10 @@ return [
             'stock' => 'Disponibilidad',
             'price' => 'Precio',
         ],
+        'book_metric' => [
+            'book_count' => 'Libros',
+            'book_stock' => 'Libros disponibles',
+        ],
 
         'account_tab_info_personal' => 'Información personal',
         'account_tab_user_details' => 'Detalles de la cuenta',
