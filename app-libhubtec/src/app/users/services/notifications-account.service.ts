@@ -18,7 +18,7 @@ export class NotificationsAccountService {
       return of([]);
     }
 
-    return this.http.get<NotificationAccountResponse>(`http://localhost:5800/v1/notification/accounts/3/account/list`, {
+    return this.http.get<NotificationAccountResponse>(`http://localhost:5800/v1/notification/accounts/${user.id}/account/list`, {
       headers: {
         'Authorization': `${_token}`
       }
