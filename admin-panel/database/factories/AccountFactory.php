@@ -32,10 +32,10 @@ class AccountFactory extends Factory
             'age' => fake()->numberBetween(18,190),
             'grade' => fake()->numberBetween(1,20),
             'shift'=> fake()->randomElement(['matutino','vespertino']),
-            'bio' => fake()->paragraph(),
+            'bio' => Str::substr(fake()->paragraph(), 0, 60),
             'username' => fake()->userName(),
             'email' => fake()->unique()->safeEmail(),
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => Hash::make('password'),
         ];
     }
 }

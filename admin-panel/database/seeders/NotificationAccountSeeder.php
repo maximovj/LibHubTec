@@ -2,19 +2,19 @@
 
 namespace Database\Seeders;
 
-use App\Models\Search;
+use App\Models\NotificationAccount;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class SearchSeeder extends Seeder
+class NotificationAccountSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Search::truncate();
+        NotificationAccount::truncate();
 
-        Search::factory(100)->create();
+        NotificationAccount::factory(33)->create();
     }
 }
