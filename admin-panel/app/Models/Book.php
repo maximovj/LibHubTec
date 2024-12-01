@@ -10,6 +10,20 @@ class Book extends Model
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = ['thumbnail','title','author','summary','description'];
+    protected $table = "books";
+    protected $fillable = [
+        'thumbnail',
+        'title',
+        'author',
+        'summary',
+        'description',
+        'stock',
+        'price'
+    ];
+
+    public function scopeStock($query)
+    {
+        return (int) $query->sum('stock');
+    }
 
 }

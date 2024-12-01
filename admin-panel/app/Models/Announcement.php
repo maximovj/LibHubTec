@@ -23,7 +23,8 @@ class Announcement extends Model
         "content",
         "pictures",
         "link",
-        "deleted"
+        "deleted",
+        "is_published",
     ];
     //protected $dates = [];
     //protected $hidden =[];
@@ -53,6 +54,16 @@ class Announcement extends Model
     | SCOPES
     |--------------------------------------------------------------------------
     */
+
+    public function scopeIsPublished($query)
+    {
+        return $query->where('is_published', true);
+    }
+
+    public function scopeIsNotPublished($query)
+    {
+        return $query->where('is_published', false);
+    }
 
     /*
     |--------------------------------------------------------------------------

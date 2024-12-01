@@ -36,5 +36,16 @@ class ReserveBook extends Model
         return $this->belongsTo(Account::class, 'account_id', 'id');
     }
 
+    public function scopeIsActive($query)
+    {
+        return $query->where('active', true);
+    }
+
+    public function scopeBookPrice($query)
+    {
+
+        return $query->sum('book_price');
+    }
+
 
 }

@@ -28,6 +28,7 @@ use MoonShine\Fields\Text;
 use MoonShine\Fields\Url;
 use MoonShine\Handlers\ExportHandler;
 use MoonShine\Handlers\ImportHandler;
+use MoonShine\Metrics\DonutChartMetric;
 use MoonShine\Models\MoonshineUser;
 use MoonShine\MoonShineUI;
 use MoonShine\Resources\MoonShineUserResource;
