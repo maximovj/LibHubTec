@@ -83,8 +83,8 @@ class BookResource extends ModelResource
                 Heading::make('* Todos los campos son obligatorios'),
                 ID::make()->sortable(),
                 Image::make(
-                    static fn() => __('moonshine::ui.resource.book.thumbnail'),
-                    'thumbnail')
+                    static fn() => __('moonshine::ui.resource.book.cover'),
+                    'cover')
                     ->disk(config('moonshine.disk', 'public'))
                     ->dir('books')
                     ->allowedExtensions(['jpg', 'png', 'jpeg'])

@@ -4,26 +4,26 @@
   </p>
 } @else {
     <div class="grid">
-      @for (item of books(); track $index) {
+      @for (book of books(); track $index) {
         <div class="col-12 md:col-6 lg:col-4">
           <div class="card flex justify-content-center">
-            <p-card [header]="item.title" [subheader]="item.author" class="w-full">
+            <p-card [header]="book.title" [subheader]="book.author" class="w-full">
                 <ng-template pTemplate="header">
                       <div class="card flex justify-content-center">
                         <shared-loading-image
-                         [imgSrc]="item.thumbnail"
-                         [imgAlt]="item.thumbnail"
+                         [imgSrc]="book.cover"
+                         [imgAlt]="book.cover"
                          [imgHeight]="'360'"
                          [pImageEnable]="true"
                         ></shared-loading-image>
                       </div>
                 </ng-template>
                 <p style="height: 280px; overflow: auto;">
-                  {{ item.summary }}
+                  {{ book.summary }}
                 </p>
                 <ng-template pTemplate="footer">
                     <div class="flex gap-3 mt-1">
-                        <p-button (onClick)="bntGoTo(item.id)" label="Consultar" />
+                        <p-button (onClick)="bntGoTo(book.id)" label="Consultar" />
                     </div>
                 </ng-template>
             </p-card>

@@ -86,7 +86,7 @@ return [
         // ! Mis Traducciones UI
         'book_title' => 'Books',
         'book' => [
-            'thumbnail' => 'Thumbnail',
+            'cover' => 'Cover',
             'title' => 'Title',
             'author' => 'Author',
             'summary' => 'Summary',

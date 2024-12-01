@@ -2,7 +2,7 @@
 
 export interface BookEntity {
   id:           number;
-  thumbnail?:   string;
+  cover?:   string;
   title:        string;
   author:       string;
   summary:      string;

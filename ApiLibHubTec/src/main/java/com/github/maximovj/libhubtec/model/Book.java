@@ -27,7 +27,7 @@ public class Book implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String thumbnail;
+	private String cover;
 	private String title;
 	private String author;
 	private String summary;

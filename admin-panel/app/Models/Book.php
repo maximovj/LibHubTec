@@ -12,7 +12,7 @@ class Book extends Model
 
     protected $table = "books";
     protected $fillable = [
-        'thumbnail',
+        'cover',
         'title',
         'author',
         'summary',

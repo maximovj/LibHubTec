@@ -20,7 +20,7 @@ import { LoadingImageComponent } from '../../../shared/components/loading-image/
     LoadingImageComponent,
   ],
   styles: `
-    .book-thumbnail {
+    .book-cover {
       width: 100%;
       height: 100px;
       object-fit: cover;
