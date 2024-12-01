@@ -80,7 +80,7 @@ class Dashboard extends Page
                     ->icon('heroicons.magnifying-glass')
                     ->columnSpan(6),
                 Column::make([
-                    Divider::make('Otros'),
+                    Divider::make(__('moonshine::ui.dasboard.divider')),
                 ]),
                 ValueMetric::make(__('moonshine::ui.dasboard.metric.upcoming'))
                     ->value(ReserveBook::bookPrice())

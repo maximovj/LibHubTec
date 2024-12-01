@@ -61,6 +61,7 @@ return [
             'stock' => 'Libros disponibles',
             'reserve_book' => 'Libros reservados',
         ],
+        'divider' => 'Otros',
         'metric' => [
             'account' => 'Cuentas',
             'reserve_book' => 'Libros reservados',

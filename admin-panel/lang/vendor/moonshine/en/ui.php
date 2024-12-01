@@ -61,6 +61,7 @@ return [
             'stock' => 'Stock',
             'reserve_book' => 'Reserve books',
         ],
+        'divider' => 'Others',
         'metric' => [
             'account' => 'Accounts',
             'reserve_book' => 'Reserve books',
