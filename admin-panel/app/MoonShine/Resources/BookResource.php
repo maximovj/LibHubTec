@@ -96,7 +96,7 @@ class BookResource extends ModelResource
     {
         return [
             Block::make([
-                Heading::make('* Todos los campos son obligatorios'),
+                Heading::make(__('moonshine::ui.all_fields_required')),
                 ID::make()->sortable(),
                 Image::make(
                     static fn() => __('moonshine::ui.resource.book.cover'),
@@ -104,7 +104,7 @@ class BookResource extends ModelResource
                     ->disk(config('moonshine.disk', 'public'))
                     ->dir('books')
                     ->allowedExtensions(['jpg', 'png', 'jpeg'])
-                    ->required(),
+                    ->nullable(),
                 Text::make(
                     static fn() => __('moonshine::ui.resource.book.title'),
                     'title')
@@ -117,12 +117,10 @@ class BookResource extends ModelResource
                     ->required(),
                 Textarea::make(
                     static fn() => __('moonshine::ui.resource.book.summary'),
-                    'summary')
-                    ->required(),
+                    'summary'),
                 Textarea::make(
                     static fn() => __('moonshine::ui.resource.book.description'),
-                    'description')
-                    ->required(),
+                    'description'),
                 Number::make(
                     static fn() => __('moonshine::ui.resource.book.stock'),
                     'stock')

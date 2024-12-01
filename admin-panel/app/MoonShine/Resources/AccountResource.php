@@ -96,7 +96,7 @@ class AccountResource extends ModelResource
     {
         return [
             Block::make([
-                Heading::make('* Todos los campos son obligatorios'),
+                Heading::make(__('moonshine::ui.all_fields_required')),
                 Tabs::make([
                     Tab::make(static fn() => __('moonshine::ui.resource.account_tab_info_personal'), [
                         ID::make()->sortable(),

@@ -129,7 +129,7 @@ class NotificationAccountResource extends ModelResource
     {
         return [
             Block::make([
-                Heading::make('* Todos los campos son obligatorios'),
+                Heading::make(__('moonshine::ui.all_fields_required')),
                 ID::make()->sortable(),
                 BelongsTo::make(
                     static fn() => __('moonshine::ui.resource.notification_account.user'),

@@ -27,6 +27,7 @@ return [
     'back' => 'Regresar',
     'more' => 'Más',
     'all_sections' => 'Todas las secciones',
+    'all_fields_required' => 'Todos los campos son obligatorios (*)',
     'file' => 'Archivo',
     'loading' => 'Cargando ...',
     'notfound' => 'Registros no encontrados',

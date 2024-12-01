@@ -27,6 +27,7 @@ return [
     'back' => 'Back',
     'more' => 'More',
     'all_sections' => 'All sections',
+    'all_fields_required' => 'All fields are required (*)',
     'file' => 'File',
     'loading' => 'Loading ...',
     'notfound' => 'Records not found',
