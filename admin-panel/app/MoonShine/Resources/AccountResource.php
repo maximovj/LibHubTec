@@ -17,6 +17,8 @@ use MoonShine\Components\MoonShineComponent;
 use MoonShine\Enums\PageType;
 use MoonShine\Fields\Image;
 use MoonShine\Fields\Number;
+use MoonShine\Fields\Password;
+use MoonShine\Fields\PasswordRepeat;
 use MoonShine\Fields\Select;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\Textarea;
@@ -147,6 +149,8 @@ class AccountResource extends ModelResource
                     'email')
                     ->required()
                     ->placeholder(__('moonshine::ui.resource.account.email')),
+                Password::make('Password'),
+                PasswordRepeat::make('Password repeat', 'password_repeat')
             ]),
         ];
     }
