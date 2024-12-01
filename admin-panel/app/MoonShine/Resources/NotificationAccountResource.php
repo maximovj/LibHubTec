@@ -87,7 +87,7 @@ class NotificationAccountResource extends ModelResource
     public function metrics(): array
     {
         return [
-            ValueMetric::make('Notifications')
+            ValueMetric::make(__('moonshine::ui.resource.notification_account_title'))
                 ->value(NotificationAccount::count()),
         ];
     }

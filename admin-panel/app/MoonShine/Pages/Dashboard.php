@@ -47,42 +47,42 @@ class Dashboard extends Page
             Grid::make([
                 Column::make([
                     Block::make([
-                        DonutChartMetric::make('Anuncios')
+                        DonutChartMetric::make(__('moonshine::ui.dasboard.announcement.title'))
                             ->values([
-                                'Publicados' => Announcement::isPublished()->count(),
-                                'No publicados' => Announcement::isNotPublished()->count()
+                                __('moonshine::ui.dasboard.announcement.is_published') => Announcement::isPublished()->count(),
+                                __('moonshine::ui.dasboard.announcement.is_not_published') => Announcement::isNotPublished()->count()
                             ])
                     ])
                 ])->columnSpan(6),
                 Column::make([
                     Block::make([
-                        DonutChartMetric::make('Libros')
+                        DonutChartMetric::make(__('moonshine::ui.dasboard.book.title'))
                             ->values([
-                                'Libros disponibles' => Book::stock(),
-                                'Libros reservados' => ReserveBook::isActive()->count(),
+                                __('moonshine::ui.dasboard.book.stock') => Book::stock(),
+                                __('moonshine::ui.dasboard.book.reserve_book') => ReserveBook::isActive()->count(),
                             ])
                     ])
                 ])->columnSpan(6),
-                ValueMetric::make('Cuentas')
+                ValueMetric::make(__('moonshine::ui.dasboard.metric.account'))
                     ->value(Account::count())
                     ->icon('heroicons.users')
                     ->columnSpan(6),
-                ValueMetric::make('Recuperación de cuentas')
+                ValueMetric::make(__('moonshine::ui.dasboard.metric.reserve_book'))
                     ->value(RecoverAccount::count())
                     ->icon('heroicons.user-group')
                     ->columnSpan(6),
-                ValueMetric::make('Notificaciones')
+                ValueMetric::make(__('moonshine::ui.dasboard.metric.notification'))
                     ->value(NotificationAccount::count())
                     ->icon('heroicons.bell')
                     ->columnSpan(6),
-                ValueMetric::make('Búsquedas')
+                ValueMetric::make(__('moonshine::ui.dasboard.metric.search'))
                     ->value(Search::count())
                     ->icon('heroicons.magnifying-glass')
                     ->columnSpan(6),
                 Column::make([
                     Divider::make('Otros'),
                 ]),
-                ValueMetric::make('Próximos ingresos')
+                ValueMetric::make(__('moonshine::ui.dasboard.metric.upcoming'))
                     ->value(ReserveBook::bookPrice())
                     ->icon('heroicons.currency-dollar')
                     ->columnSpan(6),

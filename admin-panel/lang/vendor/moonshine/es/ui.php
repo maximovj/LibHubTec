@@ -50,6 +50,25 @@ return [
         'password' => 'Contraseña',
         'or_socials' => 'o',
     ],
+    'dasboard' => [
+        'announcement' => [
+            'title' => 'Anuncios',
+            'is_published' => 'Publicados',
+            'is_not_published' => 'No publicados',
+        ],
+        'book' => [
+            'title' => 'Libros',
+            'stock' => 'Libros disponibles',
+            'reserve_book' => 'Libros reservados',
+        ],
+        'metric' => [
+            'account' => 'Cuentas',
+            'reserve_book' => 'Libros reservados',
+            'notification' => 'Notificaciones',
+            'search' => 'Búsquedas',
+            'upcoming' => 'Próximos ingresos',
+        ],
+    ],
     'resource' => [
         'system' => 'Sistema',
         'role' => 'Roles',

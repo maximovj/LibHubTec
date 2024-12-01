@@ -78,7 +78,7 @@ class AnnouncementResource extends ModelResource
     public function metrics(): array
     {
         return [
-            ValueMetric::make('Announcements')
+            ValueMetric::make(__('moonshine::ui.resource.announcement_title'))
                 ->value(Announcement::count()),
         ];
     }

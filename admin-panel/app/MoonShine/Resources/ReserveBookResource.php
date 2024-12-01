@@ -67,7 +67,7 @@ class ReserveBookResource extends ModelResource
     public function metrics(): array
     {
         return [
-            ValueMetric::make('Reserve Books')
+            ValueMetric::make(__('moonshine::ui.resource.reserve_book_title'))
                 ->value(ReserveBook::count()),
         ];
     }

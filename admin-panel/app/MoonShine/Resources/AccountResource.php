@@ -74,7 +74,7 @@ class AccountResource extends ModelResource
     public function metrics(): array
     {
         return [
-            ValueMetric::make('Accounts')
+            ValueMetric::make(__('moonshine::ui.resource.account_title'))
                 ->value(Account::count()),
         ];
     }

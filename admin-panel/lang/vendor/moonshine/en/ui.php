@@ -50,6 +50,25 @@ return [
         'password' => 'Password',
         'or_socials' => 'or',
     ],
+    'dasboard' => [
+        'announcement' => [
+            'title' => 'Announcements',
+            'is_published' => 'Published',
+            'is_not_published' => 'No published',
+        ],
+        'book' => [
+            'title' => 'Books',
+            'stock' => 'Stock',
+            'reserve_book' => 'Reserve books',
+        ],
+        'metric' => [
+            'account' => 'Accounts',
+            'reserve_book' => 'Reserve books',
+            'notification' => 'Notifications',
+            'search' => 'Searches',
+            'upcoming' => 'Upcoming income',
+        ],
+    ],
     'resource' => [
         'system' => 'System',
         'role' => 'Roles',
