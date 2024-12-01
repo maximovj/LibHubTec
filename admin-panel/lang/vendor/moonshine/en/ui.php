@@ -64,7 +64,7 @@ return [
         'divider' => 'Others',
         'metric' => [
             'account' => 'Accounts',
-            'reserve_book' => 'Reserve books',
+            'recover_account' => 'Recover accounts',
             'notification' => 'Notifications',
             'search' => 'Searches',
             'upcoming' => 'Upcoming income',

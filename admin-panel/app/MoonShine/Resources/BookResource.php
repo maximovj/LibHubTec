@@ -133,8 +133,8 @@ class BookResource extends ModelResource
         return [
             ID::make()->sortable(),
             Image::make(
-                static fn() => __('moonshine::ui.resource.book.thumbnail'),
-                'thumbnail')
+                static fn() => __('moonshine::ui.resource.book.cover'),
+                'cover')
                 ->disk(config('moonshine.disk', 'public'))
                 ->dir('books')
                 ->allowedExtensions(['jpg', 'png', 'jpeg'])

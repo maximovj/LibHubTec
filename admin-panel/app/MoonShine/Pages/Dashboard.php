@@ -67,7 +67,7 @@ class Dashboard extends Page
                     ->value(Account::count())
                     ->icon('heroicons.users')
                     ->columnSpan(6),
-                ValueMetric::make(__('moonshine::ui.dasboard.metric.reserve_book'))
+                ValueMetric::make(__('moonshine::ui.dasboard.metric.recover_account'))
                     ->value(RecoverAccount::count())
                     ->icon('heroicons.user-group')
                     ->columnSpan(6),

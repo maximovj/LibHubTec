@@ -64,7 +64,7 @@ return [
         'divider' => 'Otros',
         'metric' => [
             'account' => 'Cuentas',
-            'reserve_book' => 'Libros reservados',
+            'recover_account' => 'Recuperación de cuentas',
             'notification' => 'Notificaciones',
             'search' => 'Búsquedas',
             'upcoming' => 'Próximos ingresos',

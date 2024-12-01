@@ -153,8 +153,13 @@ class NotificationAccountResource extends ModelResource
                     ->placeholder('Subject'),
                 Markdown::make(static fn() => __('moonshine::ui.resource.notification_account.content'), 'content')
                     ->required(),
-                File::make(static fn() => __('moonshine::ui.resource.notification_account.attach'),'attach'),
-                Image::make(static fn() => __('moonshine::ui.resource.notification_account.signature'),'signature'),
+                File::make(static fn() => __('moonshine::ui.resource.notification_account.attach'),'attach')
+                    ->disk(config('moonshine.disk', 'public'))
+                    ->dir('notification_accounts'),
+                Image::make(static fn() => __('moonshine::ui.resource.notification_account.signature'),'signature')
+                    ->disk(config('moonshine.disk', 'public'))
+                    ->dir('notification_accounts')
+                    ->allowedExtensions(['jpg', 'png', 'jpeg']),
                 Enum::make(static fn() => __('moonshine::ui.resource.notification_account.status'), 'status')
                     ->attach(NotificationAccountStatus::class)
                     ->disabled()
