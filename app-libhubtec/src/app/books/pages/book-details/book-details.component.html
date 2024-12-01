@@ -46,22 +46,28 @@
             </div>
             <div class="col-12 lg:col-6">
               <label class="font-bold">Stock:</label>
-              <input [value]="10" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+              <input [value]="book.stock" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
             </div>
             <div class="col-12 lg:col-6">
                 <label class="font-bold">Precio:</label>
-                <input [value]="'30.00 MX'" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
+                <input [value]="book.price" readonly type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full">
             </div>
-        </div>
-        <ng-template pTemplate="footer">
-          <div class="flex gap-3 mt-1">
-            @if (reserved) {
-              <p-button (onClick)="onReserveBook()" label="Cancelar" severity="secondary" />
-            } @else {
-              <p-button (onClick)="onReserveBook()" label="Reservar" />
-            }
-          </div>
-      </ng-template>
+        </div>´
+        @if(book.stock > 0) {
+          <ng-template pTemplate="footer">
+            <div class="flex gap-3 mt-1">
+              @if (reserved) {
+                <p-button (onClick)="onReserveBook()" label="Cancelar" severity="secondary" />
+              } @else {
+                <p-button (onClick)="onReserveBook()" label="Reservar" />
+              }
+            </div>
+          </ng-template>
+        }@else {
+          <ng-template pTemplate="footer">
+            <p class="font-bold text-base text-center">Oops no hay stock</p>
+          </ng-template>
+        }
       </p-card>
     </div>
   </div>
