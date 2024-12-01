@@ -86,6 +86,7 @@ class ReserveBookResource extends ModelResource
                     'book',
                     fn($item) => "$item->title | $item->author",
                     new BookResource())
+                    ->required()
                     ->withImage('thumbnail','public','books')
                     ->default(Book::find(1))
                     ->setValue(Book::find(1))
@@ -105,6 +106,7 @@ class ReserveBookResource extends ModelResource
                     'account',
                     fn($item) => " $item->name $item->last_name | $item->email",
                     new AccountResource())
+                    ->required()
                     ->withImage('photo','public','accounts')
                     ->default(Account::find(1))
                     ->setValue(Account::find(1))

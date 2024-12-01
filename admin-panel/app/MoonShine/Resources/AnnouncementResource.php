@@ -108,7 +108,10 @@ class AnnouncementResource extends ModelResource
                     'pictures')
                     ->hint('Insert pictures with a 6 limit')
                     ->vertical()
-                    ->onlyValue('picture', Image::make('picture')->allowedExtensions(['jpg','png', 'jpeg']))
+                    ->onlyValue('picture', Image::make('picture')
+                                                                ->disk(config('moonshine.disk', 'public'))
+                                                                ->dir('announcements')
+                                                                ->allowedExtensions(['jpg','png', 'jpeg']))
                     ->creatable(limit: 6)
                     ->removable(),
                 Text::make(

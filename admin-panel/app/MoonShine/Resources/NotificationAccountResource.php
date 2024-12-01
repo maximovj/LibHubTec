@@ -125,6 +125,7 @@ class NotificationAccountResource extends ModelResource
                     'user',
                     fn($item) => "$item->name | $item->email",
                     resource: new MoonShineUserResource())
+                    ->required()
                     ->valuesQuery(fn(Builder $query, Field $field) => $query->where('id', auth()->id()))
                     ->withImage('avatar', 'public', 'moonshine_users')
                     ->default(MoonshineUser::find(auth()->id()))
@@ -134,6 +135,7 @@ class NotificationAccountResource extends ModelResource
                     'account',
                     fn($item) => "$item->username | $item->email",
                     resource: new AccountResource())
+                    ->required()
                     ->searchable(),
                 Text::make(static fn() => __('moonshine::ui.resource.notification_account.subject'), 'subject')
                     ->required()

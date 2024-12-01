@@ -90,7 +90,13 @@ class RecoverAccountResource extends ModelResource
         return [
             Block::make([
                 ID::make()->sortable(),
-                BelongsTo::make(__('moonshine::ui.resource.recover_account.account_name'),'accounts', 'username', new AccountResource())
+                BelongsTo::make(
+                    __('moonshine::ui.resource.recover_account.account_name'),
+                    'accounts',
+                    'username',
+                    new AccountResource())
+                ->required()
+                ->withImage('photo','public','accounts')
                 ->searchable(),
                 Text::make(__('moonshine::ui.resource.recover_account.email'), 'email'),
                 Number::make(__('moonshine::ui.resource.recover_account.code'),'code')

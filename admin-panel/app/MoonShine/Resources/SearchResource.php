@@ -88,7 +88,8 @@ use MoonShine\Handlers\ImportHandler;
                     'account',
                     fn(Model $item) => "$item->name",
                     new SearchResource())
-                    ->withImage('photo'),
+                    ->disabled()
+                    ->withImage('photo','public','accounts'),
                 Select::make(
                     static fn() => __('moonshine::ui.resource.search.query'),
                     'query')

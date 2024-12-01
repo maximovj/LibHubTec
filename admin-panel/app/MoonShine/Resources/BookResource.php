@@ -79,29 +79,38 @@ class BookResource extends ModelResource
                     'thumbnail')
                     ->disk(config('moonshine.disk', 'public'))
                     ->dir('books')
-                    ->allowedExtensions(['jpg', 'png', 'jpeg']),
+                    ->allowedExtensions(['jpg', 'png', 'jpeg'])
+                    ->required(),
                 Text::make(
                     static fn() => __('moonshine::ui.resource.book.title'),
-                    'title'),
+                    'title')
+                    ->placeholder(__('moonshine::ui.resource.book.title'))
+                    ->required(),
                 Text::make(
                     static fn() => __('moonshine::ui.resource.book.author'),
-                    'author'),
+                    'author')
+                    ->placeholder(__('moonshine::ui.resource.book.author'))
+                    ->required(),
                 Textarea::make(
                     static fn() => __('moonshine::ui.resource.book.summary'),
-                    'summary'),
+                    'summary')
+                    ->required(),
                 Textarea::make(
                     static fn() => __('moonshine::ui.resource.book.description'),
-                    'description'),
+                    'description')
+                    ->required(),
                 Number::make(
-                    'Stock',
+                    static fn() => __('moonshine::ui.resource.book.stock'),
                     'stock')
-                    ->placeholder('Stock')
+                    ->required()
+                    ->placeholder(__('moonshine::ui.resource.book.stock'))
                     ->min(0)
                     ->buttons(),
                 Number::make(
-                    'Price',
+                    static fn() => __('moonshine::ui.resource.book.price'),
                     'price')
-                    ->placeholder('Price')
+                    ->required()
+                    ->placeholder(__('moonshine::ui.resource.book.price'))
                     ->min(0)
                     ->buttons(),
             ]),

@@ -86,9 +86,12 @@ class AccountResource extends ModelResource
         return [
             Block::make([
                 ID::make()->sortable(),
-                Text::make(static fn() => __('moonshine::ui.resource.account.name'), 'name'),
-                Text::make(static fn() => __('moonshine::ui.resource.account.last_name'), 'last_name'),
-                Text::make(static fn() => __('moonshine::ui.resource.account.control_number'), 'control_number'),
+                Text::make(static fn() => __('moonshine::ui.resource.account.name'), 'name')
+                ->required(),
+                Text::make(static fn() => __('moonshine::ui.resource.account.last_name'), 'last_name')
+                ->required(),
+                Text::make(static fn() => __('moonshine::ui.resource.account.control_number'), 'control_number')
+                ->required(),
                 Select::make(static fn() => __('moonshine::ui.resource.account.sex'), 'sex')
                 ->options([
                     'mujer' => 'Mujer',
@@ -96,18 +99,22 @@ class AccountResource extends ModelResource
                     'binario' => 'Binario',
                     'otro' => 'Otro',
                 ])
-                ->default('otro'),
+                ->default('otro')
+                ->required(),
                 Number::make(static fn() => __('moonshine::ui.resource.account.age'), 'age')
+                ->required()
                 ->buttons()
                 ->min(1)
                 ->max(190)
                 ->default(18),
                 Number::make(static fn() => __('moonshine::ui.resource.account.grade'), 'grade')
+                ->required()
                 ->buttons()
                 ->min(1)
                 ->max(20)
                 ->default(1),
                 Select::make(static fn() => __('moonshine::ui.resource.account.shift'), 'shift')
+                ->required()
                 ->options([
                     'matutino' => 'Matutino',
                     'vespertino' => 'Vespertino',
@@ -116,10 +123,14 @@ class AccountResource extends ModelResource
                 Image::make(static fn() => __('moonshine::ui.resource.account.photo'), 'photo')
                     ->disk(config('moonshine.disk', 'public'))
                     ->dir('accounts')
-                    ->allowedExtensions(['jpg', 'png', 'jpeg']),
-                Textarea::make(static fn() => __('moonshine::ui.resource.account.bio'), 'bio'),
-                Text::make(static fn() => __('moonshine::ui.resource.account.username'), 'username'),
-                Text::make(static fn() => __('moonshine::ui.resource.account.email'), 'email'),
+                    ->allowedExtensions(['jpg', 'png', 'jpeg'])
+                    ->nullable(),
+                Textarea::make(static fn() => __('moonshine::ui.resource.account.bio'), 'bio')
+                ->required(),
+                Text::make(static fn() => __('moonshine::ui.resource.account.username'), 'username')
+                ->required(),
+                Text::make(static fn() => __('moonshine::ui.resource.account.email'), 'email')
+                ->required(),
             ]),
         ];
     }

@@ -71,6 +71,8 @@ return [
             'author' => 'Author',
             'summary' => 'Summary',
             'description' => 'Description',
+            'stock' => 'Stock',
+            'price' => 'Price',
         ],
 
         'account_title' => 'Accounts',
