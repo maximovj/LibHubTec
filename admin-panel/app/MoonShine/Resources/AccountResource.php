@@ -149,8 +149,16 @@ class AccountResource extends ModelResource
                     'email')
                     ->required()
                     ->placeholder(__('moonshine::ui.resource.account.email')),
-                Password::make('Password'),
-                PasswordRepeat::make('Password repeat', 'password_repeat')
+                Password::make(
+                    static fn() => __('moonshine::ui.resource.account.password'),
+                    'password')
+                    ->placeholder(__('moonshine::ui.resource.account.password'))
+                    ->required(),
+                PasswordRepeat::make(
+                    static fn() => __('moonshine::ui.resource.account.confirm_password'),
+                    'password_repeat')
+                    ->placeholder(__('moonshine::ui.resource.account.confirm_password'))
+                    ->required()
             ]),
         ];
     }

@@ -89,6 +89,7 @@ return [
             'username' => 'Username',
             'email' => 'Email',
             'password' => 'Password',
+            'confirm_password' => 'Confirm password',
         ],
 
         'recover_account_title' => 'Recover Accounts',

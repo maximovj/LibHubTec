@@ -71,6 +71,8 @@ return [
             'author' => 'Autor',
             'summary' => 'Resumen',
             'description' => 'Descripción',
+            'stock' => 'Disponibilidad',
+            'price' => 'Precio',
         ],
 
         'account_title' => 'Cuentas',
@@ -87,6 +89,7 @@ return [
             'username' => 'Nombre de usuario',
             'email' => 'Correo electrónico',
             'password' => 'Contraseña',
+            'confirm_password' => 'Confirmar contraseña',
         ],
 
         'recover_account_title' => 'Recuperar cuentas',
