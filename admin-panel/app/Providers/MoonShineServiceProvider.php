@@ -59,32 +59,37 @@ class MoonShineServiceProvider extends MoonShineApplicationServiceProvider
                     new MoonShineUserRoleResource()
                 ),
             ]),
-            MenuItem::make(
-            static fn() => __('moonshine::ui.resource.book_title'),
-            new BookResource()
-            ),
-            MenuItem::make(
-            static fn() => __('moonshine::ui.resource.account_title'),
-            new AccountResource()
-            ),
-            MenuItem::make(
-                static fn() => __('moonshine::ui.resource.recover_account_title'),
-                new RecoverAccountResource()
-            ),
-            MenuItem::make(
-                static fn() => __('moonshine::ui.resource.reserve_book_title'),
-                new ReserveBookResource()
-            ),
-            MenuItem::make(
-                static fn() => __('moonshine::ui.resource.notification_account_title'),
-                new NotificationAccountResource(),
-            ),
-            MenuItem::make(
-                static fn () => __('moonshine::ui.resource.announcement_title'),
-                new AnnouncementResource()),
-            MenuItem::make(
-                static fn () => __('moonshine::ui.resource.search_title'),
-                new SearchResource()),
+
+            MenuGroup::make('Menú', [
+                MenuItem::make(
+                    static fn() => __('moonshine::ui.resource.account_title'),
+                    new AccountResource()
+                ),
+                MenuItem::make(
+                    static fn() => __('moonshine::ui.resource.book_title'),
+                    new BookResource()
+                ),
+                MenuItem::make(
+                    static fn() => __('moonshine::ui.resource.reserve_book_title'),
+                    new ReserveBookResource()
+                ),
+                MenuItem::make(
+                    static fn() => __('moonshine::ui.resource.notification_account_title'),
+                    new NotificationAccountResource(),
+                ),
+                MenuItem::make(
+                    static fn () => __('moonshine::ui.resource.announcement_title'),
+                    new AnnouncementResource()),
+            ]),
+
+            MenuGroup::make('Logs', [
+                MenuItem::make(
+                    static fn () => __('moonshine::ui.resource.search_title'),
+                    new SearchResource()),
+                MenuItem::make(
+                        static fn() => __('moonshine::ui.resource.recover_account_title'),
+                        new RecoverAccountResource()),
+            ])
         ];
     }
 

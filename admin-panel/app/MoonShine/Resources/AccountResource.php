@@ -27,6 +27,7 @@ use MoonShine\Fields\Text;
 use MoonShine\Fields\Textarea;
 use MoonShine\Handlers\ExportHandler;
 use MoonShine\Handlers\ImportHandler;
+use MoonShine\Metrics\ValueMetric;
 
 /**
  * @extends ModelResource<Account>
@@ -68,6 +69,14 @@ class AccountResource extends ModelResource
     public function export(): ?ExportHandler
     {
         return null;
+    }
+
+    public function metrics(): array
+    {
+        return [
+            ValueMetric::make('Accounts')
+                ->value(Account::count()),
+        ];
     }
 
     public function filters(): array

@@ -27,6 +27,7 @@ use MoonShine\Handlers\ExportHandler;
 use MoonShine\Handlers\ImportHandler;
 use MoonShine\Fields\Select;
 use MoonShine\Fields\Switcher;
+use MoonShine\Metrics\ValueMetric;
 
 /**
  * @extends ModelResource<ReserveBook>
@@ -61,6 +62,14 @@ class ReserveBookResource extends ModelResource
     public function export(): ?ExportHandler
     {
         return null;
+    }
+
+    public function metrics(): array
+    {
+        return [
+            ValueMetric::make('Reserve Books')
+                ->value(ReserveBook::count()),
+        ];
     }
 
     /**

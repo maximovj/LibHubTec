@@ -30,6 +30,7 @@ use MoonShine\Fields\Switcher;
 use MoonShine\Fields\Text;
 use MoonShine\Handlers\ExportHandler;
 use MoonShine\Handlers\ImportHandler;
+use MoonShine\Metrics\ValueMetric;
 use MoonShine\Models\MoonshineUser;
 use MoonShine\MoonShineUI;
 use MoonShine\Notifications\MoonShineNotification;
@@ -81,6 +82,14 @@ class NotificationAccountResource extends ModelResource
     public function title(): string
     {
         return __('moonshine::ui.resource.notification_account_title');
+    }
+
+    public function metrics(): array
+    {
+        return [
+            ValueMetric::make('Notifications')
+                ->value(NotificationAccount::count()),
+        ];
     }
 
     public function filters(): array

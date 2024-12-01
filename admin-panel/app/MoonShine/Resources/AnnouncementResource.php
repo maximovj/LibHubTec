@@ -28,7 +28,7 @@ use MoonShine\Fields\Text;
 use MoonShine\Fields\Url;
 use MoonShine\Handlers\ExportHandler;
 use MoonShine\Handlers\ImportHandler;
-use MoonShine\Metrics\DonutChartMetric;
+use MoonShine\Metrics\ValueMetric;
 use MoonShine\Models\MoonshineUser;
 use MoonShine\MoonShineUI;
 use MoonShine\Resources\MoonShineUserResource;
@@ -73,6 +73,14 @@ class AnnouncementResource extends ModelResource
     public function export(): ?ExportHandler
     {
         return null;
+    }
+
+    public function metrics(): array
+    {
+        return [
+            ValueMetric::make('Announcements')
+                ->value(Announcement::count()),
+        ];
     }
 
     /**

@@ -22,6 +22,7 @@ use MoonShine\Fields\Number;
 use MoonShine\Fields\Preview;
 use MoonShine\Handlers\ExportHandler;
 use MoonShine\Handlers\ImportHandler;
+use MoonShine\Metrics\ValueMetric;
 
 /**
  * @extends ModelResource<Book>
@@ -62,6 +63,14 @@ class BookResource extends ModelResource
     public function export(): ?ExportHandler
     {
         return null;
+    }
+
+    public function metrics(): array
+    {
+        return [
+            ValueMetric::make('Books')
+                ->value(Book::count()),
+        ];
     }
 
     /**
