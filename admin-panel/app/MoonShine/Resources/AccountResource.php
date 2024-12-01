@@ -14,6 +14,7 @@ use MoonShine\Resources\ModelResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Request;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Enums\PageType;
 use MoonShine\Fields\Image;
 use MoonShine\Fields\Number;
 use MoonShine\Fields\Select;
@@ -29,6 +30,8 @@ use MoonShine\Handlers\ImportHandler;
 class AccountResource extends ModelResource
 {
     protected string $model = Account::class;
+
+    protected ?PageType $redirectAfterSave = PageType::INDEX;
 
     protected string $title = 'Accounts';
 
@@ -62,12 +65,6 @@ class AccountResource extends ModelResource
         return null;
     }
 
-    public function redirectAfterSave(): string
-    {
-        $refer = Request::header('referer');
-        return $refer ?? '/';
-    }
-
     public function filters(): array
     {
         return [
@@ -86,51 +83,70 @@ class AccountResource extends ModelResource
         return [
             Block::make([
                 ID::make()->sortable(),
-                Text::make(static fn() => __('moonshine::ui.resource.account.name'), 'name')
-                ->required(),
-                Text::make(static fn() => __('moonshine::ui.resource.account.last_name'), 'last_name')
-                ->required(),
-                Text::make(static fn() => __('moonshine::ui.resource.account.control_number'), 'control_number')
-                ->required(),
+                Text::make(
+                    static fn() => __('moonshine::ui.resource.account.name'),
+                    'name')
+                    ->required()
+                    ->placeholder(__('moonshine::ui.resource.account.name')),
+                Text::make(
+                    static fn() => __('moonshine::ui.resource.account.last_name'),
+                    'last_name')
+                    ->required()
+                    ->placeholder(__('moonshine::ui.resource.account.last_name')),
+                Text::make(
+                    static fn() => __('moonshine::ui.resource.account.control_number'),
+                    'control_number')
+                    ->required()
+                    ->placeholder(__('moonshine::ui.resource.account.control_number')),
                 Select::make(static fn() => __('moonshine::ui.resource.account.sex'), 'sex')
-                ->options([
-                    'mujer' => 'Mujer',
-                    'hombre' => 'Hombre',
-                    'binario' => 'Binario',
-                    'otro' => 'Otro',
-                ])
-                ->default('otro')
-                ->required(),
+                    ->options([
+                        'mujer' => 'Mujer',
+                        'hombre' => 'Hombre',
+                        'binario' => 'Binario',
+                        'otro' => 'Otro',
+                    ])
+                    ->default('otro')
+                    ->required(),
                 Number::make(static fn() => __('moonshine::ui.resource.account.age'), 'age')
-                ->required()
-                ->buttons()
-                ->min(1)
-                ->max(190)
-                ->default(18),
+                    ->required()
+                    ->placeholder(__('moonshine::ui.resource.account.age'))
+                    ->buttons()
+                    ->min(1)
+                    ->max(190)
+                    ->default(18),
                 Number::make(static fn() => __('moonshine::ui.resource.account.grade'), 'grade')
-                ->required()
-                ->buttons()
-                ->min(1)
-                ->max(20)
-                ->default(1),
+                    ->required()
+                    ->placeholder(__('moonshine::ui.resource.account.grade'))
+                    ->buttons()
+                    ->min(1)
+                    ->max(20)
+                    ->default(1),
                 Select::make(static fn() => __('moonshine::ui.resource.account.shift'), 'shift')
-                ->required()
-                ->options([
-                    'matutino' => 'Matutino',
-                    'vespertino' => 'Vespertino',
-                ])
-                ->default('matutino'),
+                    ->required()
+                    ->options([
+                        'matutino' => 'Matutino',
+                        'vespertino' => 'Vespertino',
+                    ])
+                    ->default('matutino'),
                 Image::make(static fn() => __('moonshine::ui.resource.account.photo'), 'photo')
                     ->disk(config('moonshine.disk', 'public'))
                     ->dir('accounts')
                     ->allowedExtensions(['jpg', 'png', 'jpeg'])
                     ->nullable(),
-                Textarea::make(static fn() => __('moonshine::ui.resource.account.bio'), 'bio')
-                ->required(),
-                Text::make(static fn() => __('moonshine::ui.resource.account.username'), 'username')
-                ->required(),
-                Text::make(static fn() => __('moonshine::ui.resource.account.email'), 'email')
-                ->required(),
+                Textarea::make(
+                    static fn() => __('moonshine::ui.resource.account.bio'),
+                    'bio')
+                    ->required(),
+                Text::make(
+                    static fn() => __('moonshine::ui.resource.account.username'),
+                    'username')
+                    ->required()
+                    ->placeholder(__('moonshine::ui.resource.account.username')),
+                Text::make(
+                    static fn() => __('moonshine::ui.resource.account.email'),
+                    'email')
+                    ->required()
+                    ->placeholder(__('moonshine::ui.resource.account.email')),
             ]),
         ];
     }

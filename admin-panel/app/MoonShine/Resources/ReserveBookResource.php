@@ -16,6 +16,7 @@ use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Enums\PageType;
 use MoonShine\Fields\DateRange;
 use MoonShine\Fields\Fields;
 use MoonShine\Fields\Number;
@@ -34,6 +35,8 @@ class ReserveBookResource extends ModelResource
 {
     protected string $model = ReserveBook::class;
 
+    protected ?PageType $redirectAfterSave = PageType::INDEX;
+
     protected string $title = 'ReserveBooks';
 
     protected bool $createInModal = true;
@@ -47,12 +50,6 @@ class ReserveBookResource extends ModelResource
     public function title(): string
     {
         return __('moonshine::ui.resource.reserve_book_title');
-    }
-
-    public function redirectAfterSave(): string
-    {
-        $refer = Request::header('referer');
-        return $refer ?? '/';
     }
 
     public function import(): ?ImportHandler

@@ -13,6 +13,7 @@ use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Enums\PageType;
 use MoonShine\Fields\Number;
 use MoonShine\Fields\Relationships\BelongsTo;
 use MoonShine\Fields\Select;
@@ -28,6 +29,8 @@ use MoonShine\Handlers\ImportHandler;
  class SearchResource extends ModelResource
 {
     protected string $model = Search::class;
+
+    protected ?PageType $redirectAfterSave = PageType::INDEX;
 
     protected string $title = 'Searches';
 
@@ -67,12 +70,6 @@ use MoonShine\Handlers\ImportHandler;
     public function export(): ?ExportHandler
     {
         return null;
-    }
-
-    public function redirectAfterSave(): string
-    {
-        $refer = Request::header('referer');
-        return $refer ?? '/';
     }
 
     /**

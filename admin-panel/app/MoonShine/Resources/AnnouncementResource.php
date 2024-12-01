@@ -8,6 +8,7 @@ use MoonShine\Fields\Image;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Announcement;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Request;
 use MoonShine\ActionButtons\ActionButton;
 use MoonShine\Attributes\Icon;
 use MoonShine\Resources\ModelResource;
@@ -15,6 +16,7 @@ use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Enums\PageType;
 use MoonShine\Fields\Fields;
 use MoonShine\Fields\Json;
 use MoonShine\Fields\Markdown;
@@ -36,6 +38,8 @@ use MoonShine\Resources\MoonShineUserResource;
 class AnnouncementResource extends ModelResource
 {
     protected string $model = Announcement::class;
+
+    protected ?PageType $redirectAfterSave = PageType::INDEX;
 
     protected string $title = 'Announcements';
 

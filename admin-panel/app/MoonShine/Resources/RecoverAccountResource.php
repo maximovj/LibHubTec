@@ -15,6 +15,7 @@ use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Enums\PageType;
 use MoonShine\Fields\Number;
 use MoonShine\Fields\Relationships\BelongsTo;
 use MoonShine\Fields\Switcher;
@@ -32,6 +33,8 @@ use MoonShine\Pages\Crud\IndexPage;
 class RecoverAccountResource extends ModelResource
 {
     protected string $model = RecoverAccount::class;
+
+    protected ?PageType $redirectAfterSave = PageType::INDEX;
 
     protected string $title = 'Recover accounts';
 
@@ -62,12 +65,6 @@ class RecoverAccountResource extends ModelResource
     public function title(): string
     {
         return __('moonshine::ui.resource.recover_account_title');
-    }
-
-    public function redirectAfterSave(): string
-    {
-        $refer = Request::header('referer');
-        return $refer ?? '/';
     }
 
     /**

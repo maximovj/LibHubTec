@@ -13,6 +13,7 @@ use MoonShine\Decorations\Block;
 use MoonShine\Fields\ID;
 use MoonShine\Fields\Field;
 use MoonShine\Components\MoonShineComponent;
+use MoonShine\Enums\PageType;
 use MoonShine\Fields\Text;
 use MoonShine\Fields\Textarea;
 use MoonShine\Fields\Image;
@@ -29,6 +30,8 @@ use MoonShine\Handlers\ImportHandler;
 class BookResource extends ModelResource
 {
     protected string $model = Book::class;
+
+    protected ?PageType $redirectAfterSave = PageType::INDEX;
 
     protected string $title = 'Libros';
 
@@ -58,12 +61,6 @@ class BookResource extends ModelResource
     public function export(): ?ExportHandler
     {
         return null;
-    }
-
-    public function redirectAfterSave(): string
-    {
-        $refer = Request::header('referer');
-        return $refer ?? '/';
     }
 
     /**
