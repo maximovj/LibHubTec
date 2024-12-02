@@ -2,9 +2,12 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Announcement, AnnouncementResponse } from "../interfaces";
 import { catchError, map, Observable, of, throwError } from "rxjs";
+import { environments } from "../../../environments/environments";
 
 @Injectable({ providedIn: 'root' })
 export class AnnouncementService {
+
+  private ENV_BASE_URL_API = environments.ENV_BASE_URL_API;
 
   private httpClient = inject(HttpClient);
 
@@ -15,7 +18,7 @@ export class AnnouncementService {
       return of([]);
     }
 
-    return this.httpClient.get<AnnouncementResponse>(`http://localhost:5800/v1/announcements`, {
+    return this.httpClient.get<AnnouncementResponse>(`${this.ENV_BASE_URL_API}/v1/announcements`, {
       headers: {
         "Authorization" : `${_token}`,
       }

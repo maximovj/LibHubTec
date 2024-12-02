@@ -7,9 +7,12 @@ import { BookEntity } from '../interfaces';
 import { BooksResponse, ReserveBookData, ReserveBookResponse } from '../interfaces';
 import { ReserveBookRequest } from './../interfaces/reserve-book-request.interface';
 import { User } from '../../shared/interfaces';
+import { environments } from '../../../environments/environments';
 
 @Injectable({ providedIn: "root" })
 export class BooksService {
+
+  private ENV_BASE_URL_API = environments.ENV_BASE_URL_API;
 
   private _books = signal<BookEntity[]>([]);
   public  books = computed(() =>  [...this._books()]);
@@ -35,7 +38,7 @@ export class BooksService {
 
     const headers = new HttpHeaders().set('Authorization', `Bearer ${_token}`);
 
-    return this.http.get<BooksResponse>(`http://localhost:5800/v1/books/search`, {headers, params})
+    return this.http.get<BooksResponse>(`${this.ENV_BASE_URL_API}/v1/books/search`, {headers, params})
     .pipe(
       map(({data, response})=> {
         if(response?.success){
@@ -60,7 +63,7 @@ export class BooksService {
       return of(false);
     }
 
-    return this.http.get<BooksResponse>(`http://localhost:5800/v1/books/${id}/book-details`, { headers: {
+    return this.http.get<BooksResponse>(`${this.ENV_BASE_URL_API}/v1/books/${id}/book-details`, { headers: {
       'Authorization' : `Bearer ${_token}`,
     }})
     .pipe(
@@ -89,7 +92,7 @@ export class BooksService {
       return of(null);
     }
 
-    return this.http.post<ReserveBookResponse>('http://localhost:5800/v1/reserve/book/register', reserveBookRequest, {
+    return this.http.post<ReserveBookResponse>('${this.ENV_BASE_URL_API}/v1/reserve/book/register', reserveBookRequest, {
       headers: {
         'Authorization' : `Bearer ${_token}`,
       }
@@ -117,7 +120,7 @@ export class BooksService {
       return of(false);
     }
 
-    return this.http.delete<ReserveBookResponse>('http://localhost:5800/v1/reserve/book/cancel',{
+    return this.http.delete<ReserveBookResponse>(`${this.ENV_BASE_URL_API}/v1/reserve/book/cancel`,{
       headers: {
         'Authorization' : `Bearer ${_token}`,
       },
@@ -144,7 +147,7 @@ export class BooksService {
       return of(null);
     }
 
-    return this.http.get<BooksResponse>(`http://localhost:5800/v1/books/${id}/book-details`, { headers: {
+    return this.http.get<BooksResponse>(`${this.ENV_BASE_URL_API}/v1/books/${id}/book-details`, { headers: {
       'Authorization' : `Bearer ${_token}`,
     }})
     .pipe(
@@ -166,7 +169,7 @@ export class BooksService {
       return of([]);
     }
 
-    return this.http.get<ReserveBookResponse>(`http://localhost:5800/v1/reserve/book/list/${account?.id}/account`, {
+    return this.http.get<ReserveBookResponse>(`${this.ENV_BASE_URL_API}/v1/reserve/book/list/${account?.id}/account`, {
       headers: {
         'Authorization' : `Bearer ${_token}`,
       }
@@ -188,7 +191,7 @@ export class BooksService {
     }
 
     return this.http.get<ReserveBookResponse>(
-      `http://localhost:5800/v1/reserve/book/find/${book_id}/account/${account_id}`,
+      `${this.ENV_BASE_URL_API}/v1/reserve/book/find/${book_id}/account/${account_id}`,
       {
         headers: {
           Authorization: `Bearer ${_token}`,

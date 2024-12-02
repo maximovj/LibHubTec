@@ -4,9 +4,12 @@ import { inject, Injectable } from "@angular/core";
 import { SearchResponse } from '../interfaces/search-response.interface';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { SearchEntity } from '../interfaces';
+import { environments } from '../../../environments/environments';
 
 @Injectable({ providedIn: 'root' })
 export class SearchesService {
+
+  private ENV_BASE_URL_API = environments.ENV_BASE_URL_API;
 
   private httpClient = inject(HttpClient);
 
@@ -22,7 +25,7 @@ export class SearchesService {
     const headers = new HttpHeaders().set('Authorization', _token);
     const account_id = user.id;
 
-    return this.httpClient.get<SearchResponse>(`http://localhost:5800/v1/searches/${account_id}/account`, { headers })
+    return this.httpClient.get<SearchResponse>(`${this.ENV_BASE_URL_API}/v1/searches/${account_id}/account`, { headers })
     .pipe(
       map( ({ data, response}) => {
         if(response.status && data && data.length > 0) {
@@ -43,7 +46,7 @@ export class SearchesService {
 
     const headers = new HttpHeaders().set('Authorization', _token);
 
-    return this.httpClient.delete<SearchResponse>(`http://localhost:5800/v1/searches/${search_id}`, { headers })
+    return this.httpClient.delete<SearchResponse>(`${this.ENV_BASE_URL_API}/v1/searches/${search_id}`, { headers })
       .pipe(
         map(({response}) => {
           return response.success;

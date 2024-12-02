@@ -3,9 +3,12 @@ import { NotificationAccount, NotificationAccountResponse } from "../../users/in
 import { HttpClient } from "@angular/common/http";
 import { catchError, delay, map, Observable, of, throwError } from "rxjs";
 import { User } from "../../shared/interfaces";
+import { environments } from "../../../environments/environments";
 
 @Injectable({ providedIn: "root" })
 export class NotificationsAccountService {
+
+  private ENV_BASE_URL_API = environments.ENV_BASE_URL_API;
 
   private http = inject(HttpClient);
 
@@ -18,7 +21,7 @@ export class NotificationsAccountService {
       return of([]);
     }
 
-    return this.http.get<NotificationAccountResponse>(`http://localhost:5800/v1/notification/accounts/${user.id}/account/list`, {
+    return this.http.get<NotificationAccountResponse>(`${this.ENV_BASE_URL_API}/v1/notification/accounts/${user.id}/account/list`, {
       headers: {
         'Authorization': `${_token}`
       }
@@ -42,7 +45,7 @@ export class NotificationsAccountService {
       return of(null);
     }
 
-    return this.http.put<NotificationAccountResponse>(`http://localhost:5800/v1/notification/accounts/${notificationAccount.id}/notification/read`,null, {
+    return this.http.put<NotificationAccountResponse>(`${this.ENV_BASE_URL_API}/v1/notification/accounts/${notificationAccount.id}/notification/read`,null, {
       headers: {
         'Authorization': `${_token}`,
       }

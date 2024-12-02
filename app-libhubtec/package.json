@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "set-env": "node ./set-env.js",
+    "dev-start": "npm run set-env && ng serve",
+    "dev-build": "npm run set-env && ng build",
+    "start": "npm run dev-start",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
@@ -18,6 +21,7 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "dotenv": "^16.4.5",
     "ngx-toastr": "^19.0.0",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",

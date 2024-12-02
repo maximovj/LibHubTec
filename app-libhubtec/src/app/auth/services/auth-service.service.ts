@@ -13,11 +13,14 @@ import {
 } from '../interfaces';
 
 import { AuthStatus, User } from '../../shared/interfaces';
+import { environments } from '../../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
+  private ENV_BASE_URL_API = environments.ENV_BASE_URL_API;
 
   private http  = inject(HttpClient);
 
@@ -66,7 +69,7 @@ export class AuthService {
       'Authorization': `Bearer ${token}`
     });
 
-    this.http.get<AccountDetailsResponse>(`http://localhost:5800/v1/accounts/${sub}/details`, { headers })
+    this.http.get<AccountDetailsResponse>(`${this.ENV_BASE_URL_API}/v1/accounts/${sub}/details`, { headers })
     .pipe(
       map(({data, notifications}) => {
         const userData = data?.at(0);
@@ -83,7 +86,7 @@ export class AuthService {
   // Entrar al sistema (login) enviando: `email`, `password`
   login(req :LoginRequest) :Observable<boolean>
   {
-    return this.http.post<LoginResponse>('http://localhost:5800/v1/auth/authenticate', {
+    return this.http.post<LoginResponse>(`${this.ENV_BASE_URL_API}/v1/auth/authenticate`, {
       username: req.username,
       email: req.email,
       password: req.password,
@@ -120,7 +123,7 @@ export class AuthService {
   {
     return this
       .http
-      .get<VerifyTokenResponse>('http://localhost:5800/v1/auth/verify-token', { headers: {
+      .get<VerifyTokenResponse>(`${this.ENV_BASE_URL_API}/v1/auth/verify-toke`, { headers: {
         'Authorization': `Bearer ${token}`
       } })
       .pipe(
@@ -148,7 +151,7 @@ export class AuthService {
   {
     return this
       .http
-      .post<VerifyTokenResponse>('http://localhost:5800/v1/recover/verify-token', null, { headers: {
+      .post<VerifyTokenResponse>(`${this.ENV_BASE_URL_API}/v1/recover/verify-token`, null, { headers: {
         'Authorization': `Bearer ${token}`
       } })
       .pipe(
@@ -163,7 +166,7 @@ export class AuthService {
   forgetPassword(req :LoginRequest) : Observable<boolean>
   {
     this._query.set(true);
-    return this.http.post<RecoverAccountResponse>('http://localhost:5800/v1/auth/forget-password', { email: req.email })
+    return this.http.post<RecoverAccountResponse>('${this.ENV_BASE_URL_API}/v1/auth/forget-password', { email: req.email })
     .pipe(
       map( ({response}) => response.success),
       catchError(err => throwError(()=> err.message)),
@@ -177,7 +180,7 @@ export class AuthService {
   recoverAccountConfirm(req :RecoverAccountRequest, token :string) : Observable<boolean>
   {
     this._query.set(true);
-    return this.http.post<RecoverAccountResponse>('http://localhost:5800/v1/recover/account', req, { headers: {
+    return this.http.post<RecoverAccountResponse>(`${this.ENV_BASE_URL_API}/v1/recover/account`, req, { headers: {
       'Authorization': `Bearer ${token}`
     } })
     .pipe(
