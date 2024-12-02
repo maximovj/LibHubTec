@@ -34,3 +34,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignorar los archivos de configuración específicos del perfil
+application-dev.properties
+application-prod.properties

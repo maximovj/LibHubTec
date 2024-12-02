@@ -1,0 +1,28 @@
+# Plantilla para perfil application-dev.properties o application-prod.properties
+
+# Cofiguración de mi aplicación (Variables personalizadas) 
+app.secret=
+app.email.support=
+
+# Conexión a MySQL con Hibernate, Spring JPA, Datasource
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.database-platform=org.hibernate.dialect.MySQLDialect
+#spring.jpa.database-platform=org.hibernate.dialect.MySQL57Dialect
+spring.jpa.hibernate.ddl-auto=none	
+logging.level.org.hibernate.SQL=debug
+
+# Configuración de JWT 
+application.security.jwt.secret-key=
+application.security.jwt.expiration=864000000 
+application.security.jwt.refresh-token.expiration=864000000
+
+# Configuración de Spring Email
+spring.mail.host=
+spring.mail.port=25
+spring.mail.username=
+spring.mail.password=
+spring.mail.properties.mail.smtp.auth=
+spring.mail.properties.mail.smtp.starttls.enable=

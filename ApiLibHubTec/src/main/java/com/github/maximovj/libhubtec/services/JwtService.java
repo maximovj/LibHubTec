@@ -10,6 +10,7 @@ import io.jsonwebtoken.security.SignatureException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.github.maximovj.libhubtec.user.UserInfo;
@@ -28,7 +29,8 @@ public class JwtService {
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
-    public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
+    @Value("${app.secret}")
+    private String SECRET;
 
     // Generate token with given user name
     public String generateToken(Long id) {
@@ -69,7 +71,7 @@ public class JwtService {
 
     // Obtener una firma clave para JWT token
     private Key getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
+        byte[] keyBytes = Decoders.BASE64.decode(this.SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
