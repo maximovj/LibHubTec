@@ -16,8 +16,7 @@ class RecoverAccountSeeder extends Seeder
     {
         RecoverAccount::truncate();
 
-        $accounts =  Account::count();
-
-        RecoverAccount::factory($accounts)->create();
+        //$accounts =  Account::count();
+        //RecoverAccount::factory($accounts)->create();
     }
 }

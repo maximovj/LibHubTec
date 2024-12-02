@@ -26,4 +26,13 @@ class Book extends Model
         return (int) $query->sum('stock');
     }
 
+    public function scopeResultSearch($query, string $search) :int
+    {
+        return (int) $query
+            ->where('title', 'like', "%$search%")
+            ->orWhere('author', 'like', "%$search%")
+            ->orWhere('summary', 'like', "%$search%")
+            ->count();
+    }
+
 }

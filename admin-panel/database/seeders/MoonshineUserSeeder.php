@@ -19,14 +19,14 @@ class MoonshineUserSeeder extends Seeder
         MoonshineUser::factory()->create([
             'moonshine_user_role_id' => 1,
             'email' => 'admin@admin.com',
-            'password' => Hash::make('admin@admin.com'),
+            'password' => Hash::make('password'),
             'name' => 'Admin',
-            'avatar' => null,
+            'avatar' => 'moonshine_users/bu9VJlTqn9FEW4EPED8lEkCFOSGd3rE4XH2pSJeD.jpg',
             'remember_token' => null,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
-        MoonshineUser::factory(10)->create();
+        //MoonshineUser::factory(10)->create();
     }
 }

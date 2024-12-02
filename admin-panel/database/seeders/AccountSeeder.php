@@ -23,13 +23,29 @@ class AccountSeeder extends Seeder
             'sex' => 'hombre',
             'age' => 25,
             'grade' => 9,
-            'shift'=> 'Vespertino',
-            'bio' => 'Me apasiona la tecnología, me gusta escuchar música y mis hobbies es la programación.',
+            'shift'=> 'vespertino',
+            'photo' => 'accounts/pwqEtB563biL5dDONAQDmCC2DkfMkmm0M2ppqn21.png',
+            'bio' => 'Soy un apasionado por la tecnología, me encanta escuchar música y mi hobby es la programación.',
             'username' => 'victor.maximo',
-            'email' => 'victor.maximo@demo.com',
-            'password' => Hash::make('victor.maximo@demo.com'),
+            'email' => 'victor.maximo@example.com',
+            'password' => Hash::make('password'),
         ]);
 
-        Account::factory(10)->create();
+        Account::factory()->create([
+            'name' => 'User',
+            'last_name' => 'Demo',
+            'control_number' => '1800404',
+            'sex' => 'otro',
+            'age' => 18,
+            'grade' => 1,
+            'shift'=> 'matutino',
+            'photo' => 'accounts/CXkWgq7nlcri0bm2EmLLHGjuOjxpSeNG6AJ0pW2e.png',
+            'bio' => 'Soy un usuario de pruebas.',
+            'username' => 'user.demo',
+            'email' => 'use.demo@example.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        //Account::factory(10)->create();
     }
 }
