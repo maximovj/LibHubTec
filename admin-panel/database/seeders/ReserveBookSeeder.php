@@ -24,7 +24,7 @@ class ReserveBookSeeder extends Seeder
         foreach($bookIds as $item ) {
             $book = Book::find($item);
             ReserveBook::factory()->create([
-                'account_id' => $book->id,
+                'account_id' => $account->id,
                 'account_username' => $account->username,
                 'account_email' => $account->email,
                 'account_name' => $account->name,

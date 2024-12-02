@@ -137,6 +137,7 @@ public class BookServiceImpl implements IBookServiceImpl {
                 Optional<Search> op_search = this.searchDao.findByAccountIdAndQueryAndSearch(account.get().getId(), _query, _search);
                 
                 if(op_search.isPresent()) {
+                    op_search.get().setResult(books.size());
                     op_search.get().setUpdated_at(LocalDateTime.now());
                     this.searchDao.save(op_search.get());
                 } else {

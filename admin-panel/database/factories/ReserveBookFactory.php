@@ -36,7 +36,7 @@ class ReserveBookFactory extends Factory
         $book->save();
 
         return [
-            'account_id' => $book->id,
+            'account_id' => $account->id,
             'account_username' => $account->username,
             'account_email' => $account->email,
             'account_name' => $account->name,
