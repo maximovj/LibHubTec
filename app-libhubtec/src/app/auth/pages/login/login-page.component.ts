@@ -51,7 +51,6 @@ export class LoginPageComponent implements OnInit {
           this.toastr.success('Haz iniciado sesión correctamente', 'Inicio de sesión');
           this.router.navigateByUrl('/books/list');
         },
-        error: (message) => console.log(message),
       });
   }
 

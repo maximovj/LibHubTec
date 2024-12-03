@@ -51,7 +51,6 @@ export class UserNotificationsComponent implements OnInit {
       .pipe(
         delay(1000),
         map( (data: NotificationAccount[]) => {
-          console.log(data);
           return { loading: false, data, err: null  };
         }),
         startWith({ loading: true, data: null, err: null }),

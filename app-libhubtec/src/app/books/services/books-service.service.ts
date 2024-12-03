@@ -42,7 +42,6 @@ export class BooksService {
     .pipe(
       map(({data, response})=> {
         if(response?.success){
-          console.log(data, response);
           this._books.set(data);
         }
         return response?.success;

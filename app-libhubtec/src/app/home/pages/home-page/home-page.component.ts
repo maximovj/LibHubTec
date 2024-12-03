@@ -44,7 +44,6 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.user();
-    console.log('user:',this.user);
     this.announcements = this.announcementService
       .listAllAnnountcements()
       .pipe(

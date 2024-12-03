@@ -58,7 +58,6 @@ export class BookDetailsComponent implements OnInit {
     this.book = this.book_details?.book;
     this.reserved = this.book_details.isReserved || false;
     this.reserve_book_id = this.book_details.reserve_book_id;
-    console.log({ data: this.book_details, book : this.book_details?.book });
   }
 
   onReserveBook() :void

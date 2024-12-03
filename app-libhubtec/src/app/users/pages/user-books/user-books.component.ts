@@ -47,7 +47,6 @@ export class UserBooksComponent implements OnInit {
     .pipe(
       delay(1000),
       map( (data :ReserveBookData[] )  => {
-        console.log(data);
         return { loading: false, data, err: null };
       }),
       startWith({ loading: true, data: [], err: null }),

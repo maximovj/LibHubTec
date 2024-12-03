@@ -55,9 +55,7 @@ export class LoadingImageComponent implements OnInit {
 
   constructor () { }
 
-  ngOnInit(): void {
-    console.log('imgSRC: ',this.imgSrc)
-  }
+  ngOnInit(): void { }
 
   public srcError(event: Event): void {
     const target = event.target as HTMLImageElement;

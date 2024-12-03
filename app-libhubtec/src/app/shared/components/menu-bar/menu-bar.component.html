@@ -14,7 +14,7 @@
       </ng-template>
       <ng-template pTemplate="end">
           <div class="flex align-items-center gap-2">
-              <input type="text" pInputText placeholder="Search" [(ngModel)]="search" (keyup.enter)="onSearch()"  class="w-8rem sm:w-auto" />
+              <input type="text" pInputText placeholder="Buscar un libro..." [(ngModel)]="search" (keyup.enter)="onSearch()"  class="w-8rem sm:w-auto" />
               @if(user?.photo){
                 <p-avatar (click)="btnGoToSettings()" [image]="user?.photo | picture" class="cursor-pointer" shape="circle" />
               } @else {

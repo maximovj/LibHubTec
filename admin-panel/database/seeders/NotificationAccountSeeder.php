@@ -24,7 +24,7 @@ class NotificationAccountSeeder extends Seeder
             'signature'  =>  null,
             'status' => 'send',
             'send_email' => false,
-            'tags' => ["Nuevo libros"],
+            'tags' => ["Nuevos libros"],
             'created_at' => now(),
             'updated_at' => now(),
         ]);

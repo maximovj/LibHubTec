@@ -20,16 +20,16 @@
                     <p>
                         Hemos recibido una solicitud de recuperación de cuenta desde nuestro portal LibHubTec, para lograr cuperar tu cuenta sigue estos pasos:
                         <ol>
-                            <li>Accede a la página recuperación de cuenta, haciendo clíck en el bóton <i>Recuperar cuenta</i>.</li>
-                            <li>En caso de que botón no funcione, copia el enlace del footer y pagalo en una nueva pestaña.</li>
+                            <li>Accede a la página recuperación de cuenta, haciendo clic en el bóton <i>Recuperar cuenta</i>.</li>
+                            <li>En caso de que el botón no funcione, copia el enlace del footer y pégalo en una nueva pestaña.</li>
                             <li>Ingrese su código de recuperación de cuenta</li>
                             <li>Crea una nueva contraseña segura, con minimo 8 carácteres y máximo 30 carácteres, utilice simbolos, números, minúsculas y mayúsculas. </li>
                         </ol>
-                        Si no fuiste tú quién solicio la recuperación de cuenta, puedes ignorar este mensaje.
+                        Si tú no fuiste quién solicitó la recuperación de cuenta, puedes ignorar este mensaje.
                     </p>
-                    <p>Haz click en el botón de abajo para recuperar tu cuenta</p>
+                    <p>Haz clic en el botón de abajo para recuperar tu cuenta</p>
                     <p><span class="lead">Código:</span> <strong th:text="${code}">12345</strong></p>
-                    <p>En caso de que botón no funcione, copia el enlace del footer y pagalo en una nueva pestaña.</p>
+                    <p>En caso de que el botón no funcione, copia el enlace del footer y pégalo en una nueva pestaña.</p>
                     <a th:href="${BASE_URL_APP} + '/auth/recover/account?token=' + ${token}" target="_blank" class="btn btn-sm btn-success">Recuperar cuenta</a>
                 </div>
             </div>

@@ -53,7 +53,6 @@ export class BooksListComponent implements OnInit {
         next: () => {
           this.toastrService.success('Lista de libros cargados exitosamente.', 'Libros');
         },
-        error: (err) => console.log(err),
       });
     });
 
