@@ -123,7 +123,7 @@ export class AuthService {
   {
     return this
       .http
-      .get<VerifyTokenResponse>(`${this.ENV_BASE_URL_API}/v1/auth/verify-toke`, { headers: {
+      .get<VerifyTokenResponse>(`${this.ENV_BASE_URL_API}/v1/auth/verify-token`, { headers: {
         'Authorization': `Bearer ${token}`
       } })
       .pipe(

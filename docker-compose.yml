@@ -58,6 +58,9 @@ services:
 
   service_angular:
     container_name: libhubtec-angular-18
+    environment:
+      ENV_BASE_URL_API: http://192.168.33.99:5800
+      ENV_BASE_URL_STORAGE: http://192.168.33.99:8000
     build:
       context: ./app-libhubtec
       dockerfile: Dockerfile.angular

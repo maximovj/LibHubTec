@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { environments } from '../../../environments/environments';
 
 @Pipe({
   name: 'picture',
@@ -6,17 +7,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 
 export class PicturePipe implements PipeTransform {
-  private url_storage = 'http://localhost:8000/storage';
+
+  private ENV_BASE_URL_STORAGE = environments.ENV_BASE_URL_STORAGE;
 
   transform(value: string | undefined | null): any {
-    // [src]="'http://localhost:8000/storage/'.concat(item.thumbnail || '')"
-    // src="images/no_thumbnail.jpg"
-
-
     if(!value) {
       return 'images/no_thumbnail.jpg';
     }
-
-    return this.url_storage.concat('/').concat(value);
+    return `${this.ENV_BASE_URL_STORAGE}/storage/${value}`;
   }
 }

@@ -7,7 +7,7 @@
     "dev-start": "npm run set-env && ng serve",
     "dev-build": "npm run set-env && ng build",
     "start": "npm run dev-start",
-    "build": "ng build",
+    "build": "npm run dev-build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
