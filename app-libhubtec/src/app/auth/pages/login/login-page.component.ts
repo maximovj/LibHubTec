@@ -29,8 +29,8 @@ export class LoginPageComponent implements OnInit {
   private authService = inject(AuthService);
 
   public myForm :FormGroup = this.fb.group({
-    email: ['eloisa00@example.net', [Validators.required]],
-    password: ['password', [Validators.required]],
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
 
   constructor() { }
@@ -51,6 +51,9 @@ export class LoginPageComponent implements OnInit {
           this.toastr.success('Haz iniciado sesión correctamente', 'Inicio de sesión');
           this.router.navigateByUrl('/books/list');
         },
+        error: () => {
+          this.toastr.error('Usuario o contraseña incorrecta.', 'Inicio de sesión');
+        }
       });
   }
 

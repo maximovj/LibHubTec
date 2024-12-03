@@ -91,7 +91,7 @@ export class BooksService {
       return of(null);
     }
 
-    return this.http.post<ReserveBookResponse>('${this.ENV_BASE_URL_API}/v1/reserve/book/register', reserveBookRequest, {
+    return this.http.post<ReserveBookResponse>(`${this.ENV_BASE_URL_API}/v1/reserve/book/register`, reserveBookRequest, {
       headers: {
         'Authorization' : `Bearer ${_token}`,
       }
