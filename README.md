@@ -20,7 +20,7 @@ Requisitos
     * collaction: utf8mb4_spanish2_ci
 ```
 
-Sitio de servicio: [http://192.168.33.99:8000](http://192.168.33.99:8000)
+Sitio de servicio: [http://localhost:8000](http://localhost:8000)
 
 Puerto de servicio: 8000
 
@@ -38,7 +38,7 @@ Requisitos
     * PrimeFlex >= 3.3.1
 ```
 
-Sitio de servicio: [http://192.168.33.99:4200](http://192.168.33.99:4200)
+Sitio de servicio: [http://localhost:4200](http://localhost:4200)
 
 Puerto de servicio: 4200
 
@@ -63,7 +63,7 @@ Requisitos
     * collaction: utf8mb4_spanish2_ci
 ```
 
-Sitio de servicio: [http://192.168.33.99:5800](http://192.168.33.99:5800)
+Sitio de servicio: [http://localhost:5800](http://localhost:5800)
 
 Puerto de servicio: 5800
 
@@ -71,7 +71,7 @@ Puerto de servicio: 5800
 
 Es un servidor local para probar envios de correo electrónicos mediante STMP
 
-Sitio de servicio: [http://192.168.33.99:8025](http://192.168.33.99:8025)
+Sitio de servicio: [http://localhost:8025](http://localhost:8025)
 
 Puerto de servicio: 8025
 
@@ -114,11 +114,11 @@ con dirección IP de `192.168.33.99`, por lo tanto para acceder a los serivcios 
 
 es necesario cambiar `localhost` por la dirección IP de la caja de Vagrant (y viceversa), sería de está manera:
 
-Sitio de servicio Laravel 11.x: [http://192.168.33.99:8000](http://192.168.33.99:8000)
+Sitio de servicio Laravel 11.x: [http://localhost:8000](http://localhost:8000)
 
-Sitio de servicio Angular 18.x: [http://192.168.33.99:4200](http://192.168.33.99:4200)
+Sitio de servicio Angular 18.x: [http://localhost:4200](http://localhost:4200)
 
-Sitio de servicio SpringBoot 3.x: [http://192.168.33.99:5800](http://192.168.33.99:5800)
+Sitio de servicio SpringBoot 3.x: [http://localhost:5800](http://localhost:5800)
 
 <br>
 

@@ -26,11 +26,11 @@ services:
       DB_DATABASE: libhubtec_db
       DB_USERNAME: libhubtec
       DB_PASSWORD: password
-      APP_URL: http://192.168.33.99:8000
+      APP_URL: http://localhost:8000
       FILESYSTEM_DISK: public
       MOONSHINE_TITLE: AdminPanel
-      MOONSHINE_LOGO: http://192.168.33.99:8000/vendor/moonshine/android-chrome-512x512.png
-      MOONSHINE_LOGO_SMALL: http://192.168.33.99:8000/moonshine/vendor/android-chrome-192x192.png
+      MOONSHINE_LOGO: http://localhost:8000/vendor/moonshine/android-chrome-512x512.png
+      MOONSHINE_LOGO_SMALL: http://localhost:8000/moonshine/vendor/android-chrome-192x192.png
     ports:
       - "8000:80"
       - "443:443"
