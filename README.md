@@ -20,7 +20,7 @@ Requisitos
     * collaction: utf8mb4_spanish2_ci
 ```
 
-Sitio de servicio: [http://localhost:8000](http://localhost:8000)
+Sitio de servicio: [http://192.168.33.99:8000](http://192.168.33.99:8000)
 
 Puerto de servicio: 8000
 
@@ -38,7 +38,7 @@ Requisitos
     * PrimeFlex >= 3.3.1
 ```
 
-Sitio de servicio: [http://localhost:4200](http://localhost:4200)
+Sitio de servicio: [http://192.168.33.99:4200](http://192.168.33.99:4200)
 
 Puerto de servicio: 4200
 
@@ -63,9 +63,17 @@ Requisitos
     * collaction: utf8mb4_spanish2_ci
 ```
 
-Sitio de servicio: [http://localhost:5800](http://localhost:5800)
+Sitio de servicio: [http://192.168.33.99:5800](http://192.168.33.99:5800)
 
 Puerto de servicio: 5800
+
+* Mailpit
+
+Es un servidor local para probar envios de correo electrónicos mediante STMP
+
+Sitio de servicio: [http://192.168.33.99:8025](http://192.168.33.99:8025)
+
+Puerto de servicio: 8025
 
 # Requisitos
 
@@ -80,6 +88,7 @@ Puerto de servicio: 5800
 * jdk >= 17.0.2
 * jre >= 17.0.11
 * MySQL v5.7
+* Mailpit v1.21.4
 
 # Arrancar Vagrant como maquina virtual
 
@@ -135,18 +144,36 @@ Ejecuta el siguiente comando, desde la terminal.
 $ docker-compose exec service_laravel /bin/bash
 ```
 
-**Paso 2)** Dentro del servicio docker-compose de Laravel 11.x para ejecutar seeders.
+**Paso 3)** Dentro del servicio docker-compose de Laravel 11.x para ejecutar seeders.
 
 Ejecuta el siguiente comando, desde la terminal.
 
 ```shell
-$ php artisan db:seed --class=BooksTableSeeder
+$ php artisan db:seed --class=DatabaseSeeder
 ```
 
-**Paso 4)** Dentro del servicio docker-compose de Laravel 11.x para crear un usaurio administrador.
+<br>
 
-Ejecuta el siguiente comando, desde la terminal.
+# Vista previas
 
-```shell
-$ php artisan moonshine:user
-```
+![preview1.jpg](/screenshots/preview_1.jpg)
+
+![preview2.jpg](/screenshots/preview_2.jpg)
+
+![preview3.jpg](/screenshots/preview_3.jpg)
+
+![preview4.jpg](/screenshots/preview_4.jpg)
+
+![preview5.jpg](/screenshots/preview_5.jpg)
+
+![preview6.jpg](/screenshots/preview_6.jpg)
+
+![preview7.jpg](/screenshots/preview_7.jpg)
+
+![preview8.jpg](/screenshots/preview_8.jpg)
+
+![preview9.jpg](/screenshots/preview_9.jpg)
+
+![preview10.jpg](/screenshots/preview_10.jpg)
+
+![preview11.jpg](/screenshots/preview_11.jpg)
