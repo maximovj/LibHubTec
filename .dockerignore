@@ -4,6 +4,7 @@ node_modules
 .vscode
 .workspace
 .vagrant
+/data
 
 # custom files
 composer.lock

@@ -52,6 +52,8 @@ public class EmailService {
         try {
             // Obtener correo electrónico de soporte
             String emailSupport = this.environment.getProperty("app.email.support");
+            // Obtener el dominio del app (FrontEnd/)
+            String baseURLApp = this.environment.getProperty("app.base.url.app");
 
             Map<String, Object> claims = new HashMap<>();
             String name = userInfo.getLast_name() + " " + userInfo.getName();
@@ -61,12 +63,13 @@ public class EmailService {
 
             // Crear el contexto para Thymeleaf
             Context context = new Context();
+            context.setVariable("BASE_URL_APP", baseURLApp);
             context.setVariable("code", code);
             context.setVariable("token", token);
             context.setVariable("name", name);
 
             // Procesar la plantilla HTML
-            String htmlContent = this.templateEngine.process("email", context);
+            String htmlContent = this.templateEngine.process("email-recover-account", context);
 
             // Crear el mensaje de correo
             MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -90,9 +93,12 @@ public class EmailService {
         try {
             // Obtener correo electrónico de soporte
             String emailSupport = this.environment.getProperty("app.email.support");
+            // Obtener el dominio del app (FrontEnd/)
+            String baseURLApp = this.environment.getProperty("app.base.url.app");
             
             // Crear el contexto para Thymeleaf
             Context context = new Context();
+            context.setVariable("BASE_URL_APP", baseURLApp);
             String name = account.getLast_name() + " " + account.getName();
             context.setVariable("name", name);
 

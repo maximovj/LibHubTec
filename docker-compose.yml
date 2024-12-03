@@ -85,4 +85,25 @@ services:
       - service_db
       - service_laravel
       - service_angular
-  
+
+  service_mailpit:
+    image: axllent/mailpit
+    container_name: mailpit
+    restart: unless-stopped
+    volumes:
+      - ./data:/data
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+    networks:
+      - libhubtec-net
+    depends_on:
+      - service_db
+      - service_laravel
+      - service_angular
+      - service_springboot
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1

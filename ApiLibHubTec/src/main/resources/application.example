@@ -2,6 +2,7 @@
 
 # Cofiguración de mi aplicación (Variables personalizadas) 
 app.secret=
+app.base.url.app=
 app.email.support=
 
 # Conexión a MySQL con Hibernate, Spring JPA, Datasource

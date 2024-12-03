@@ -166,7 +166,7 @@ export class AuthService {
   forgetPassword(req :LoginRequest) : Observable<boolean>
   {
     this._query.set(true);
-    return this.http.post<RecoverAccountResponse>('${this.ENV_BASE_URL_API}/v1/auth/forget-password', { email: req.email })
+    return this.http.post<RecoverAccountResponse>(`${this.ENV_BASE_URL_API}/v1/auth/forget-password`, { email: req.email })
     .pipe(
       map( ({response}) => response.success),
       catchError(err => throwError(()=> err.message)),
