@@ -120,6 +120,8 @@ Sitio de servicio Angular 18.x: [http://192.168.33.99:4200](http://192.168.33.99
 
 Sitio de servicio SpringBoot 3.x: [http://192.168.33.99:5800](http://192.168.33.99:5800)
 
+Sitio de servicio Mailpit: [http://192.168.33.99:8025](http://192.168.33.99:8025)
+
 <br>
 
 **NOTA:** Si no se está usando Vagrant como máquina virtual es necesario cambiar la dirección IP (`192.168.33.99`) de la caja de Vagrant 
@@ -133,24 +135,46 @@ por `localhost`, en archivos de  Dockerfile y Docker-compose.
 Ejecuta el siguiente comando, desde la terminal.
 
 ```shell
-$ docker-compose up --build
+$ cd workspace
 ```
 
-**Paso 2)** Accerder al servicio docker-compose de Laravel 11.x para.
+**Paso 2)** Convetir el achivo `setup.sh` en un archivo ejecutable o script de linux y ejecutarló. 
+
+Además de crear variable de entorno, instalar nodejs, y crear alias para linux
 
 Ejecuta el siguiente comando, desde la terminal.
 
 ```shell
-$ docker-compose exec service_laravel /bin/bash
+$ dos2unix ./setup.sh && ./setup.sh && source ~/.bashrc 
 ```
 
-**Paso 3)** Dentro del servicio docker-compose de Laravel 11.x para ejecutar seeders.
+**Paso 3)** Construir todos los servicios de docker-compose
 
-Ejecuta el siguiente comando, desde la terminal.
+Se construye la imagen, contenedor y ejecuta cada servicio que compone docker-compose 
 
 ```shell
-$ php artisan db:seed --class=DatabaseSeeder
+$ doc-again
 ```
+
+**Paso 4)** Comienza a probar el proyecto
+
+Felicidades ya puedes acceder a los sitios del proyecto, que son:
+
+- Sitio de servicio Laravel 11.x: [http://192.168.33.99:8000](http://192.168.33.99:8000)
+
+    usuario: admin@admin.com
+
+    contraseña: password
+
+- Sitio de servicio Angular 18.x: [http://192.168.33.99:4200](http://192.168.33.99:4200)
+
+    usuario: victor.maximo@example.com
+    
+    contraseña: password
+
+- Sitio de servicio SpringBoot 3.x: [http://192.168.33.99:5800](http://192.168.33.99:5800)
+
+- Sitio de servicio Mailpit: [http://192.168.33.99:8025](http://192.168.33.99:8025)
 
 <br>
 
@@ -177,3 +201,9 @@ $ php artisan db:seed --class=DatabaseSeeder
 ![preview10.jpg](/screenshots/preview_10.jpg)
 
 ![preview11.jpg](/screenshots/preview_11.jpg)
+
+![preview11.jpg](/screenshots/preview_12.jpg)
+
+![preview11.jpg](/screenshots/preview_13.jpg)
+
+![preview11.jpg](/screenshots/preview_14.jpg)

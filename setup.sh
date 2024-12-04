@@ -14,7 +14,11 @@ echo ' ' >> /home/vagrant/.bashrc
 echo '# Creando alias para docker-compose y docker' >> /home/vagrant/.bashrc
 echo 'alias doc=docker-compose' >> /home/vagrant/.bashrc
 echo 'alias doc-rm="docker-compose stop && docker-compose rm --force"' >> /home/vagrant/.bashrc
-echo 'alias doc-again="docker-compose stop && docker-compose rm --force && docker-compose build && docker-compose up"' >> /home/vagrant/.bashrc
+echo 'alias doc-ps="docker-compose ps --all"' >> /home/vagrant/.bashrc
+echo 'alias doc-laravel="docker-compose exec service_laravel /bin/bash"' >> /home/vagrant/.bashrc
+echo 'alias doc-logs="docker-compose logs"' >> /home/vagrant/.bashrc
+echo 'alias doc-down="docker-compose stop && docker-compose rm --force"' >> /home/vagrant/.bashrc
+echo 'alias doc-up="docker-compose stop && docker-compose rm --force && docker-compose build && docker-compose up"' >> /home/vagrant/.bashrc
 echo 'alias docker-ps-clean="docker container prune -f"' >> /home/vagrant/.bashrc
 echo 'alias docker-images-clean="docker rmi $(docker images -f "dangling=true" -q)"' >> /home/vagrant/.bashrc
 echo ' ' >> /home/vagrant/.bashrc

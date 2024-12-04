@@ -51,6 +51,7 @@ services:
         php artisan cache:clear &&
         php artisan view:clear &&
         php artisan route:clear &&
+        php artisan db:seed --class=DatabaseSeeder &&
         nginx -g 'daemon off;'
       "
     depends_on:
