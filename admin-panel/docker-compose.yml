@@ -44,6 +44,8 @@ services:
         composer install --ignore-platform-reqs && 
         php artisan key:generate &&
         php artisan migrate --force &&
+        php artisan db:seed --class=DatabaseSeeder &&
+        php artisan app:publish-storage &&
         # npm install --production &&
         php artisan optimize &&
         php artisan config:cache &&
